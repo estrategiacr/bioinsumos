@@ -1,105 +1,107 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bioinsumos Costa Rica - Experiencias e Innovación</title>
+    
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
-<title>Bioinsumos Costa Rica</title>
-
-<link rel="stylesheet" href="css/main.css">
-<link rel="stylesheet" href="css/header-footer.css">
-<link rel="stylesheet" href="css/home.css">
-<link rel="stylesheet" href="css/experiencias.css">
-<script src="js/data.js"></script>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/header-footer.css">
+    <link rel="stylesheet" href="css/home.css">
+    <link rel="stylesheet" href="css/experiencias.css">
 </head>
-
 <body>
 
 <header class="topbar">
-
-  <div class="logo">
-    🌿 Bioinsumos CR
-  </div>
-
-  <nav class="main-nav">
-    <a href="index.html">Inicio</a>
-    <a href="conocimiento.html">Conocimiento</a>
-    <a href="experiencias.html" class="active">Experiencias</a>
-    <a href="ecosistema.html">Ecosistema</a>
-    <a href="entorno.html">Entorno</a>
-  </nav>
-
+    <div class="logo">🌿 Bioinsumos CR</div>
+    <nav class="main-nav">
+        <a href="index.html">Inicio</a>
+        <a href="conocimiento.html">Conocimiento</a>
+        <a href="experiencias.html" class="active">Experiencias</a>
+        <a href="ecosistema.html">Ecosistema</a>
+        <a href="entorno.html">Entorno</a>
+    </nav>
 </header>
 
 <main class="page-content">
     <section class="hero hero-experiencias">
-
         <div class="hero-content">
-        
-        <h1>
-        Experiencias e Innovación
-        </h1>
-        
-        <p>
-        Conozca las biofábricas,
-        casos de éxito e innovaciones nacionales.
-        </p>
-        
+            <h1>Experiencias e Innovación</h1>
+            <p>Monitoreo en tiempo real del Mapa Nacional de Biofábricas, casos de éxito y transferencia tecnológica.</p>
         </div>
-        
-        </section>
-        
-        <section class="dashboard-map">
-        
+    </section>
+    
+    <section class="dashboard-map">
         <aside class="filter-panel">
-        
-        <!-- filtros actuales -->
-        
+            <h3>Filtrar Biofábricas</h3>
+            <div class="filter-group">
+                <label for="filterRegion">Región / Provincia</label>
+                <select id="filterRegion">
+                    <option value="Todos">Todas las Regiones</option>
+                    <option value="San José">San José</option>
+                    <option value="Alajuela">Alajuela</option>
+                    <option value="Cartago">Cartago</option>
+                    <option value="Heredia">Heredia</option>
+                    <option value="Guanacaste">Guanacaste</option>
+                    <option value="Puntarenas">Puntarenas</option>
+                    <option value="Limón">Limón</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label for="searchBiofabrica">Buscar por nombre</label>
+                <input type="text" id="searchBiofabrica" placeholder="Ej. Central, Norte...">
+            </div>
+            <div class="stats-box">
+                <span class="stats-title">Total Biofábricas</span>
+                <div id="biofabricasCount" class="stats-number">0</div>
+            </div>
         </aside>
         
         <div class="map-container">
-        
-        <div id="map"></div>
-        
+            <div id="map"></div>
         </div>
         
-        <aside id="infoPanel" class="bio-card"></aside>
-        
-        </section>
+        <aside id="infoPanel" class="bio-card">
+            <div class="info-placeholder">
+                <span class="info-icon">📍</span>
+                <p>Haga clic en un punto del mapa para desplegar los detalles de la biofábrica seleccionada.</p>
+            </div>
+        </aside>
+    </section>
 
-        <section class="innovation-grid">
-
-            <h2>Innovaciones destacadas</h2>
-            
-            <div id="innovationCards"></div>
-            
-            </section>
+    <section class="innovation-section">
+        <div class="section-title-container">
+            <h2>Innovaciones y Casos de Éxito Destacados</h2>
+            <p>Tecnologías agrobiológicas validadas en el entorno agrícola costarricense.</p>
+        </div>
+        <div id="innovationCards" class="innovation-grid"></div>
+    </section>
 </main>
 
 <footer class="site-footer">
-
-<div>
-<h4>Bioinsumos Costa Rica</h4>
-<p>Plataforma nacional de gestión del conocimiento.</p>
-</div>
-
-<div>
-<h4>Contacto</h4>
-<p>proyecto@bioinsumos.cr</p>
-</div>
-
-<div>
-<h4>Instituciones</h4>
-<p>MAG · IICA · Universidades</p>
-</div>
-
-<div>
-<h4>Redes</h4>
-<p>YouTube · LinkedIn</p>
-</div>
-
+    <div>
+        <h4>Bioinsumos Costa Rica</h4>
+        <p>Plataforma nacional de gestión del conocimiento.</p>
+    </div>
+    <div>
+        <h4>Contacto</h4>
+        <p>proyecto@bioinsumos.cr</p>
+    </div>
+    <div>
+        <h4>Instituciones</h4>
+        <p>MAG · IICA · Universidades</p>
+    </div>
+    <div>
+        <h4>Redes</h4>
+        <p>YouTube · LinkedIn</p>
+    </div>
 </footer>
 
+<script src="js/data.js"></script>
+<script src="js/experiencias.js"></script>
 
 </body>
 </html>

@@ -1,73 +1,205 @@
-.hero-experiencias{
+/* ==========================================================================
+   HOJA DE ESTILOS: EXPERIENCIAS E INNOVACIÓN (MEJORADO)
+   ========================================================================== */
 
-    background:
-        linear-gradient(
-            rgba(215,215,255,.45),
-            rgba(215,215,255,.25)
-        ),
-        url("../assets/images/hero.png");
-
-    background-size:cover;
+   :root {
+    --primary-color: #2e7d32;
+    --primary-light: #e8f5e9;
+    --text-dark: #2c3e50;
+    --text-light: #7f8c8d;
+    --shadow-smooth: 0 12px 30px rgba(0,0,0,0.06);
+    --border-radius-lg: 16px;
 }
 
-.dashboard-map{
-
-    display:grid;
-
-    grid-template-columns:
-        300px 1fr 360px;
-
-    gap:1.5rem;
+/* Hero Section */
+.hero-experiencias {
+    background: linear-gradient(rgba(46, 125, 50, 0.6), rgba(44, 62, 80, 0.85)), url("../assets/images/hero.png");
+    background-size: cover;
+    background-position: center;
+    color: white;
+    padding: 4rem 2rem;
+    text-align: center;
 }
 
+.hero-content h1 {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+    font-weight: 700;
+}
+
+/* Dashboard Layout Base (Grid) */
+.dashboard-map {
+    display: grid;
+    grid-template-columns: 320px 1fr 380px;
+    gap: 1.5rem;
+    padding: 2rem;
+    max-width: 1600px;
+    margin: 0 auto;
+    background-color: #f8f9fa;
+}
+
+/* Paneles Estilizados */
 .filter-panel,
 .bio-card,
-.map-container{
-
-    background:white;
-
-    border-radius:20px;
-
-    box-shadow:
-        0 10px 25px rgba(0,0,0,.08);
-
-}
-.filter-panel{
-    padding:1.5rem;
+.map-container {
+    background: white;
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow-smooth);
+    border: 1px solid rgba(0,0,0,0.03);
+    transition: transform 0.2s ease;
 }
 
-.map-container{
-    padding:1rem;
+/* Panel Izquierdo: Filtros */
+.filter-panel {
+    padding: 1.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
 }
 
-#map{
-    height:700px;
-    border-radius:20px;
+.filter-panel h3 {
+    color: var(--text-dark);
+    font-size: 1.2rem;
+    border-bottom: 2px solid var(--primary-light);
+    padding-bottom: 0.5rem;
+    margin: 0;
 }
 
-.bio-card{
-    overflow:hidden;
+.filter-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
 }
 
-.innovation-grid{
-
-    max-width:1400px;
-    margin:auto;
+.filter-group label {
+    font-size: 0.85rem;
+    font-weight: bold;
+    color: var(--text-light);
 }
 
-#innovationCards{
-
-    display:grid;
-
-    grid-template-columns:
-        repeat(auto-fit,minmax(300px,1fr));
-
-    gap:1.5rem;
+.filter-group select,
+.filter-group input {
+    padding: 0.75rem;
+    border: 1px solid #dcdde1;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    outline: none;
+    transition: border-color 0.2s;
 }
 
-@media(max-width:1200px){
+.filter-group select:focus,
+.filter-group input:focus {
+    border-color: var(--primary-color);
+}
 
-    .dashboard-map{
-        grid-template-columns:1fr;
+/* Caja de Estadísticas Interna */
+.stats-box {
+    margin-top: auto;
+    background: var(--primary-light);
+    padding: 1rem;
+    border-radius: 10px;
+    text-align: center;
+}
+.stats-title { font-size: 0.8rem; color: var(--primary-color); font-weight: bold; text-transform: uppercase;}
+.stats-number { font-size: 2rem; font-weight: 800; color: var(--primary-color);}
+
+/* Contenedor del Mapa */
+.map-container {
+    padding: 0.5rem;
+}
+#map {
+    height: 650px;
+    border-radius: 12px;
+    z-index: 1;
+}
+
+/* Panel Derecho: Ficha Técnica Activa */
+.bio-card {
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.info-placeholder {
+    padding: 3rem 1.5rem;
+    text-align: center;
+    color: var(--text-light);
+    margin: auto;
+}
+.info-icon { font-size: 3rem; display: block; margin-bottom: 1rem; }
+
+/* Estilos de la Ficha Técnica Dinámica */
+.card-image-wrapper { position: relative; width: 100%; height: 200px; overflow: hidden; }
+.card-img { width: 100%; height: 100%; object-fit: cover; }
+.status-badge { position: absolute; top: 12px; right: 12px; padding: 0.4rem 0.8rem; border-radius: 20px; font-size: 0.75rem; font-weight: bold; color: white; text-transform: uppercase;}
+.status-activa { background-color: #2ecc71; }
+
+.card-body { padding: 1.5rem; display: flex; flex-direction: column; gap: 0.75rem; }
+.card-region { font-size: 0.8rem; font-weight: bold; color: var(--primary-color); text-transform: uppercase; }
+.card-title { font-size: 1.35rem; color: var(--text-dark); margin: 0; }
+.card-desc { font-size: 0.95rem; color: var(--text-light); line-height: 1.5; }
+
+.card-tags-container { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.bio-tag { background: #f1f2f6; color: var(--text-dark); padding: 0.3rem 0.6rem; border-radius: 6px; font-size: 0.75rem; font-weight: 500; }
+.card-divider { border: 0; border-top: 1px solid #f1f2f6; margin: 1rem 0; }
+.card-meta { font-size: 0.8rem; color: var(--text-light); }
+
+/* Sección de Cuadrícula de Innovación */
+.innovation-section {
+    padding: 4rem 2rem;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+.section-title-container { text-align: center; margin-bottom: 2.5rem; }
+.section-title-container h2 { font-size: 2rem; color: var(--text-dark); margin-bottom: 0.5rem; }
+
+.innovation-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 2rem;
+}
+
+/* Tarjetas Independientes de la Cuadrícula */
+.innovation-item-card {
+    background: white;
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow-smooth);
+    overflow: hidden;
+    border: 1px solid rgba(0,0,0,0.02);
+    display: flex;
+    flex-direction: column;
+}
+
+.inno-img-header { position: relative; height: 180px; }
+.inno-img-header img { width: 100%; height: 100%; object-fit: cover; }
+.inno-badge { position: absolute; bottom: 12px; left: 12px; background: rgba(44, 62, 80, 0.9); color: white; padding: 0.3rem 0.7rem; border-radius: 6px; font-size: 0.75rem; font-weight: bold; }
+
+.inno-content { padding: 1.5rem; display: flex; flex-direction: column; flex-grow: 1; gap: 0.6rem; }
+.inno-org { font-size: 0.8rem; color: var(--primary-color); font-weight: bold; }
+.inno-content h3 { font-size: 1.2rem; color: var(--text-dark); margin: 0; }
+.inno-content p { font-size: 0.9rem; color: var(--text-light); line-height: 1.5; margin: 0 0 1rem 0; }
+
+.inno-btn-link {
+    margin-top: auto;
+    text-align: center;
+    background: var(--primary-color);
+    color: white;
+    padding: 0.75rem;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: bold;
+    transition: background 0.2s;
+}
+.inno-btn-link:hover { background: #215d25; }
+
+/* Responsive / Adaptación Móvil */
+@media(max-width: 1200px) {
+    .dashboard-map {
+        grid-template-columns: 1fr;
+    }
+    #map {
+        height: 455px;
     }
 }
+
