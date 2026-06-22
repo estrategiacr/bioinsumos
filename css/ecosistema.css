@@ -1,0 +1,48 @@
+.hero-ecosistema{
+
+    background:
+        linear-gradient(
+            rgba(215,255,215,.40),
+            rgba(215,255,215,.20)
+        ),
+        url("../assets/images/hero.png");
+
+    background-size:cover;
+}
+#map{
+    width:100%;
+    height:600px;
+    border-radius:20px;
+}
+
+.ecosystem-map{
+    padding:2rem;
+}
+.directory-grid,
+.network-section{
+
+    max-width:1400px;
+    margin:auto;
+}
+
+#actoresGrid,
+#networkCards{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(auto-fit,minmax(300px,1fr));
+
+    gap:1.5rem;
+}
+
+.ecosystem-map{
+
+    max-width:1400px;
+    margin:auto;
+}
+
+.ecosystem-map #map{
+    height:700px;
+    border-radius:20px;
+}

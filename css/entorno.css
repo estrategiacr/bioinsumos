@@ -1,0 +1,50 @@
+.hero-entorno{
+
+    background:
+        linear-gradient(
+            rgba(230,230,200,.45),
+            rgba(230,230,200,.25)
+        ),
+        url("../assets/images/hero.png");
+
+    background-size:cover;
+}
+
+.kpi-section{
+    max-width:1400px;
+    margin:auto;
+}
+
+.entorno-grid{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(2,1fr);
+
+    gap:2rem;
+
+    max-width:1400px;
+
+    margin:auto;
+}
+
+.entorno-card{
+
+    background:white;
+
+    border-radius:20px;
+
+    padding:1.5rem;
+
+    box-shadow:
+        0 10px 25px rgba(0,0,0,.08);
+}
+
+@media(max-width:768px){
+
+    .entorno-grid{
+        grid-template-columns:1fr;
+    }
+
+}

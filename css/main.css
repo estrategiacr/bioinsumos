@@ -1,0 +1,241 @@
+/* ==========================
+   RESET
+========================== */
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+html{
+  scroll-behavior:smooth;
+}
+
+body{
+  font-family:Inter,Arial,sans-serif;
+  background:#f4f7f5;
+  color:#1f2937;
+  line-height:1.6;
+}
+
+/* ==========================
+   MENÚ ACTIVO
+========================== */
+
+.main-nav a{
+  position:relative;
+  text-decoration:none;
+  color:#374151;
+  font-weight:500;
+  padding:.65rem 1rem;
+  border-radius:12px;
+  transition:.25s ease;
+}
+
+.main-nav a:hover{
+  color:#166534;
+  background:rgba(22,101,52,.08);
+}
+
+/* Página actual */
+.main-nav a.active{
+  color:#166534;
+  background:rgba(22,101,52,.12);
+  font-weight:700;
+}
+
+/* Línea inferior */
+.main-nav a.active::after{
+  content:"";
+  position:absolute;
+  left:15%;
+  bottom:-4px;
+  width:70%;
+  height:3px;
+  border-radius:999px;
+  background:#166534;
+}
+
+/* ==========================
+ VARIABLES
+========================== */
+
+:root{
+
+  --primary:#166534;
+  --primary-light:#22c55e;
+
+  --bg:#f4f7f5;
+  --card:#ffffff;
+
+  --text:#1f2937;
+  --muted:#6b7280;
+
+  --border:#e5e7eb;
+
+  --shadow:
+      0 10px 30px rgba(0,0,0,.08);
+
+  --radius:20px;
+}
+
+/* ==========================
+ LAYOUT GENERAL
+========================== */
+
+.page-content{
+  min-height:calc(100vh - 220px);
+}
+
+.container{
+  width:min(1400px,95%);
+  margin:auto;
+}
+
+/* ==========================
+ TITULOS
+========================== */
+
+section{
+  padding:4rem 2rem;
+}
+
+section h2{
+  font-size:2rem;
+  margin-bottom:1rem;
+}
+
+section p{
+  color:var(--muted);
+}
+
+/* ==========================
+ BOTONES
+========================== */
+
+.primary-btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+
+  background:var(--primary);
+  color:white;
+
+  border:none;
+
+  padding:1rem 1.5rem;
+
+  border-radius:14px;
+
+  text-decoration:none;
+
+  font-weight:600;
+
+  cursor:pointer;
+
+  transition:.25s;
+}
+
+.primary-btn:hover{
+  transform:translateY(-2px);
+}
+
+.secondary-btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+
+  background:white;
+
+  border:1px solid var(--border);
+
+  padding:1rem 1.5rem;
+
+  border-radius:14px;
+
+  text-decoration:none;
+
+  color:var(--text);
+
+  font-weight:600;
+}
+
+/* ==========================
+ TARJETAS
+========================== */
+
+.card{
+  background:white;
+
+  border-radius:20px;
+
+  box-shadow:var(--shadow);
+
+  padding:1.5rem;
+}
+
+/* ==========================
+ HERO BASE
+========================== */
+
+.hero{
+  min-height:60vh;
+
+  display:flex;
+  align-items:center;
+
+  position:relative;
+
+  overflow:hidden;
+
+  padding:4rem 2rem;
+}
+
+.hero-overlay{
+  width:min(1400px,100%);
+  margin:auto;
+}
+
+.hero-content{
+  max-width:700px;
+  
+}
+
+.hero-content h1{
+  font-size:3.5rem;
+  line-height:1.1;
+  margin-bottom:1rem;
+}
+
+.hero-content p{
+  font-size:1.1rem;
+  max-width:650px;
+  margin-bottom:2rem;
+  color:#ffffff
+}
+
+/* ==========================
+ GRID GENERAL
+========================== */
+
+.grid{
+  display:grid;
+  gap:1.5rem;
+}
+
+/* ==========================
+ RESPONSIVE
+========================== */
+
+@media(max-width:768px){
+
+  .hero-content h1{
+      font-size:2.2rem;
+  }
+
+  section{
+      padding:3rem 1rem;
+  }
+
+}

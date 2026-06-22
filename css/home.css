@@ -1,0 +1,140 @@
+/* ==========================
+   HERO HOME
+========================== */
+
+.hero-home{
+
+    background-image:
+        linear-gradient(
+            rgba(255,255,255,.45),
+            rgba(255,255,255,.25)
+        ),
+        url("../assets/images/hero.png");
+
+    background-size:cover;
+    background-position:center;
+}
+
+.hero-home .hero-overlay{
+
+    display:grid;
+
+    grid-template-columns:
+        1.4fr 1fr;
+
+    gap:2rem;
+
+    align-items:center;
+}
+
+/* ==========================
+   KPIs
+========================== */
+
+.hero-stats{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(2,1fr);
+
+    gap:1rem;
+}
+
+.stat{
+
+    background:
+        rgba(255,255,255,.75);
+
+    backdrop-filter:blur(10px);
+
+    border-radius:20px;
+
+    padding:1.5rem;
+
+    box-shadow:0 10px 25px rgba(0,0,0,.08);
+}
+
+.stat strong{
+
+    display:block;
+
+    font-size:2rem;
+
+    color:#166534;
+}
+
+.stat span{
+    color:#6b7280;
+}
+
+/* ==========================
+   PILARES
+========================== */
+
+.pillar-preview{
+
+    max-width:1400px;
+
+    margin:auto;
+}
+
+.pillar-grid{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(4,1fr);
+
+    gap:1.5rem;
+}
+
+.pillar-card{
+
+    text-decoration:none;
+
+    color:inherit;
+
+    background:white;
+
+    border-radius:20px;
+
+    padding:2rem;
+
+    text-align:center;
+
+    box-shadow:
+        0 10px 25px rgba(0,0,0,.08);
+
+    transition:.25s;
+}
+
+.pillar-card:hover{
+    transform:translateY(-5px);
+}
+
+.pillar-card h3{
+    margin-top:1rem;
+}
+
+@media(max-width:900px){
+
+    .hero-home .hero-overlay{
+        grid-template-columns:1fr;
+    }
+
+    .pillar-grid{
+        grid-template-columns:1fr 1fr;
+    }
+}
+
+@media(max-width:768px){
+
+    .pillar-grid{
+        grid-template-columns:1fr;
+    }
+
+    .hero-stats{
+        grid-template-columns:1fr;
+    }
+}

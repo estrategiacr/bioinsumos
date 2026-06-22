@@ -1,0 +1,73 @@
+.hero-experiencias{
+
+    background:
+        linear-gradient(
+            rgba(215,215,255,.45),
+            rgba(215,215,255,.25)
+        ),
+        url("../assets/images/hero.png");
+
+    background-size:cover;
+}
+
+.dashboard-map{
+
+    display:grid;
+
+    grid-template-columns:
+        300px 1fr 360px;
+
+    gap:1.5rem;
+}
+
+.filter-panel,
+.bio-card,
+.map-container{
+
+    background:white;
+
+    border-radius:20px;
+
+    box-shadow:
+        0 10px 25px rgba(0,0,0,.08);
+
+}
+.filter-panel{
+    padding:1.5rem;
+}
+
+.map-container{
+    padding:1rem;
+}
+
+#map{
+    height:700px;
+    border-radius:20px;
+}
+
+.bio-card{
+    overflow:hidden;
+}
+
+.innovation-grid{
+
+    max-width:1400px;
+    margin:auto;
+}
+
+#innovationCards{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(auto-fit,minmax(300px,1fr));
+
+    gap:1.5rem;
+}
+
+@media(max-width:1200px){
+
+    .dashboard-map{
+        grid-template-columns:1fr;
+    }
+}
