@@ -13,7 +13,7 @@
 
 /* Hero Section */
 .hero-experiencias {
-    background: linear-gradient(rgba(46, 125, 50, 0.6), rgba(44, 62, 80, 0.85)), url("../assets/images/hero.png");
+    background: linear-gradient(rgba(46, 125, 50, 0.3), rgba(44, 62, 80, 0.55)), url("../assets/images/hero.png");
     background-size: cover;
     background-position: center;
     color: white;
