@@ -20,8 +20,8 @@ function parseCSVLine(line) {
 const SHEET_BASE = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSugZplAvcSBZjGPZikP3jhTaKA6DtMwZpOZc0_ophORRVGjemhu3Z5JEY3EnsZMUayuhviSia3Gf58/pub?";
 
 // Endpoints CSV por Hojas (GIDs independientes)
-const SHEET_CSV_BIOFABRICAS = `${SHEET_BASE}gid=0&single=true&output=csv`;
-const SHEET_CSV_INNOVACIONES = `${SHEET_BASE}gid=615287650&single=true&output=csv`; // GID Asignado a Tabla 2
+const SHEET_CSV_BIOFABRICAS = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSugZplAvcSBZjGPZikP3jhTaKA6DtMwZpOZc0_ophORRVGjemhu3Z5JEY3EnsZMUayuhviSia3Gf58/pub?gid=0&single=true&output=csv";
+const SHEET_CSV_INNOVACIONES = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSugZplAvcSBZjGPZikP3jhTaKA6DtMwZpOZc0_ophORRVGjemhu3Z5JEY3EnsZMUayuhviSia3Gf58/pub?gid=615287650&single=true&output=csv";
 const SHEET_CSV_RECURSOS     = `${SHEET_BASE}gid=1587744224&single=true&output=csv`;
 
 // =====================================
