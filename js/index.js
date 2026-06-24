@@ -22,35 +22,28 @@ document.addEventListener("DOMContentLoaded", () => {
   /**
    * Genera contadores de impacto real basados en la data de Google Sheets
    */
-  function renderKPIs(biofabricas, innovaciones) {
+// Modifica la inicialización en js/index.js para cargar los KPIs
+async function initPlatform() {
+    localBiofabricas = await fetchBiofabricas();
+    localInnovaciones = await fetchInnovaciones();
+    const localKPIs = await fetchKPIs(); // Nueva consulta
+  
+    renderKPIs(localKPIs); // Pasamos los KPIs directos
+    renderFeaturedInnovations(localInnovaciones);
+    initGlobalSearch();
+  }
+  
+  function renderKPIs(kpis) {
     const container = document.getElementById("heroStats");
-    if (!container) return;
+    if (!container || kpis.length === 0) return;
   
-    // Calculamos métricas en base a las filas de datos reales
-    const totalBiofabricas = biofabricas.length;
-    const totalInnovaciones = innovaciones.length;
-    
-    // Conteo de recursos técnicos estimados presentes en las bases de datos
-    const totalRecursos = innovaciones.filter(i => i.categoria.toLowerCase().includes("conocimiento") || i.enlaceRecurso).length + 12; 
-  
-    container.innerHTML = `
+    // Renderiza dinámicamente las cajitas mapeando la lista llave/valor del Excel
+    container.innerHTML = kpis.map(item => `
       <div class="stat">
-        <strong>${totalBiofabricas}</strong>
-        <span>Biofábricas Mapeadas</span>
+        <strong>${item.valor}</strong>
+        <span>${item.kpi}</span>
       </div>
-      <div class="stat">
-        <strong>${totalInnovaciones}</strong>
-        <span>Innovaciones Registradas</span>
-      </div>
-      <div class="stat">
-        <strong>${totalRecursos}</strong>
-        <span>Recursos Técnicos</span>
-      </div>
-      <div class="stat">
-        <strong>7</strong>
-        <span>Centros de Investigación</span>
-      </div>
-    `;
+    `).join('');
   }
   
   /**

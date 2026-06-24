@@ -1,474 +1,214 @@
 // =====================================
-// VARIABLES
+// VARIABLES Y SELECTORES
 // =====================================
-
 let recursos = [];
 let recursosFiltrados = [];
 let categoriaActual = "Todos";
 
+const closeBtn = document.getElementById("closeModal");
+const fullscreenBtn = document.getElementById("fullscreenBtn");
+const modal = document.getElementById("resourceModal");
+const modalContent = document.getElementById("modalContent"); // Corregido el enlace para el Iframe
 
-
-const closeBtn =
-document.getElementById("closeModal");
-
-const fullscreenBtn =
-document.getElementById("fullscreenBtn");
-
-const modal =
-    document.getElementById("resourceModal");
-
-const modalContent =
-    document.getElementById("modalContent");
-
-console.log(document.getElementById("closeModal"));
-console.log(document.getElementById("resourceModal"));
-console.log(document.getElementById("fullscreenBtn"));
-
-function closeResourceModal(){
-
-    if(document.fullscreenElement){
+// =====================================
+// MANEJO DEL MODAL MULTIMEDIA
+// =====================================
+function closeResourceModal() {
+    if (document.fullscreenElement) {
         document.exitFullscreen();
     }
-
     modalContent.innerHTML = "";
-
     modal.classList.add("hidden");
 }
 
-closeBtn.addEventListener(
-    "click",
-    closeResourceModal
-);
+if (closeBtn) closeBtn.addEventListener("click", closeResourceModal);
 
-modal.addEventListener("click", (e)=>{
-
-    if(e.target === modal){
-
-        closeResourceModal();
-
-    }
-
-});
-
-document
-.querySelector(".modal-box")
-.addEventListener("click",(e)=>{
-
-    e.stopPropagation();
-
-});
-
-document.addEventListener(
-    "keydown",
-    (e)=>{
-
-        if(e.key === "Escape"){
-
-            closeResourceModal();
-
-        }
-
-    }
-);
-
-fullscreenBtn.addEventListener(
-    "click",
-    toggleFullscreen
-);
-
-function toggleFullscreen(){
-
-    const modalBox =
-    document.querySelector(".modal-box");
-
-    if(!document.fullscreenElement){
-
-        modalBox.requestFullscreen();
-
-    }else{
-
-        document.exitFullscreen();
-
-    }
-
+if (modal) {
+    modal.addEventListener("click", (e) => {
+        if (e.target === modal) closeResourceModal();
+    });
 }
 
-document.addEventListener(
-    "fullscreenchange",
-    ()=>{
+const modalBox = document.querySelector(".modal-box");
+if (modalBox) {
+    modalBox.addEventListener("click", (e) => {
+        e.stopPropagation();
+    });
+}
 
-        fullscreenBtn.textContent =
-        document.fullscreenElement
-            ? "🡼"
-            : "⛶";
+document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") closeResourceModal();
+});
 
+if (fullscreenBtn) fullscreenBtn.addEventListener("click", toggleFullscreen);
+
+function toggleFullscreen() {
+    const box = document.querySelector(".modal-box");
+    if (!document.fullscreenElement) {
+        box.requestFullscreen().catch(err => console.log(err));
+    } else {
+        document.exitFullscreen();
     }
-);
+}
+
+document.addEventListener("fullscreenchange", () => {
+    if (fullscreenBtn) {
+        fullscreenBtn.textContent = document.fullscreenElement ? "🡼" : "⛶";
+    }
+});
 
 // =====================================
-// INICIALIZAR
+// INICIALIZAR CAPA DE CONOCIMIENTO
 // =====================================
-
 document.addEventListener("DOMContentLoaded", async () => {
-
-    recursos = await fetchRecursos();
-
+    // Vincula con la función fetchInnovaciones o crea fetchRecursos en data.js si usas otra tabla
+    recursos = await fetchInnovaciones(); 
     configurarBuscador();
-
     renderRecursos();
 });
 
 // =====================================
-// BUSCADOR GLOBAL
+// LOGICA DE FILTROS Y EVENTOS
 // =====================================
+function configurarBuscador() {
+    const input = document.getElementById("resourceSearch");
+    const btn = document.getElementById("resourceSearchBtn");
 
-function configurarBuscador(){
-
-    const input =
-    document.getElementById("resourceSearch");
-
-    const btn =
-    document.getElementById("resourceSearchBtn");
-
-    btn?.addEventListener("click", renderRecursos);
-
-    input?.addEventListener("keypress",(e)=>{
-
-        if(e.key==="Enter"){
-            renderRecursos();
-        }
-
-    });
-
-    document
-    .querySelectorAll(".tab")
-    .forEach(tab=>{
-
-        tab.addEventListener("click",()=>{
-
-            document
-            .querySelectorAll(".tab")
-            .forEach(t=>t.classList.remove("active"));
-
-            tab.classList.add("active");
-
-            categoriaActual =
-            tab.dataset.cat;
-
-            renderRecursos();
-
+    if (btn) btn.addEventListener("click", renderRecursos);
+    if (input) {
+        input.addEventListener("keypress", (e) => {
+            if (e.key === "Enter") renderRecursos();
         });
+    }
 
+    document.querySelectorAll(".tab").forEach(tab => {
+        tab.addEventListener("click", () => {
+            document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
+            tab.classList.add("active");
+            categoriaActual = tab.dataset.cat;
+            renderRecursos();
+        });
     });
-
 }
 
 // =====================================
-// RENDER
+// RENDERIZADO DINÁMICO DE TARJETAS
 // =====================================
+function renderRecursos() {
+    const grid = document.getElementById("recursosGrid");
+    const total = document.getElementById("resourceCount");
+    const searchInput = document.getElementById("resourceSearch");
+    const query = searchInput ? searchInput.value.toLowerCase().trim() : "";
 
-function renderRecursos(){
+    recursosFiltrados = recursos.filter(r => {
+        // Validación de categoría (Pestañas)
+        const matchCategoria = (categoriaActual === "Todos") || 
+                               (r.categoria && r.categoria.toLowerCase().includes(categoriaActual.toLowerCase()));
 
-    const grid =
-    document.getElementById("recursosGrid");
-
-    const total =
-    document.getElementById("resourceCount");
-
-    const query =
-    document
-    .getElementById("resourceSearch")
-    ?.value
-    ?.toLowerCase()
-    ?.trim() || "";
-
-    recursosFiltrados =
-    recursos.filter(r=>{
-
-        const matchCategoria =
-        categoriaActual === "Todos"
-        ||
-        r.categoria === categoriaActual;
-
-        const matchTexto =
-        query === ""
-        ||
-        `
-            ${r.nombre}
-            ${r.tipo}
-            ${r.categoria}
-        `
-        .toLowerCase()
-        .includes(query);
+        // Validación de texto en buscador
+        const matchTexto = (query === "") || 
+                           (r.titulo && r.titulo.toLowerCase().includes(query)) ||
+                           (r.descripcion && r.descripcion.toLowerCase().includes(query)) ||
+                           (r.organizacion && r.organizacion.toLowerCase().includes(query));
 
         return matchCategoria && matchTexto;
-
     });
 
-    if(total){
-
-        total.innerHTML =
-        `${recursosFiltrados.length} recursos encontrados`;
-
+    if (total) {
+        total.innerHTML = `${recursosFiltrados.length} recursos encontrados`;
     }
 
-    if(recursosFiltrados.length===0){
+    if (!grid) return;
 
+    if (recursosFiltrados.length === 0) {
         grid.innerHTML = `
             <div class="empty-state">
                 <h3>No se encontraron recursos</h3>
-                <p>
-                    Intenta otro término de búsqueda.
-                </p>
+                <p>Intenta cambiar los términos de búsqueda o selecciona otra categoría.</p>
             </div>
         `;
-
         return;
     }
 
-    grid.innerHTML =
-    recursosFiltrados
-    .map(renderCard)
-    .join("");
-
+    grid.innerHTML = recursosFiltrados.map(renderCard).join("");
 }
 
-// =====================================
-// CARD SEGÚN TIPO
-// =====================================
+function renderCard(recurso) {
+    // Discriminación inteligente por tipo o categoría para renderizar la tarjeta adecuada
+    const enlace = recurso.enlaceRecurso || "";
+    const esVideo = enlace.includes("youtube.com") || enlace.includes("youtu.be");
 
-function renderCard(recurso){
-
-    const tipo =
-    recurso.tipo?.toLowerCase();
-
-    if(tipo==="video"){
-
-        return renderVideoCard(recurso);
-
+    if (esVideo) {
+        return renderVideoCard(recurso, enlace);
+    } else if (enlace.toLowerCase().includes(".pdf") || recurso.categoria.toLowerCase().includes("documento")) {
+        return renderPDFCard(recurso, enlace);
     }
-
-    if(tipo==="pdf"){
-
-        return renderPDFCard(recurso);
-
-    }
-
-    return renderGenericCard(recurso);
-
+    return renderGenericCard(recurso, enlace);
 }
 
-// =====================================
-// VIDEO
-// =====================================
-
-function renderVideoCard(recurso){
-
-    const thumb =
-    getYoutubeThumbnail(recurso.enlace);
-
+function renderVideoCard(recurso, enlace) {
+    const thumb = getYoutubeThumbnail(enlace);
     return `
-
-        <article
-            class="resource-card"
-            onclick="openResource(
-                '${recurso.tipo}',
-                '${recurso.enlace}'
-            )"
-        >
-
-            <img
-                class="resource-preview"
-                src="${thumb}"
-                alt="${recurso.nombre}"
-            >
-
+        <article class="resource-card" onclick="openResource('video', '${enlace}')" style="cursor:pointer;">
+            <img class="resource-preview" src="${thumb}" alt="${recurso.titulo}">
             <div class="resource-content">
-
-                <span class="resource-type">
-                    🎥 Video
-                </span>
-
-                <h3>
-                    ${recurso.nombre}
-                </h3>
-
-                <p>
-                    ${recurso.categoria}
-                </p>
-
+                <span class="resource-category">🎥 Video</span>
+                <h3 style="margin-top:0.5rem;">${recurso.titulo}</h3>
+                <p>${recurso.organizacion}</p>
             </div>
-
         </article>
-
     `;
-
 }
 
-// =====================================
-// PDF
-// =====================================
-
-function renderPDFCard(recurso){
-
+function renderPDFCard(recurso, enlace) {
     return `
-
         <article class="resource-card">
-
-            <div class="pdf-mobile-preview">
-                📄
-            </div>
-
+            <div class="resource-preview" style="background:#f1f5f9; display:flex; align-items:center; justify-content:center; font-size:3.5rem;">📄</div>
             <div class="resource-content">
-
-                <span class="resource-type">
-                    📚 Documento
-                </span>
-
-                <h3>
-                    ${recurso.nombre}
-                </h3>
-
-                <p>
-                    ${recurso.categoria}
-                </p>
-
-                <button
-                    class="resource-btn"
-                    onclick="openResource(
-                        'pdf',
-                        '${recurso.enlace}'
-                    )"
-                >
-                    Ver documento
-                </button>
-
+                <span class="resource-category">📚 Documento</span>
+                <h3 style="margin-top:0.5rem;">${recurso.titulo}</h3>
+                <p>${recurso.organizacion}</p>
+                <button class="resource-btn" onclick="openResource('pdf', '${enlace}')">Ver documento</button>
             </div>
-
         </article>
-
     `;
-
 }
 
-// =====================================
-// OTROS
-// =====================================
-
-function renderGenericCard(recurso){
-
+function renderGenericCard(recurso, enlace) {
     return `
-
         <article class="resource-card">
-
-            <div class="resource-placeholder">
-                📁
-            </div>
-
+            <div class="resource-preview" style="background:#f1f5f9; display:flex; align-items:center; justify-content:center; font-size:3.5rem;">🔗</div>
             <div class="resource-content">
-
-                <span class="resource-type">
-                    ${recurso.tipo}
-                </span>
-
-                <h3>
-                    ${recurso.nombre}
-                </h3>
-
-                <p>
-                    ${recurso.categoria}
-                </p>
-
-                <a
-                    class="resource-btn"
-                    href="${recurso.enlace}"
-                    target="_blank"
-                >
-                    Abrir recurso
-                </a>
-
+                <span class="resource-category">${recurso.categoria || 'Recurso'}</span>
+                <h3 style="margin-top:0.5rem;">${recurso.titulo}</h3>
+                <p>${recurso.organizacion}</p>
+                <a class="resource-btn" href="${enlace}" target="_blank">Abrir enlace externo</a>
             </div>
-
         </article>
-
     `;
+}
 
+function getYoutubeThumbnail(url) {
+    const match = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&?#]+)/i);
+    return match ? `https://img.youtube.com/vi/${match[1]}/hqdefault.jpg` : "https://images.unsplash.com/photo-1592417817098-8f3d6eb19675?q=80&w=600";
 }
 
 // =====================================
-// YOUTUBE
+// CONTROL DE APERTURA (IFRAME EMBED)
 // =====================================
+function openResource(tipo, enlace) {
+    if (!modalContent || !modal) return;
 
-function getYoutubeThumbnail(url){
-
-    const match =
-    url.match(
-      /(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&]+)/i
-    );
-
-    return match
-      ? `https://img.youtube.com/vi/${match[1]}/hqdefault.jpg`
-      : "assets/images/video-placeholder.jpg";
-
-}
-
-// =====================================
-// MODAL
-// =====================================
-
-function openResource(tipo,enlace){
-
-    
-
-    if(tipo.toLowerCase()==="video"){
-
-        const embed =
-        getYoutubeEmbed(enlace);
-
-        content.innerHTML = `
-            <iframe
-                src="${embed}"
-                allowfullscreen
-            ></iframe>
-        `;
-
-    }else{
-
-        content.innerHTML = `
-            <iframe
-                src="${enlace}"
-            ></iframe>
-        `;
-
+    if (tipo === "video") {
+        const embed = getYoutubeEmbed(enlace);
+        modalContent.innerHTML = `<iframe src="${embed}" allowfullscreen></iframe>`;
+    } else {
+        modalContent.innerHTML = `<iframe src="${enlace}"></iframe>`;
     }
-
     modal.classList.remove("hidden");
-
 }
 
-function getYoutubeEmbed(url){
-
-    const match =
-    url.match(
-      /(?:youtube\.com\/watch\?v=|youtu\.be\/)([^?&]+)/i
-    );
-
-    return match
-      ? `https://www.youtube.com/embed/${match[1]}`
-      : "";
-
+function getYoutubeEmbed(url) {
+    const match = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([^?&]+)/i);
+    return match ? `https://www.youtube.com/embed/${match[1]}` : "";
 }
-
-// document
-// .getElementById("closeModal")
-// ?.addEventListener("click",()=>{
-
-//     document
-//     .getElementById("resourceModal")
-//     .classList.add("hidden");
-
-//     document
-//     .getElementById("modalContent")
-//     .innerHTML="";
-
-// });

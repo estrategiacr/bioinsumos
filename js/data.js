@@ -101,3 +101,29 @@ async function fetchInnovaciones() {
     return [];
   }
 }
+
+// Agrega esta constante junto a las otras URLs de publicación en tu data.js
+const SHEET_CSV_KPIS = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSugZplAvcSBZjGPZikP3jhTaKA6DtMwZpOZc0_ophORRVGjemhu3Z5JEY3EnsZMUayuhviSia3Gf58/pub?gid=1232917699&single=true&output=csv";
+
+// =====================================
+// EXTRACCIÓN DE KPIS (TABLA 3)
+// =====================================
+async function fetchKPIs() {
+  try {
+    const response = await fetch(SHEET_CSV_KPIS);
+    const csv = await response.text();
+    const rows = csv.split(/\r?\n/).filter(row => row.trim() !== "");
+    
+    // Mapeamos las filas omitiendo el encabezado (kpi, valor)
+    return rows.slice(1).map(row => {
+      const values = parsearLineaCSV(row);
+      return {
+        kpi: values[0],
+        valor: values[1]
+      };
+    });
+  } catch (error) {
+    console.error("Error cargando KPIs dinámicos:", error);
+    return [];
+  }
+}
