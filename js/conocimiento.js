@@ -62,7 +62,7 @@ document.addEventListener("fullscreenchange", () => {
 // =====================================
 document.addEventListener("DOMContentLoaded", async () => {
     // Vincula con la función fetchInnovaciones o crea fetchRecursos en data.js si usas otra tabla
-    recursos = await fetchInnovaciones(); 
+    recursos = await fetchRecursos(); 
     configurarBuscador();
     renderRecursos();
 });
