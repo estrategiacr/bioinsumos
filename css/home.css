@@ -138,3 +138,225 @@
         grid-template-columns:1fr;
     }
 }
+
+/* =========================================================
+   ESTILOS COMPLEMENTARIOS HOME & BUSCADOR GLOBAL
+========================================================= */
+
+.hero-content h1 {
+    font-size: 3rem;
+    color: #111827;
+    font-weight: 800;
+    line-height: 1.2;
+  }
+  
+  .hero-tag {
+    display: inline-block;
+    background: rgba(22, 101, 52, 0.1);
+    color: #166534;
+    padding: 0.35rem 0.85rem;
+    border-radius: 999px;
+    font-weight: 700;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+  
+  /* Caja de Buscador */
+  .search-box-container {
+    margin-top: 2rem;
+    background: #ffffff;
+    padding: 0.5rem;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+    border: 1px solid #e5e7eb;
+    max-width: 620px;
+  }
+  
+  .search-field {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  
+  .search-icon {
+    color: #9ca3af;
+    margin-left: 0.75rem;
+    font-size: 1.1rem;
+  }
+  
+  .search-field input {
+    flex: 1;
+    border: none;
+    outline: none;
+    font-size: 0.95rem;
+    color: #1f2937;
+    padding: 0.5rem;
+  }
+  
+  /* Sección de resultados de búsqueda */
+  .search-results-section {
+    background: #ffffff;
+    padding: 2.5rem;
+    border-radius: 24px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.04);
+    margin-top: -2rem;
+    margin-bottom: 3rem;
+    position: relative;
+    z-index: 100;
+    border: 1px solid #e5e7eb;
+  }
+  
+  .search-results-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid #f3f4f6;
+    padding-bottom: 1rem;
+  }
+  
+  .search-results-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1.5rem;
+  }
+  
+  .search-result-card {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    padding: 1.5rem;
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  
+  .result-tag {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #166534;
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+  }
+  
+  .search-result-card h4 {
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .search-result-card p {
+    font-size: 0.9rem;
+    color: #4b5563;
+    margin-bottom: 1rem;
+  }
+  
+  .result-link {
+    color: #166534;
+    font-weight: 600;
+    text-decoration: none;
+    font-size: 0.9rem;
+  }
+  
+  .result-link:hover {
+    text-decoration: underline;
+  }
+  
+  /* Grid de Innovaciones */
+  .featured-innovations {
+    margin-top: 4rem;
+    margin-bottom: 4rem;
+  }
+  
+  .section-title-wrap {
+    margin-bottom: 2rem;
+  }
+  
+  .innovations-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+  
+  .innovation-card {
+    padding: 0;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .innovation-img-wrap {
+    position: relative;
+    height: 200px;
+    background: #e5e7eb;
+  }
+  
+  .innovation-img-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .innovation-badge {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    background: var(--primary);
+    color: #ffffff;
+    padding: 0.25rem 0.75rem;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 700;
+  }
+  
+  .innovation-body {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+  
+  .organization-text {
+    font-size: 0.8rem;
+    color: #6b7280;
+    margin-bottom: 0.5rem;
+  }
+  
+  .desc-text {
+    font-size: 0.9rem;
+    color: #4b5563;
+    margin-bottom: 1.5rem;
+  }
+  
+  .card-btn {
+    margin-top: auto;
+    font-size: 0.85rem;
+    padding: 0.6rem;
+  }
+  
+  .no-results-box {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 3rem;
+    color: #9ca3af;
+  }
+  
+  .no-results-box i {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+  }
+  
+  /* Helper Utilitario */
+  .d-none { display: none !important; }
+  
+  @media(max-width: 992px) {
+    .innovations-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  
+  @media(max-width: 768px) {
+    .innovations-grid {
+      grid-template-columns: 1fr;
+    }
+  }

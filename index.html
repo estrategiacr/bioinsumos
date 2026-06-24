@@ -1,25 +1,24 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Bioinsumos Costa Rica</title>
 
-<title>Bioinsumos Costa Rica</title>
-
-<link rel="stylesheet" href="css/main.css">
-<link rel="stylesheet" href="css/header-footer.css">
-<link rel="stylesheet" href="css/home.css">
-<script src="js/data.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/header-footer.css">
+  <link rel="stylesheet" href="css/home.css">
+  <script src="js/data.js"></script>
 </head>
 
 <body>
 
 <header class="topbar">
-
   <div class="logo">
     🌿 Bioinsumos CR
   </div>
-
   <nav class="main-nav">
     <a href="index.html" class="active">Inicio</a>
     <a href="conocimiento.html">Conocimiento</a>
@@ -27,99 +26,99 @@
     <a href="ecosistema.html">Ecosistema</a>
     <a href="entorno.html">Entorno</a>
   </nav>
-
 </header>
 
 <main class="page-content">
 
-<section class="hero hero-home">
+  <section class="hero hero-home">
+    <div class="hero-overlay">
+      <div class="hero-content">
+        <span class="hero-tag">Estrategia Nacional de Bioinsumos</span>
+        <h1>Costa Rica</h1>
+        <p>Plataforma nacional de gestión del conocimiento, innovación y articulación sectorial.</p>
+        
+        <div class="search-box-container">
+          <div class="search-field">
+            <i class="fa-solid fa-magnifying-glass search-icon"></i>
+            <input type="text" id="globalSearchInput" placeholder="Busca por término (ej. Trichoderma, biofábrica, normativas)...">
+            <button id="globalSearchBtn" class="primary-btn">Buscar</button>
+          </div>
+        </div>
+      </div>
 
-<div class="hero-overlay">
+      <div id="heroStats" class="hero-stats">
+        </div>
+    </div>
+  </section>
 
-<div class="hero-content">
+  <section id="searchResultsSection" class="search-results-section d-none container">
+    <div class="search-results-header">
+      <h2>Resultados de la búsqueda</h2>
+      <button id="closeSearchBtn" class="secondary-btn"><i class="fa-solid fa-xmark"></i> Cerrar resultados</button>
+    </div>
+    <div class="search-results-grid" id="searchResultsGrid"></div>
+  </section>
 
-<h1>
-Estrategia Nacional de Bioinsumos
-Costa Rica
-</h1>
+  <section class="pillar-preview container">
+    <h2>Los cuatro pilares de la estrategia</h2>
+    <div class="pillar-grid">
+      <a href="conocimiento.html" class="pillar-card">
+        <div class="pillar-icon">📚</div>
+        <h3>Conocimiento Técnico</h3>
+        <p>Biblioteca integrada, manuales, guías y recursos multimedia.</p>
+      </a>
+      <a href="experiencias.html" class="pillar-card">
+        <div class="pillar-icon">🚜</div>
+        <h3>Experiencias e Innovación</h3>
+        <p>Biofábricas validadas, casos de éxito y parcelas demostrativas.</p>
+      </a>
+      <a href="ecosistema.html" class="pillar-card">
+        <div class="pillar-icon">🤝</div>
+        <h3>Ecosistema Nacional</h3>
+        <p>Directorio de actores sectoriales y mapas de distribución.</p>
+      </a>
+      <a href="entorno.html" class="pillar-card">
+        <div class="pillar-icon">📜</div>
+        <h3>Entorno Habilitador</h3>
+        <p>Marco regulatorio, normativas vigentes y oportunidades financieras.</p>
+      </a>
+    </div>
+  </section>
 
-<p>
-Plataforma nacional de gestión del conocimiento,
-innovación y articulación sectorial.
-</p>
-
-<a href="ecosistema.html" class="primary-btn">
-Explorar ecosistema
-</a>
-
-</div>
-
-<div id="heroStats" class="hero-stats"></div>
-
-</div>
-
-</section>
-
-<section class="pillar-preview">
-
-<h2>Los cuatro pilares de la estrategia</h2>
-
-<div class="pillar-grid">
-
-<a href="conocimiento.html" class="pillar-card">
-📚
-<h3>Conocimiento Técnico</h3>
-<p>Biblioteca, videos y formación.</p>
-</a>
-
-<a href="experiencias.html" class="pillar-card">
-🚜
-<h3>Experiencias e Innovación</h3>
-<p>Biofábricas y casos de éxito.</p>
-</a>
-
-<a href="ecosistema.html" class="pillar-card">
-🤝
-<h3>Ecosistema Nacional</h3>
-<p>Actores y redes.</p>
-</a>
-
-<a href="entorno.html" class="pillar-card">
-📜
-<h3>Entorno Habilitador</h3>
-<p>Normativa y financiamiento.</p>
-</a>
-
-</div>
-
-</section>
+  <section class="featured-innovations container">
+    <div class="section-title-wrap">
+      <h2>Innovaciones Nacionales Destacadas</h2>
+      <p>Tecnologías validadas y casos de éxito en el sector agroalimentario costarricense.</p>
+    </div>
+    <div class="innovations-grid" id="featuredInnovationsGrid">
+      </div>
+  </section>
 
 </main>
 
 <footer class="site-footer">
-
-<div>
-<h4>Bioinsumos Costa Rica</h4>
-<p>Plataforma nacional de gestión del conocimiento.</p>
-</div>
-
-<div>
-<h4>Contacto</h4>
-<p>proyecto@bioinsumos.cr</p>
-</div>
-
-<div>
-<h4>Instituciones</h4>
-<p>MAG · IICA · Universidades</p>
-</div>
-
-<div>
-<h4>Redes</h4>
-<p>YouTube · LinkedIn</p>
-</div>
-
+  <div>
+    <h4>Bioinsumos Costa Rica</h4>
+    <p>Plataforma nacional de gestión del conocimiento.</p>
+  </div>
+  <div>
+    <h4>Contacto</h4>
+    <p>proyecto@bioinsumos.cr</p>
+  </div>
+  <div>
+    <h4>Instituciones</h4>
+    <p>MAG · IICA · Universidades</p>
+  </div>
+  <div>
+    <h4>Redes</h4>
+    <p>YouTube · LinkedIn</p>
+  </div>
 </footer>
 
+<div class="footer-bottom">
+  © 2026 Bioinsumos Costa Rica
+</div>
 
+<script src="js/index.js"></script>
 </body>
 </html>
