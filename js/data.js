@@ -42,7 +42,7 @@ const SHEET_BASE = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSugZplAvcSB
 // Asegúrate de cambiar el GID de la Tabla 2 por el que te genere Google Sheets
 const SHEET_CSV_BIOFABRICAS = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSugZplAvcSBZjGPZikP3jhTaKA6DtMwZpOZc0_ophORRVGjemhu3Z5JEY3EnsZMUayuhviSia3Gf58/pub?gid=0&single=true&output=csv";
 const SHEET_CSV_INNOVACIONES = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSugZplAvcSBZjGPZikP3jhTaKA6DtMwZpOZc0_ophORRVGjemhu3Z5JEY3EnsZMUayuhviSia3Gf58/pub?gid=615287650&single=true&output=csv";
-
+const SHEET_CSV_RECURSOS     = `${SHEET_BASE}gid=1587744224&single=true&output=csv`;
 
 // =====================================
 // EXTRACCIÓN DE BIOFÁBRICAS (TABLA 1)
@@ -124,6 +124,28 @@ async function fetchKPIs() {
     });
   } catch (error) {
     console.error("Error cargando KPIs dinámicos:", error);
+    return [];
+  }
+}
+// =====================================
+// EXTRACCIÓN DE RECURSOS (PILAR 1)
+// =====================================
+async function fetchRecursos() {
+  try {
+    const response = await fetch(SHEET_CSV_RECURSOS);
+    const csv = await response.text();
+    const rows = csv.trim().split(/\r?\n/);
+    
+    return rows.slice(1).map(row => {
+      const values = parseCSVLine(row);
+      return {
+        nombre: values[0],
+        tipo: values[1],
+        categoria: values[2],
+        enlace: values[3]
+      };
+    });
+  } catch (error) {
     return [];
   }
 }
