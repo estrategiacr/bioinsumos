@@ -15,16 +15,15 @@
 </head>
 <body class="experiencias-page">
 
-<header class="topbar">
-    <div class="logo">🌿 Bioinsumos CR</div>
-    <nav class="main-nav" id="mainNav">
-        <a href="index.html">Inicio</a>
-        <a href="conocimiento.html">Conocimiento</a>
-        <a href="experiencias.html" class="active">Experiencias</a>
-        <a href="ecosistema.html">Ecosistema</a>
-        <a href="entorno.html">Entorno</a>
-    </nav>
-</header>
+    <header class="topbar">
+        <div class="logo-wrap">🌿 Bioinsumos CR</div>
+        <button class="menu-toggle" id="menuToggle"><span></span><span></span><span></span></button>
+        <nav class="nav" id="mainNav">
+          <a href="index.html">Inicio</a>
+          <a href="conocimiento.html" class="active">Conocimiento</a>
+          <a href="experiencias.html">Experiencias</a>
+        </nav>
+      </header>
 
 <main class="page-content">
     <!-- HERO CONTEXTUAL DE EXPERIENCIAS -->
@@ -89,25 +88,32 @@
     </div>
 </div>
 
-<footer class="site-footer">
-    <div>
-        <h4>Bioinsumos Costa Rica</h4>
-        <p>Plataforma nacional de gestión del conocimiento.</p>
-    </div>
-    <div>
+<footer class="main-footer">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <h3>Bioinsumos Costa Rica</h3>
+        <p>Plataforma para el fomento, investigación y desarrollo de alternativas biológicas en el sector agropecuario nacional.</p>
+      </div>
+      <div class="footer-links">
+        <h4>Secciones</h4>
+        <ul>
+          <li><a href="index.html">Inicio</a></li>
+          <li><a href="conocimiento.html">Centro de Conocimiento</a></li>
+          <li><a href="experiencias.html">Repositorio de Experiencias</a></li>
+        </ul>
+      </div>
+      <div class="footer-links">
         <h4>Contacto</h4>
-        <p>proyecto@bioinsumos.cr</p>
+        <ul>
+          <li><i class="fa-solid fa-envelope"></i> info@bioinsumos.cr</li>
+          <li><i class="fa-solid fa-location-dot"></i> San José, Costa Rica</li>
+        </ul>
+      </div>
     </div>
-    <div>
-        <h4>Instituciones</h4>
-        <p>MAG · IICA · Universidades Públicas</p>
+    <div class="footer-bottom">
+      <p>&copy; 2026 Bioinsumos CR. Todos los derechos reservados.</p>
     </div>
-    <div>
-        <h4>Redes</h4>
-        <p>YouTube · LinkedIn</p>
-    </div>
-</footer>
-
+  </footer>
 <script src="js/experiencias.js"></script>
 </body>
 </html>

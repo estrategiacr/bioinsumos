@@ -165,4 +165,102 @@ body {
     }
 }
 
+/* =========================================================
+   HEADER / TOPBAR
+========================================================= */
+.topbar {
+    position: sticky;
+    top: 0;
+    z-index: 2000;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(12px);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 5%;
+    border-bottom: 1px solid var(--border);
+  }
+  
+  .logo-wrap {
+    font-size: 1.3rem;
+    font-weight: 800;
+    color: var(--primary);
+  }
+  
+  .nav { 
+    display: flex; 
+    gap: 1.5rem; 
+  }
+  
+  .nav a {
+    text-decoration: none;
+    color: #374151;
+    font-weight: 600;
+    padding: 0.5rem 1rem;
+    border-radius: 12px;
+    transition: .25s ease;
+  }
+  
+  .nav a:hover, .nav a.active {
+    color: var(--primary);
+    background: rgba(22, 101, 52, 0.08);
+  }
+
 .hidden { display: none !important; }
+
+/* =========================================================
+   FOOTER INSTITUCIONAL COMPLETO
+========================================================= */
+.main-footer {
+    background: #0f172a;
+    color: #94a3b8;
+    padding: 3rem 5% 2rem;
+    font-size: 0.9rem;
+    border-top: 4px solid var(--primary);
+  }
+  
+  .footer-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 2rem;
+    margin-bottom: 2rem;
+  }
+  
+  .footer-brand h3 {
+    color: white;
+    margin: 0 0 0.75rem 0;
+    font-size: 1.25rem;
+  }
+  
+  .footer-links h4 {
+    color: white;
+    margin: 0 0 1rem 0;
+    font-size: 1rem;
+  }
+  
+  .footer-links ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .footer-links ul li {
+    margin-bottom: 0.5rem;
+  }
+  
+  .footer-links ul li a {
+    color: #94a3b8;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  
+  .footer-links ul li a:hover {
+    color: var(--accent);
+  }
+  
+  .footer-bottom {
+    border-top: 1px solid #334155;
+    padding-top: 1.5rem;
+    text-align: center;
+    font-size: 0.8rem;
+  }
