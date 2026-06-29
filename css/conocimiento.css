@@ -1,182 +1,59 @@
 /* =========================================================
-   VARIABLES GLOBALES (Bioinsumos Costa Rica)
-========================================================= */
-:root {
-  --primary: #166534;        
-  --primary-dark: #14532d;   
-  --accent: #22c55e;         
-  --success: #15803d;
-  --bg: #f4f7f5;             
-  --surface: #ffffff;
-  --surface-2: #f8fafc;
-  --text: #1f2937;           
-  --muted: #6b7280;          
-  --border: #e5e7eb;
-  --shadow: 0 10px 30px rgba(22, 101, 52, 0.06);
-}
-
-body {
-  font-family: 'Inter', sans-serif;
-  background: var(--bg);
-  color: var(--text);
-  margin: 0;
-  padding: 0;
-}
-
-/* =========================================================
-   HEADER & HERO RECONSTRUIDO
-========================================================= */
-.topbar {
-  position: sticky;
-  top: 0;
-  z-index: 2000;
-  background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(12px);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem 5%;
-  border-bottom: 1px solid var(--border);
-}
-
-.logo-wrap {
-  font-size: 1.3rem;
-  font-weight: 800;
-  color: var(--primary);
-}
-
-.nav { display: flex; gap: 1.5rem; }
-.nav a {
-  text-decoration: none;
-  color: #374151;
-  font-weight: 600;
-  padding: 0.5rem 1rem;
-  border-radius: 12px;
-  transition: .25s ease;
-}
-.nav a:hover, .nav a.active {
-  color: var(--primary);
-  background: rgba(22, 101, 52, 0.08);
-}
-
-.dashboard-hero {
-  background: linear-gradient(rgba(22, 101, 52, 0.6), rgba(15, 23, 42, 0.5)), url("../assets/images/hero.png");
-  background-size: cover;
-  background-position: center;
-  min-height: 28vh;
-  display: flex;
-  align-items: center;
-  padding: 2.5rem 5%;
-  color: white;
-}
-
-/* =========================================================
-   BARRA DE BÚSQUEDA Y PESTAÑAS (VISTA ESCRITORIO)
-========================================================= */
-.search-container-desktop {
-  margin-top: 1rem;
-  display: block;
-}
-
-.search-box {
-  background: var(--surface);
-  padding: 0.35rem;
-  border-radius: 14px;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
-  display: flex;
-  gap: 0.5rem;
-  max-width: 550px;
-}
-
-.search-box input {
-  flex: 1;
-  border: none;
-  outline: none;
-  padding: 0.6rem;
-  font-size: 0.95rem;
-}
-
-.search-box button {
-  background: var(--primary);
-  color: white;
-  border: none;
-  padding: 0.6rem 1.2rem;
-  border-radius: 10px;
-  font-weight: 600;
-  cursor: pointer;
-}
-
-/* Contenedor de navegación/filtros clásico */
-.map-tabs-container {
-  display: flex;
-  justify-content: center;
-  gap: 0.5rem;
-  margin: 2.5rem 5% 1.5rem;
-}
-
-.map-tab-btn {
-  background: white;
-  border: 1px solid var(--border);
-  padding: 0.6rem 1.2rem;
-  border-radius: 100px;
-  font-weight: 600;
-  color: var(--muted);
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  transition: all 0.2s;
-}
-
-.map-tab-btn.active, .map-tab-btn:hover {
-  background: var(--primary);
-  color: white;
-  border-color: var(--primary);
-}
-
-/* Ocultar texto largo en responsive a través de clases auxiliares */
-.btn-text { display: inline; }
-
-/* =========================================================
-   DISEÑO EXCLUSIVO DE CONTROL FLOTANTE INFERIOR (MÓVIL)
+   DISEÑO MEJORADO: FRANJA FLOTANTE INFERIOR CONTINUA (MÓVIL)
 ========================================================= */
 .mobile-floating-dock {
-  display: none; /* Oculto en escritorio */
+  display: none; /* Oculto por defecto en ordenadores */
 }
 
 @media (max-width: 768px) {
+  /* Ocultamos las herramientas de escritorio */
   .search-container-desktop, .map-tabs-container {
-    display: none !important; /* Oculta barras clásicas */
+    display: none !important; 
   }
 
+  /* Margen extra al cuerpo para que el contenido pase por detrás de la franja sin taparse */
   body {
-    padding-bottom: 140px; /* Evita que el dock tape las últimas tarjetas */
+    padding-bottom: 125px; 
   }
 
+  /* Ajuste de fuentes del Hero en Celulares para mayor impacto visual */
+  .dashboard-hero h1 {
+    font-size: 1.9rem !important;
+  }
+  .dashboard-hero p {
+    font-size: 0.95rem !important;
+    line-height: 1.4;
+  }
+
+  /* LA FRANJA INFERIOR CONTINUA (Estilo Header invertido) */
   .mobile-floating-dock {
     display: flex;
     flex-direction: column;
     position: fixed;
-    bottom: 16px;
-    left: 5%;
-    right: 5%;
-    background: rgba(255, 255, 255, 0.92);
-    backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 255, 255, 0.5);
-    border-radius: 24px;
-    box-shadow: 0 20px 40px rgba(15, 23, 42, 0.15);
-    padding: 0.75rem;
-    gap: 0.6rem;
+    bottom: 0; /* Pegado por completo abajo */
+    left: 0;   /* De lado a lado */
+    right: 0;  /* De lado a lado */
+    background: rgba(255, 255, 255, 0.96);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-top: 1px solid var(--border); /* Línea divisoria superior fina */
+    
+    /* Esquinas superiores sutilmente redondeadas para suavizar el contacto visual */
+    border-radius: 16px 16px 0 0; 
+    box-shadow: 0 -10px 30px rgba(15, 23, 42, 0.08);
+    padding: 0.65rem 1rem; /* Franja compacta y fina */
+    gap: 0.5rem;
     z-index: 9999;
   }
 
-  /* Buscador ultra compacto inferior */
+  /* Entrada de búsqueda integrada en la franja */
   .mobile-search-bar {
     display: flex;
     background: #f1f5f9;
-    border-radius: 14px;
-    padding: 0.25rem 0.5rem;
+    border-radius: 10px;
+    padding: 0.2rem 0.6rem;
     align-items: center;
+    border: 1px solid rgba(0, 0, 0, 0.04);
   }
   
   .mobile-search-bar input {
@@ -184,181 +61,36 @@ body {
     background: transparent;
     border: none;
     outline: none;
-    padding: 0.5rem;
-    font-size: 0.9rem;
+    padding: 0.4rem;
+    font-size: 0.85rem;
+    color: var(--text);
   }
 
-  /* Fila de filtros compacta con iconos estilizados */
+  /* Fila de botones minimalistas */
   .mobile-filter-row {
     display: flex;
     justify-content: space-between;
-    gap: 0.4rem;
+    gap: 0.35rem;
   }
 
+  /* Iconos estilizados dentro de la franja móvil */
   .mobile-filter-row .map-tab-btn {
     flex: 1;
     justify-content: center;
-    padding: 0.6rem;
-    border-radius: 14px;
-    font-size: 1.1rem; /* Iconos más visibles */
+    padding: 0.5rem;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    background: #f8fafc;
+    border: 1px solid transparent;
   }
 
-  .btn-text { display: none; } /* Remueve texto en móviles */
-}
-
-/* =========================================================
-   REJILLA DE RECURSOS (3 BLOQUES)
-========================================================= */
-.tech-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
-  gap: 1.5rem;
-  margin-top: 1rem;
-}
-
-.tech-card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 20px;
-  padding: 1.25rem;
-  box-shadow: var(--shadow);
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
-/* Simulación de página real para PDFs sin portada */
-.card-preview-area {
-  position: relative;
-  border-radius: 14px;
-  overflow: hidden;
-  aspect-ratio: 16 / 10;
-  background: #f8fafc;
-  margin-bottom: 1rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.pdf-mock-cover {
-  width: 85%;
-  height: 90%;
-  background: white;
-  border-radius: 4px 12px 12px 4px;
-  box-shadow: 5px 5px 15px rgba(0,0,0,0.08);
-  border-left: 6px solid var(--primary);
-  padding: 1rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  position: relative;
-}
-
-/* =========================================================
-   PAGINACIÓN
-========================================================= */
-.pagination-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 0.5rem;
-  margin: 3rem 0;
-}
-
-.pagination-btn {
-  background: white;
-  border: 1px solid var(--border);
-  width: 38px;
-  height: 38px;
-  border-radius: 8px;
-  cursor: pointer;
-  font-weight: 600;
-}
-
-.pagination-btn.active {
-  background: var(--primary);
-  color: white;
-  border-color: var(--primary);
-}
-
-/* =========================================================
-   MODAL OPTIMIZADO PANTALLA COMPLETA NORMAL
-========================================================= */
-.resource-modal {
-  position: fixed;
-  inset: 0;
-  background: rgba(15, 23, 42, 0.85);
-  backdrop-filter: blur(8px);
-  z-index: 99999;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 1rem;
-}
-
-.modal-box {
-  background: white;
-  border-radius: 24px;
-  width: min(96vw, 1000px);
-  height: min(85vh, 750px);
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-  transition: all 0.2s ease;
-}
-
-/* Cabecera dinámica que cambia en Fullscreen */
-.modal-header-bar {
-  padding: 1rem;
-  border-bottom: 1px solid var(--border);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: var(--surface-2);
-  transition: padding 0.2s, background 0.2s;
-}
-
-/* CUANDO EL MODAL ENTRA EN PANTALLA COMPLETA */
-.modal-box:fullscreen {
-  width: 100vw !important;
-  height: 100vh !important;
-  border-radius: 0px !important;
-}
-
-.modal-box:fullscreen .modal-header-bar {
-  padding: 0.4rem 1rem; /* Reduce drásticamente el espacio superior */
-  background: #0f172a;
-  color: white;
-}
-
-.modal-box:fullscreen .modal-header-bar strong {
-  font-size: 0.85rem;
-  color: #94a3b8;
-}
-
-/* MENÚ HAMBURGUESA MÓVIL */
-.menu-toggle {
-  display: none;
-  flex-direction: column;
-  gap: 4px;
-  background: none;
-  border: none;
-}
-.menu-toggle span { width: 22px; height: 3px; background: var(--primary); border-radius: 2px; }
-
-@media (max-width: 768px) {
-  .menu-toggle { display: flex; }
-  .nav {
-    display: none;
-    position: absolute;
-    top: 100%; left: 0; right: 0;
-    background: white;
-    flex-direction: column;
-    padding: 1rem 5%;
-    border-bottom: 1px solid var(--border);
+  .mobile-filter-row .map-tab-btn.active {
+    background: var(--primary);
+    color: white;
   }
-  .nav.open { display: flex; }
-  .resource-modal { padding: 0; }
-  .modal-box { width: 100vw; height: 100vh; border-radius: 0; }
+
+  /* Remueve textos largos en los botones flotantes */
+  .btn-text { 
+    display: none; 
+  }
 }
-.hidden { display: none !important; }

@@ -1,81 +1,19 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Centro Nacional de Conocimiento | Bioinsumos Costa Rica</title>
-  
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
-  <link rel="stylesheet" href="css/conocimiento.css" />
-</head>
-<body>
-
-  <header class="topbar">
-    <div class="logo-wrap">🌿 Bioinsumos CR</div>
-    <button class="menu-toggle" id="menuToggle"><span style="width:24px"></span><span></span><span></span></button>
-    <nav class="nav" id="mainNav">
-      <a href="index.html">Inicio</a>
-      <a href="conocimiento.html" class="active">Conocimiento</a>
-      <a href="experiencias.html">Experiencias</a>
-    </nav>
-  </header>
-
-  <section class="dashboard-hero">
-    <div style="position: relative; z-index: 2; width: 100%;">
-      <span class="hero-tag">Pilar 1</span>
-      <h1 style="font-size: 2.1rem; font-weight: 800; letter-spacing: -0.02em;">Centro de Conocimiento</h1>
+<!-- HERO ENRIQUECIDO Y ADAPTATIVO -->
+<section class="dashboard-hero">
+    <div style="position: relative; z-index: 2; width: 100%; max-width: 800px;">
+      <h1 style="font-size: 2.4rem; font-weight: 800; letter-spacing: -0.02em; margin: 0 0 0.75rem 0; line-height: 1.2;">
+        Centro Nacional de Conocimiento
+      </h1>
+      <p style="font-size: 1.1rem; line-height: 1.5; opacity: 0.95; margin: 0; font-weight: 400;">
+        Acceda a la biblioteca oficial de Bioinsumos de Costa Rica. Un espacio técnico unificado donde encontrará fichas normativas, validaciones científicas, guías de capacitación práctica y material multimedia interactivo para el desarrollo agrícola sostenible.
+      </p>
       
+      <!-- Buscador de Escritorio (Se mantiene oculto en celulares de forma automática) -->
       <div class="search-container-desktop">
         <div class="search-box">
-          <input type="text" class="global-search-input" placeholder="Buscar fichas o recursos..." />
+          <input type="text" class="global-search-input" placeholder="Buscar fichas, bacterias, hongos o metodologías..." />
           <button class="global-search-btn"><i class="fa-solid fa-magnifying-glass"></i></button>
         </div>
       </div>
     </div>
   </section>
-
-  <div class="map-tabs-container">
-    <button class="map-tab-btn active" data-cat="Todos"><i class="fa-solid fa-layer-group"></i> Todos</button>
-    <button class="map-tab-btn" data-cat="Tecnica"><i class="fa-solid fa-book"></i> Fichas Técnicas</button>
-    <button class="map-tab-btn" data-cat="Multimedia"><i class="fa-solid fa-clapperboard"></i> Multimedia</button>
-    <button class="map-tab-btn" data-cat="Capacitacion"><i class="fa-solid fa-graduation-cap"></i> Capacitación</button>
-  </div>
-
-  <main style="padding: 0 5% 4rem;">
-    <p id="resourceCount" style="color: var(--muted); font-size: 0.9rem; margin-bottom: 1rem; text-align: center;"></p>
-    <div class="tech-grid" id="recursosGrid"></div>
-    <div class="pagination-container" id="paginationControls"></div>
-  </main>
-
-  <div class="mobile-floating-dock">
-    <div class="mobile-search-bar">
-      <input type="text" class="global-search-input" placeholder="Buscar recurso biológico..." />
-      <i class="fa-solid fa-magnifying-glass" style="color: var(--muted); padding-right: 0.5rem;"></i>
-    </div>
-    <div class="mobile-filter-row">
-      <button class="map-tab-btn active" data-cat="Todos" title="Todos"><i class="fa-solid fa-square-rss"></i></button>
-      <button class="map-tab-btn" data-cat="Tecnica" title="Fichas Técnicas"><i class="fa-solid fa-file-shield"></i></button>
-      <button class="map-tab-btn" data-cat="Multimedia" title="Multimedia"><i class="fa-solid fa-circle-play"></i></button>
-      <button class="map-tab-btn" data-cat="Capacitacion" title="Capatitación"><i class="fa-solid fa-user-graduate"></i></button>
-    </div>
-  </div>
-
-  <div class="resource-modal hidden" id="resourceModal">
-    <div class="modal-box" id="modalBox">
-      <div class="modal-header-bar">
-        <strong id="modalTitle">Visualizador de Material</strong>
-        <div style="display: flex; gap: 0.3rem;">
-          <button id="fullscreenBtn" style="background:transparent; border:none; color:inherit; width:35px; height:35px; cursor:pointer;"><i class="fa-solid fa-expand"></i></button>
-          <button id="closeModal" style="background:transparent; border:none; color:#ef4444; width:35px; height:35px; cursor:pointer; font-size:1.2rem;"><i class="fa-solid fa-xmark"></i></button>
-        </div>
-      </div>
-      <div id="modalContent" style="flex: 1; background: #000;"></div>
-    </div>
-  </div>
-
-  <script src="js/conocimiento.js"></script>
-</body>
-</html>
