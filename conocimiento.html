@@ -1,157 +1,92 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-
-<title>Bioinsumos Costa Rica</title>
-
-<link rel="stylesheet" href="css/main.css">
-<link rel="stylesheet" href="css/header-footer.css">
-<link rel="stylesheet" href="css/home.css">
-<link rel="stylesheet" href="css/conocimiento.css">
-
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Centro Nacional de Conocimiento | Bioinsumos Costa Rica</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <link rel="stylesheet" href="css/conocimiento.css" />
 </head>
-
 <body>
 
-<header class="topbar">
+  <header class="topbar">
+    <div class="logo-wrap">
+      🌿 Bioinsumos CR
+    </div>
 
-  <div class="logo">
-    🌿 Bioinsumos CR
+    <button class="menu-toggle" id="menuToggle" aria-label="Abrir menú">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+
+    <nav class="nav" id="mainNav">
+      <a href="index.html">Inicio</a>
+      <a href="conocimiento.html" class="active">Conocimiento</a>
+      <a href="experiencias.html">Experiencias</a>
+      <a href="ecosistema.html">Ecosistema</a>
+      <a href="entorno.html">Entorno</a>
+    </nav>
+  </header>
+
+  <section class="dashboard-hero">
+    <div style="position: relative; z-index: 2; width: 100%;">
+      <span class="hero-tag">Pilar 1: Gestión de Información</span>
+      <h1 style="font-size: 2.8rem; font-weight: 800; line-height: 1.2; max-width: 700px;">Centro Nacional de Conocimiento sobre Bioinsumos</h1>
+      <p style="margin-top: 0.5rem; font-size: 1.1rem; opacity: 0.9;">Acceda a manuales técnicos, videos explicativos, webinars y fichas de capacitación.</p>
+      
+      <div class="search-box">
+        <input type="text" id="resourceSearch" placeholder="Buscar Trichoderma, compostaje, microorganismos..." />
+        <button id="resourceSearchBtn"><i class="fa-solid fa-magnifying-glass"></i> Buscar</button>
+      </div>
+    </div>
+  </section>
+
+  <div class="map-tabs-container">
+    <button class="map-tab-btn active" data-cat="Todos">Todos</button>
+    <button class="map-tab-btn" data-cat="Capacitación">🎓 Capacitación</button>
+    <button class="map-tab-btn" data-cat="Documentación">📚 Documentación</button>
+    <button class="map-tab-btn" data-cat="Fichas">📄 Fichas Técnicas</button>
   </div>
 
-  <nav class="main-nav">
-    <a href="index.html" >Inicio</a>
-    <a href="conocimiento.html" class="active">Conocimiento</a>
-    <a href="experiencias.html">Experiencias</a>
-    <a href="ecosistema.html">Ecosistema</a>
-    <a href="entorno.html">Entorno</a>
-  </nav>
+  <main class="container" style="padding: 0 5% 5rem 5%;">
+    <p id="resourceCount" style="color: var(--muted); font-weight: 500; margin-bottom: 1.5rem;"></p>
+    
+    <div class="tech-grid" id="recursosGrid"></div>
+  </main>
 
-</header>
+  <footer class="footer">
+    <div>
+      <h3 style="color: var(--primary); margin-bottom: 0.75rem;">Bioinsumos Costa Rica</h3>
+      <p style="color: var(--muted); font-size: 0.95rem;">Plataforma nacional para la promoción, estandarización y conocimiento técnico de alternativas biológicas en el sector agropecuario.</p>
+    </div>
+    <div>
+      <h4 style="margin-bottom: 0.75rem;">Instituciones</h4>
+      <p style="color: var(--text); font-size: 0.9rem; line-height: 1.8;">MAG · IICA · Universidades Públicas</p>
+    </div>
+    <div>
+      <h4 style="margin-bottom: 0.75rem;">Contacto</h4>
+      <p style="color: var(--muted); font-size: 0.9rem;">proyecto@bioinsumos.cr</p>
+    </div>
+  </footer>
 
-<main class="page-content">
-
-    <section class="hero hero-conocimiento">
-
-        <div class="hero-content">
-        
-        <h1>
-        Centro Nacional de Conocimiento
-        sobre Bioinsumos
-        </h1>
-        
-        <p>
-        Busque documentos, videos,
-        webinars y materiales de capacitación.
-        </p>
-        
+  <div class="resource-modal hidden" id="resourceModal">
+    <div class="modal-box">
+      <div style="padding: 1rem; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; background: var(--surface-2);">
+        <strong id="modalTitle" style="color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 70%;">Visualizador Multimedia</strong>
+        <div style="display: flex; gap: 0.5rem;">
+          <button id="fullscreenBtn" style="background: white; border: 1px solid var(--border); padding: 0.5rem; border-radius: 8px; cursor: pointer; width: 40px; height: 40px;">⛶</button>
+          <button id="closeModal" style="background: #ef4444; color: white; border: none; padding: 0.5rem; border-radius: 8px; cursor: pointer; width: 40px; height: 40px;">&times;</button>
         </div>
-        
-        </section>
-        
-        <section class="global-search">
-        
-        <input
-        id="resourceSearch"
-        placeholder="Buscar Trichoderma, compostaje, microorganismos..."
-        >
-        
-        <button id="resourceSearchBtn">
-            Buscar
-        </button>
-        
-        </section>
-        
-        <section>
-        
-           
-            
-            <div class="resource-tabs">
-            
-                <button
-                    class="tab active"
-                    data-cat="Todos">
-                    Todos
-                </button>
-            
-                <button
-                    class="tab"
-                    data-cat="Capacitación">
-                    Capacitación
-                </button>
-            
-                <button
-                    class="tab"
-                    data-cat="Documentación">
-                    Documentación
-                </button>
-            
-                <button
-                    class="tab"
-                    data-cat="Fichas">
-                    Fichas
-                </button>
-            
-            </div>
-            
-            <p id="resourceCount"></p>
-            
-            <div id="recursosGrid"></div>
-            
-            <div id="resourceModal" class="resource-modal hidden">
+      </div>
+      <div id="modalContent" style="flex: 1; background: #000;"></div>
+    </div>
+  </div>
 
-                <div class="modal-box">
-            
-                    <div class="modal-header">
-            
-                        <div class="modal-actions">
-            
-                            <button id="fullscreenBtn">⛶</button>
-            
-                            <button id="closeModal">✕</button>
-            
-                        </div>
-            
-                    </div>
-            
-                    <div id="modalContent"></div>
-            
-                </div>
-            
-            </div>
-        
-        </section>
-</main>
-
-<footer class="site-footer">
-
-<div>
-<h4>Bioinsumos Costa Rica</h4>
-<p>Plataforma nacional de gestión del conocimiento.</p>
-</div>
-
-<div>
-<h4>Contacto</h4>
-<p>proyecto@bioinsumos.cr</p>
-</div>
-
-<div>
-<h4>Instituciones</h4>
-<p>MAG · IICA · Universidades</p>
-</div>
-
-<div>
-<h4>Redes</h4>
-<p>YouTube · LinkedIn</p>
-</div>
-
-</footer>
-
-<script src="js/data.js"></script>
-<script src="js/conocimiento.js"></script>
-<script src="js/common.js"></script>
-
+  <script src="js/conocimiento.js"></script>
 </body>
 </html>
