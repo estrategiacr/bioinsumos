@@ -1,219 +1,281 @@
-let bibliotecaCompleta = [];
-let itemsFiltrados = [];
-let categoriaActual = "Todos";
-let paginaActual = 1;
-const ITEMS_POR_PAGINA = 6;
+/* ==========================================================================
+   CONTROLADOR LÓGICO: PILAR 1 - GESTIÓN DEL CONOCIMIENTO
+   ========================================================================== */
 
-const SHEET_CSV_TECNICA      = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSugZplAvcSBZjGPZikP3jhTaKA6DtMwZpOZc0_ophORRVGjemhu3Z5JEY3EnsZMUayuhviSia3Gf58/pub?gid=1587744224&single=true&output=csv";
-const SHEET_CSV_MULTIMEDIA   = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSugZplAvcSBZjGPZikP3jhTaKA6DtMwZpOZc0_ophORRVGjemhu3Z5JEY3EnsZMUayuhviSia3Gf58/pub?gid=194535019&single=true&output=csv";
-const SHEET_CSV_CAPACITACION = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSugZplAvcSBZjGPZikP3jhTaKA6DtMwZpOZc0_ophORRVGjemhu3Z5JEY3EnsZMUayuhviSia3Gf58/pub?gid=1587744224&single=true&output=csv";
-
-const modal = document.getElementById("resourceModal");
-const modalContent = document.getElementById("modalContent");
-const modalTitle = document.getElementById("modalTitle");
-const closeBtn = document.getElementById("closeModal");
-const fullscreenBtn = document.getElementById("fullscreenBtn");
-
-function parsearLineaCSV(linea) {
-  const resultado = [];
-  let dentroDeComillas = false;
-  let entradaActual = "";
-  for (let i = 0; i < linea.length; i++) {
-    const char = linea[i];
-    if (char === '"') dentroDeComillas = !insideQuotes;
-    else if (char === ',' && !dentroDeComillas) {
-      resultado.push(entradaActual.trim().replace(/^"|"$/g, ''));
-      entradaActual = "";
-    } else entradaActual += char;
-  }
-  resultado.push(entradaActual.trim().replace(/^"|"$/g, ''));
-  return resultado;
-}
-
-async function inicializarBiblioteca() {
-  try {
-    const [resTecnica, resMultimedia, resCapacitacion] = await Promise.all([
-      fetch(SHEET_CSV_TECNICA).then(r => r.text()),
-      fetch(SHEET_CSV_MULTIMEDIA).then(r => r.text()),
-      fetch(SHEET_CSV_CAPACITACION).then(r => r.text())
-    ]);
-
-    bibliotecaCompleta = [
-      ...procesarDatosHoja(resTecnica, "Tecnica"),
-      ...procesarDatosHoja(resMultimedia, "Multimedia"),
-      ...procesarDatosHoja(resCapacitacion, "Capacitacion")
-    ];
-    filtrarYCalcular();
-  } catch (error) {
-    console.error("Error cargando repositorio:", error);
-  }
-}
-
-function procesarDatosHoja(csvTexto, tipoLista) {
-  const filas = csvTexto.split(/\r?\n/).filter(r => r.trim() !== "");
-  if (filas.length <= 1) return [];
-  return filas.slice(1).map(row => {
-    const values = parsearLineaCSV(row);
-    return {
-      titulo: values[0] || "Recurso sin título",
-      tipo: values[1] || "Enlace",
-      categoria: values[2] || "General",
-      enlaceRecurso: values[3] || "",
-      imagenUrl: values[4] || "", 
-      listaOrigen: tipoLista
-    };
-  });
-}
-
-function filtrarYCalcular() {
-  // Sincroniza las entradas de los dos buscadores (móvil y escritorio)
-  const activeInput = document.querySelector(".mobile-floating-dock").getBoundingClientRect().height > 0 
-    ? document.querySelector(".mobile-search-bar input")
-    : document.querySelector(".search-box input");
-    
-  const query = activeInput ? activeInput.value.toLowerCase().trim() : "";
-
-  itemsFiltrados = bibliotecaCompleta.filter(item => {
-    const matchCategoria = (categoriaActual === "Todos") || (item.listaOrigen === categoriaActual);
-    const matchTexto = (query === "") || item.titulo.toLowerCase().includes(query) || item.categoria.toLowerCase().includes(query);
-    return matchCategoria && matchTexto;
-  });
-  paginaActual = 1;
-  renderizarPantalla();
-}
-
-/* =========================================================
-   RENDER DE TARJETAS CON EFECTO DE PORTADA DE DOCUMENTO
-========================================================= */
-function renderCardComponent(item) {
-  const enlace = item.enlaceRecurso || "";
-  const esVideo = enlace.includes("youtube.com") || enlace.includes("youtu.be");
-  const esPDF = enlace.toLowerCase().includes(".pdf") || item.tipo.toLowerCase().includes("documento");
-  let areaPreviewHTML = "";
-
-  if (esVideo) {
-    const match = enlace.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&?#]+)/i);
-    const videoThumb = match ? `https://img.youtube.com/vi/${match[1]}/hqdefault.jpg` : "https://images.unsplash.com/photo-1592417817098-8f3d6eb19675?q=80&w=400";
-    areaPreviewHTML = `
-      <div class="card-preview-area" onclick="openResource('video', '${enlace}', '${item.titulo}')" style="cursor:pointer;">
-        <img src="${videoThumb}" alt="${item.titulo}">
-        <span style="position:absolute; background:rgba(22,101,52,0.95); color:white; padding:0.3rem 0.6rem; border-radius:6px; font-size:0.65rem; font-weight:700;"><i class="fa-solid fa-circle-play"></i> VER MULTIMEDIA</span>
-      </div>`;
-  } else {
-    if (item.imagenUrl && item.imagenUrl.trim() !== "") {
-      areaPreviewHTML = `<div class="card-preview-area"><img src="${item.imagenUrl}" alt="${item.titulo}"></div>`;
-    } else {
-      // ESTRUCTURA DE PORTADA SIMULADA: Genera una vista de primera página de informe real
-      areaPreviewHTML = `
-        <div class="card-preview-area">
-          <div class="pdf-mock-cover">
-            <div style="font-size:0.6rem; color:var(--primary); font-weight:800; letter-spacing:0.05em;"><i class="fa-solid fa-ribbon"></i> PUBLICACIÓN OFICIAL</div>
-            <div style="font-size:0.8rem; font-weight:700; color:var(--text); margin-top:0.5rem; display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; overflow:hidden;">${item.titulo}</div>
-            <div style="display:flex; justify-content:between; align-items:center; margin-top:auto; border-top:1px solid var(--border); padding-top:0.4rem;">
-               <span style="font-size:0.6rem; color:var(--muted); font-weight:600;">Pilar 1 · Costa Rica</span>
-               <i class="${esPDF ? 'fa-solid fa-file-pdf' : 'fa-solid fa-globe'}" style="color:var(--primary); font-size:1.1rem; margin-left:auto;"></i>
-            </div>
-          </div>
-        </div>`;
-    }
-  }
-
-  return `
-    <article class="tech-card">
-      <div>
-        ${areaPreviewHTML}
-        <h4 style="font-weight:700; color:var(--text); line-height:1.3; font-size:1rem;">${item.titulo}</h4>
-      </div>
-      <div style="margin-top:1rem;">
-        <p style="font-size:0.75rem; color:var(--muted); font-weight:700; text-transform:uppercase;"><i class="fa-solid fa-tag"></i> ${item.categoria}</p>
-        <button class="map-tab-btn active" style="width:100%; border-radius:10px; font-size:0.8rem; padding:0.5rem; justify-content:center; margin-top:0.5rem;" onclick="openResource('${esPDF ? 'pdf' : (esVideo ? 'video' : 'externo')}', '${enlace}', '${item.titulo}')">
-          Leer / Ver Recurso
-        </button>
-      </div>
-    </article>
-  `;
-}
-
-function renderizarPantalla() {
-  const grid = document.getElementById("recursosGrid");
-  const countDisplay = document.getElementById("resourceCount");
-  if (countDisplay) countDisplay.innerHTML = `Resultados: <b>${itemsFiltrados.length}</b> materiales encontrados`;
-
-  const indiceInicio = (paginaActual - 1) * ITEMS_POR_PAGINA;
-  grid.innerHTML = itemsFiltrados.slice(indiceInicio, indiceInicio + ITEMS_POR_PAGINA).map(renderCardComponent).join("");
-  renderizarControlesPaginacion();
-}
-
-function renderizarControlesPaginacion() {
-  const container = document.getElementById("paginationControls");
-  const totalPaginas = Math.ceil(itemsFiltrados.length / ITEMS_POR_PAGINA);
-  if (totalPaginas <= 1) { container.innerHTML = ""; return; }
-
-  let html = `<button class="pagination-btn" onclick="cambiarPagina(${paginaActual - 1})" ${paginaActual === 1 ? 'disabled' : ''}>&lt;</button>`;
-  for (let i = 1; i <= totalPaginas; i++) {
-    html += `<button class="pagination-btn ${paginaActual === i ? 'active' : ''}" onclick="cambiarPagina(${i})">${i}</button>`;
-  }
-  html += `<button class="pagination-btn" onclick="cambiarPagina(${paginaActual + 1})" ${paginaActual === totalPaginas ? 'disabled' : ''}>&gt;</button>`;
-  container.innerHTML = html;
-}
-
-function cambiarPagina(p) { paginaActual = p; renderizarPantalla(); }
-
-function openResource(tipo, enlace, titulo) {
-  if (titulo && modalTitle) modalTitle.textContent = titulo;
-  if (tipo === "externo") { window.open(enlace, '_blank'); return; }
-  
-  if (tipo === "video") {
-    const match = enlace.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([^?&]+)/i);
-    modalContent.innerHTML = `<iframe src="https://www.youtube.com/embed/${match[1]}?autoplay=1" style="width:100%; height:100%; border:none;" allow="autoplay; fullscreen" allowfullscreen></iframe>`;
-  } else {
-    modalContent.innerHTML = `<iframe src="${enlace}" style="width:100%; height:100%; border:none;"></iframe>`;
-  }
-  modal.classList.remove("hidden");
-  document.body.style.overflow = "hidden";
-}
-
-function closeResourceModal() {
-  if (document.fullscreenElement) document.exitFullscreen().catch(()=>{});
-  modalContent.innerHTML = "";
-  modal.classList.add("hidden");
-  document.body.style.overflow = "";
-}
-
-function toggleFullscreen() {
-  const box = document.getElementById("modalBox");
-  if (!document.fullscreenElement) box.requestFullscreen().catch(()=>{});
-  else document.exitFullscreen();
-}
-
-function asociarManejadoresInterfaz() {
-  document.getElementById("menuToggle").addEventListener("click", () => document.getElementById("mainNav").classList.toggle("open"));
-
-  // Enlazar los inputs tanto de la barra superior como de la flotante móvil
-  document.querySelectorAll(".global-search-input").forEach(inp => {
-    inp.addEventListener("input", (e) => {
-      document.querySelectorAll(".global-search-input").forEach(other => other.value = e.target.value);
-      filtrarYCalcular();
-    });
-  });
-
-  // Listener unificado de pestañas
-  document.querySelectorAll(".map-tab-btn").forEach(tab => {
-    tab.addEventListener("click", () => {
-      const cat = tab.getAttribute("data-cat");
-      categoriaActual = cat;
-      document.querySelectorAll(".map-tab-btn").forEach(t => {
-        t.classList.toggle("active", t.getAttribute("data-cat") === cat);
-      });
-      filtrarYCalcular();
-    });
-  });
-}
-
-if (closeBtn) closeBtn.addEventListener("click", closeResourceModal);
-if (fullscreenBtn) fullscreenBtn.addEventListener("click", toggleFullscreen);
-
-document.addEventListener("DOMContentLoaded", () => {
-  asociarManejadoresInterfaz();
-  inicializarBiblioteca();
-});
+   let repositorioRecursos = [];
+   let recursosFiltrados = [];
+   
+   // Estado de paginación interna
+   const FILAS_POR_PAGINA = 6;
+   let paginaActual = 1;
+   let categoriaActiva = "Todos";
+   
+   // Cambiar por tu URL correspondiente de la pestaña Conocimiento de Google Sheets
+   const SHEET_CSV_CONOCIMIENTO = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSugZplAvcSBZjGPZikP3jhTaKA6DtMwZpOZc0_ophORRVGjemhu3Z5JEY3EnsZMUayuhviSia3Gf58/pub?gid=0&single=true&output=csv";
+   
+   document.addEventListener("DOMContentLoaded", () => {
+       configurarComponentesUI();
+       cargarRepositorioConocimiento();
+   });
+   
+   /**
+    * Parsea celdas de forma segura previniendo saltos por comas internas
+    */
+   function parsearFilaCSV(linea) {
+       const arr = [];
+       let enComillas = false;
+       let celda = "";
+       
+       // Si la hoja usa punto y coma, cambiar el char en el condicional correspondiente
+       const separador = lineasTienenPuntoYComa(linea) ? ';' : ',';
+   
+       for (let i = 0; i < linea.length; i++) {
+           const c = linea[i];
+           if (c === '"') {
+               enComillas = !enComillas;
+           } else if (c === separador && !enComillas) {
+               arr.push(celda.trim().replace(/^"|"$/g, ''));
+               celda = "";
+           } else {
+               celda += c;
+           }
+       }
+       arr.push(celda.trim().replace(/^"|"$/g, ''));
+       return arr;
+   }
+   
+   function lineasTienenPuntoYComa(txt) {
+       return txt.includes(';');
+   }
+   
+   /**
+    * Fetch y mapeo analítico del repositorio
+    */
+   async function cargarRepositorioConocimiento() {
+       try {
+           const res = await fetch(SHEET_CSV_CONOCIMIENTO);
+           const csvTexto = await res.text();
+           const lineas = csvTexto.split(/\r?\n/).filter(l => l.trim() !== "");
+   
+           if (lineas.length <= 1) {
+               mostrarMensajeVacio();
+               return;
+           }
+   
+           // Estructura esperada de columnas: id; titulo; institucion; categoria; resumen; descripcionLarga; imagen; tags; urlDescarga
+           repositorioRecursos = lineas.slice(1).map(fila => {
+               const campos = parsearFilaCSV(fila);
+               return {
+                   id: campos[0] || Math.random().toString(),
+                   titulo: campos[1] || "Recurso técnico sin título",
+                   institucion: campos[2] || "MAG / IICA",
+                   categoria: campos[3] || "Ficha Técnica",
+                   resumen: campos[4] || "No hay un resumen corto disponible.",
+                   descripcionLarga: campos[5] || "No se ha cargado un desglose extendido para este recurso.",
+                   imagen: campos[6] || "https://images.unsplash.com/photo-1530595467537-0b5996c41f2d?q=80&w=600",
+                   tags: campos[7] ? campos[7].split(",").map(t => t.trim()) : ["Bioinsumo"],
+                   urlDescarga: campos[8] || "#"
+               };
+           });
+   
+           ejecutarFiltradoLogico();
+   
+       } catch (err) {
+           console.error("Error al conectar con la base de conocimiento:", err);
+           document.getElementById("resourcesGridContainer").innerHTML = 
+               `<p style="grid-column:1/-1; text-align:center; color:var(--text-light); padding:3rem;">No se pudo conectar al repositorio de Google Sheets. Verifique la publicación técnica del documento.</p>`;
+       }
+   }
+   
+   /**
+    * Aplica filtros de texto y categorías cruzados (Escritorio + Móvil)
+    */
+   function ejecutarFiltradoLogico() {
+       const esCelular = document.querySelector(".mobile-knowledge-dock").getBoundingClientRect().height > 0;
+       const inputBuscador = esCelular 
+           ? document.getElementById("mobileKnowledgeSearch") 
+           : document.getElementById("knowledgeSearch");
+   
+       const query = inputBuscador ? inputBuscador.value.toLowerCase().trim() : "";
+   
+       recursosFiltrados = repositorioRecursos.filter(rec => {
+           const cumpleCategoria = (categoriaActiva === "Todos" || rec.categoria.toLowerCase() === categoriaActiva.toLowerCase());
+           const cumpleBusqueda = (query === "") ||
+                                  rec.titulo.toLowerCase().includes(query) ||
+                                  rec.resumen.toLowerCase().includes(query) ||
+                                  rec.institucion.toLowerCase().includes(query) ||
+                                  rec.tags.some(t => t.toLowerCase().includes(query));
+           return cumpleCategoria && cumpleBusqueda;
+       });
+   
+       document.getElementById("resourcesCount").textContent = recursosFiltrados.length;
+       
+       // Regresar a la primera página tras un filtro
+       paginaActual = 1;
+       renderizarBloqueRecursos();
+   }
+   
+   /**
+    * Segmenta los recursos según la paginación activa y los inyecta en el Grid
+    */
+   function renderizarBloqueRecursos() {
+       const grid = document.getElementById("resourcesGridContainer");
+       if (!grid) return;
+   
+       if (recursosFiltrados.length === 0) {
+           grid.innerHTML = `<p style="grid-column:1/-1; text-align:center; color:var(--text-light); padding:4rem 1rem;">No se encontraron recursos técnicos que coincidan con los filtros seleccionados.</p>`;
+           document.getElementById("paginationWrapper").classList.add("hidden");
+           return;
+       }
+   
+       document.getElementById("paginationWrapper").classList.remove("hidden");
+   
+       // Cálculo matemático de fragmentos de página
+       const indiceInicial = (paginaActual - 1) * FILAS_POR_PAGINA;
+       const indiceFinal = indiceInicial + FILAS_POR_PAGINA;
+       const recursosPagina = recursosFiltrados.slice(indiceInicial, indiceFinal);
+       const totalPaginas = Math.ceil(recursosFiltrados.length / FILAS_POR_PAGINA);
+   
+       // Inyección de HTML limpio
+       grid.innerHTML = recursosPagina.map(item => {
+           const tagsHTML = item.tags.map(t => `<span class="tag-pill">${t}</span>`).join("");
+           return `
+               <article class="resource-item-card">
+                   <div class="card-image-header">
+                       <img src="${item.imagen}" alt="${item.titulo}" loading="lazy">
+                       <span class="resource-badge">${item.categoria}</span>
+                   </div>
+                   <div class="card-body-content">
+                       <span class="resource-institution">🏢 ${item.institucion}</span>
+                       <h3 class="resource-title">${item.titulo}</h3>
+                       <p class="resource-excerpt">${item.resumen}</p>
+                       <div class="card-tags-wrap">${tagsHTML}</div>
+                   </div>
+                   <div class="card-action-footer">
+                       <button class="btn-open-resource" onclick="abrirFichaDetallada('${item.id}')">
+                           <i class="fa-solid fa-book-open-reader"></i> Estudiar Recurso
+                       </button>
+                   </div>
+               </article>
+           `;
+       }).join("");
+   
+       // Actualizar controles de interfaz
+       document.getElementById("pageIndicator").textContent = `Página ${paginaActual} de ${totalPaginas || 1}`;
+       document.getElementById("btnPrevPage").disabled = (paginaActual === 1);
+       document.getElementById("btnNextPage").disabled = (paginaActual === totalPaginas || totalPaginas === 0);
+   }
+   
+   /**
+    * Abre el Modal Extendiendo la Información técnica del renglón seleccionado
+    */
+   window.abrirFichaDetallada = function(id) {
+       const item = repositorioRecursos.find(r => r.id == id);
+       if (!item) return;
+   
+       const wrapper = document.getElementById("modalDynamicContent");
+       const modal = document.getElementById("resourceDetailModal");
+   
+       wrapper.innerHTML = `
+           <div class="modal-visual-side">
+               <img src="${item.imagen}" alt="${item.titulo}">
+           </div>
+           <div class="modal-info-side">
+               <span class="modal-meta-row">📄 ${item.categoria} · ${item.institucion}</span>
+               <h2>${item.titulo}</h2>
+               <p class="modal-long-desc">${item.descripcionLarga}</p>
+               <a href="${item.urlDescarga}" target="_blank" class="modal-download-link">
+                   <i class="fa-solid fa-file-arrow-down"></i> Descargar Documentación Oficial
+               </a>
+           </div>
+       `;
+   
+       modal.classList.remove("hidden");
+       document.body.style.overflow = "hidden"; // Deshabilita scroll del fondo
+   };
+   
+   function configurarComponentesUI() {
+       // Sincronización de Buscadores (Escritorio + Móvil)
+       const searchEscritorio = document.getElementById("knowledgeSearch");
+       const searchMovil = document.getElementById("mobileKnowledgeSearch");
+   
+       [searchEscritorio, searchMovil].forEach(input => {
+           if (input) {
+               input.addEventListener("input", (e) => {
+                   if (searchEscritorio) searchEscritorio.value = e.target.value;
+                   if (searchMovil) searchMovil.value = e.target.value;
+                   ejecutarFiltradoLogico();
+               });
+           }
+       });
+   
+       // Control de Filtros por Clases de Categoría (Escritorio)
+       document.querySelectorAll(".tab-btn").forEach(btn => {
+           btn.addEventListener("click", () => {
+               document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
+               btn.classList.add("active");
+               categoriaActiva = btn.getAttribute("data-category");
+               
+               // Sincronizar dock móvil
+               document.querySelectorAll(".mobile-dock-btn").forEach(mb => {
+                   mb.classList.toggle("active", mb.getAttribute("data-category") === categoriaActiva);
+               });
+   
+               ejecutarFiltradoLogico();
+           });
+       });
+   
+       // Control de Filtros en Dock Móvil
+       document.querySelectorAll(".mobile-dock-btn").forEach(btn => {
+           btn.addEventListener("click", () => {
+               document.querySelectorAll(".mobile-dock-btn").forEach(b => b.classList.remove("active"));
+               btn.classList.add("active");
+               categoriaActiva = btn.getAttribute("data-category");
+   
+               // Sincronizar pestañas de escritorio
+               document.querySelectorAll(".tab-btn").forEach(tb => {
+                   tb.classList.toggle("active", tb.getAttribute("data-category") === categoriaActiva);
+               });
+   
+               ejecutarFiltradoLogico();
+           });
+       });
+   
+       // Eventos de Paginación
+       document.getElementById("btnPrevPage").addEventListener("click", () => {
+           if (paginaActual > 1) {
+               paginaActual--;
+               renderizarBloqueRecursos();
+               window.scrollTo({ top: 300, behavior: 'smooth' });
+           }
+       });
+   
+       document.getElementById("btnNextPage").addEventListener("click", () => {
+           const totalPaginas = Math.ceil(recursosFiltrados.length / FILAS_POR_PAGINA);
+           if (paginaActual < totalPaginas) {
+               paginaActual++;
+               renderizarBloqueRecursos();
+               window.scrollTo({ top: 300, behavior: 'smooth' });
+           }
+       });
+   
+       // Cierre del Modal
+       const modal = document.getElementById("resourceDetailModal");
+       document.getElementById("closeModalBtn").addEventListener("click", () => {
+           modal.classList.add("hidden");
+           document.body.style.overflow = "";
+       });
+   
+       // Cerrar si hace clic fuera de la tarjeta blanca del modal
+       modal.addEventListener("click", (e) => {
+           if (e.target === modal) {
+               modal.classList.add("hidden");
+               document.body.style.overflow = "";
+           }
+       });
+   }
+   
+   function mostrarMensajeVacio() {
+       document.getElementById("resourcesGridContainer").innerHTML = 
+           `<p style="grid-column:1/-1; text-align:center; color:var(--text-light); padding:3rem;">No hay recursos disponibles en el repositorio.</p>`;
+   }

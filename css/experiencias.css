@@ -1,4 +1,8 @@
-:root {
+/* ==========================================================================
+   HOJA DE ESTILOS: PILAR 2 - EXPERIENCIAS E INNOVACIÓN (BIOINSUMOS CR)
+   ========================================================================== */
+
+   :root {
     --primary: #166534;        
     --primary-dark: #14532d;   
     --accent: #22c55e;         
@@ -10,6 +14,7 @@
     --border: #e5e7eb;
     --shadow: 0 10px 30px rgba(22, 101, 52, 0.06);
     --radius: 16px;
+    --transition: all 0.25s ease;
 }
 
 body {
@@ -19,43 +24,47 @@ body {
     margin: 0; padding: 0;
 }
 
+/* Hero Sección Experiencias */
 .hero-experiencias {
-    background: linear-gradient(rgba(22, 101, 52, 0.65), rgba(15, 23, 42, 0.5)), url("../assets/images/hero.png");
-    background-size: cover; background-position: center;
-    color: white; padding: 4rem 8%; text-align: center;
+    background: linear-gradient(rgba(22, 101, 52, 0.7), rgba(15, 23, 42, 0.55)), url("../assets/images/hero.png");
+    background-size: cover; 
+    background-position: center;
+    color: white; 
+    padding: 4.5rem 8%; 
+    text-align: center;
 }
-.hero-content h1 { font-size: 2.4rem; font-weight: 800; margin-bottom: 0.75rem; }
-.hero-content p { font-size: 1.05rem; line-height: 1.5; max-width: 850px; margin: 0 auto; opacity: 0.95; }
+.hero-content h1 { font-size: 2.6rem; font-weight: 800; margin-bottom: 0.75rem; letter-spacing: -0.02em; }
+.hero-content p { font-size: 1.05rem; line-height: 1.5; max-width: 800px; margin: 0 auto; opacity: 0.95; }
 
 /* Barra de Filtros Escritorio */
 .desktop-filter-bar { padding: 2rem 5% 0.5rem; }
 .filter-wrapper {
-    background: var(--surface); padding: 0.5rem; border-radius: var(--radius);
+    background: var(--surface); padding: 0.75rem 1.25rem; border-radius: var(--radius);
     border: 1px solid var(--border); box-shadow: var(--shadow);
-    display: flex; align-items: center; gap: 1rem;
+    display: flex; align-items: center; gap: 1.5rem;
 }
 .filter-wrapper .search-box {
-    flex: 1; display: flex; background: var(--surface-2); border-radius: 10px; padding: 0.25rem 0.5rem;
+    flex: 1; display: flex; background: var(--surface-2); border: 1px solid var(--border); border-radius: 12px; padding: 0.25rem 0.75rem; align-items: center;
 }
 .filter-wrapper .search-box input {
     flex: 1; border: none; background: transparent; outline: none; padding: 0.5rem; font-size: 0.9rem;
 }
-.filter-wrapper .search-box button { border: none; background: transparent; color: var(--primary); }
+.filter-wrapper .search-box button { border: none; background: transparent; color: var(--primary); cursor: pointer; }
 .filter-wrapper select {
-    padding: 0.6rem 1.2rem; border-radius: 10px; border: 1px solid var(--border); background: var(--surface-2); outline: none; font-weight: 500;
+    padding: 0.65rem 1.2rem; border-radius: 12px; border: 1px solid var(--border); background: var(--surface-2); outline: none; font-weight: 500; color: var(--text-dark);
 }
 .counter-badge {
-    padding: 0.5rem 1rem; font-size: 0.85rem; font-weight: 700; color: var(--primary); background: rgba(22, 101, 52, 0.08); border-radius: 8px;
+    padding: 0.5rem 0.75rem; font-size: 0.85rem; font-weight: 700; color: var(--primary); background: rgba(22, 101, 52, 0.05); border-radius: 8px;
 }
 
 /* ==========================================================================
-   FEED ESTILO RED SOCIAL (FACEBOOK / INSTAGRAM EDITORIAL)
+   GRID DE PUBLICACIONES (ESTILO BITÁCORA EDITORIAL)
    ========================================================================== */
 .view-content-wrapper { padding: 1.5rem 5% 5rem; }
 
 .social-feed-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
     gap: 2.5rem;
     max-width: 1400px;
     margin: 0 auto;
@@ -64,16 +73,16 @@ body {
 .social-card {
     background: var(--surface); border: 1px solid var(--border);
     border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow);
-    display: flex; flex-direction: column; transition: transform 0.2s;
+    display: flex; flex-direction: column; transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
-.social-card:hover { transform: translateY(-4px); }
+.social-card:hover { transform: translateY(-4px); box-shadow: 0 15px 35px rgba(22,101,52,0.1); }
 
 .social-card-header {
-    padding: 1rem; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--surface-2);
+    padding: 1.25rem; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--surface-2);
 }
 .header-profile-info { display: flex; flex-direction: column; }
-.profile-title { font-weight: 800; font-size: 1rem; color: var(--text-dark); }
-.profile-subtitle { font-size: 0.75rem; color: var(--text-light); font-weight: 600; margin-top: 0.15rem; }
+.profile-title { font-weight: 800; font-size: 1.05rem; color: var(--text-dark); }
+.profile-subtitle { font-size: 0.78rem; color: var(--text-light); font-weight: 600; margin-top: 0.15rem; }
 
 .social-card-media {
     position: relative; width: 100%; aspect-ratio: 4 / 3; background-color: #0f172a; overflow: hidden;
@@ -81,23 +90,23 @@ body {
 .social-card-media img { width: 100%; height: 100%; object-fit: cover; }
 .social-status-tag {
     position: absolute; top: 12px; right: 12px; background: rgba(22, 101, 52, 0.9);
-    color: white; padding: 0.35rem 0.75rem; border-radius: 100px; font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.02em;
+    color: white; padding: 0.35rem 0.75rem; border-radius: 6px; font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;
 }
 
 .social-interactions-bar {
-    padding: 0.8rem 1rem 0.2rem; display: flex; gap: 1.2rem; font-size: 1.3rem; color: var(--text-dark);
+    padding: 1rem 1.25rem 0.25rem; display: flex; gap: 1.2rem; font-size: 1.35rem; color: var(--text-dark);
 }
-.action-icon-btn { cursor: pointer; transition: color 0.15s; }
+.action-icon-btn { cursor: pointer; transition: color 0.15s ease; }
 .action-icon-btn.liked { color: #dc2626; }
 
-.social-card-body { padding: 0 1rem 1.25rem 1rem; display: flex; flex-direction: column; gap: 0.4rem; flex-grow: 1; }
-.likes-counter { font-size: 0.85rem; font-weight: 700; color: var(--text-dark); }
-.social-caption-text { font-size: 0.9rem; line-height: 1.45; color: #374151; margin: 0; }
+.social-card-body { padding: 0 1.25rem 1.5rem 1.25rem; display: flex; flex-direction: column; gap: 0.5rem; flex-grow: 1; }
+.likes-counter { font-size: 0.88rem; font-weight: 700; color: var(--text-dark); }
+.social-caption-text { font-size: 0.92rem; line-height: 1.5; color: #374151; margin: 0; }
 .social-tags-row { display: flex; flex-wrap: wrap; gap: 0.35rem; margin-top: 0.4rem; }
-.social-pill { background: var(--surface-2); border: 1px solid var(--border); color: var(--primary); font-size: 0.7rem; font-weight: 600; padding: 0.2rem 0.5rem; border-radius: 6px; }
+.social-pill { background: var(--surface-2); border: 1px solid var(--border); color: var(--primary); font-size: 0.72rem; font-weight: 600; padding: 0.2rem 0.5rem; border-radius: 4px; }
 
 /* ==========================================================================
-   ESTILOS DOCK FLOTANTE COMPACTO Y COMPLETO LADO A LADO (CELULARES)
+   ESTILOS DOCK FLOTANTE CONTINUO (MÓVIL)
    ========================================================================== */
 .mobile-floating-dock { display: none; }
 .region-picker-modal { display: none; }
@@ -106,10 +115,11 @@ body {
     .desktop-filter-bar { display: none !important; }
     body { padding-bottom: 120px; }
     
-    .hero-experiencias h1 { font-size: 1.8rem !important; }
-    .hero-experiencias p { font-size: 0.9rem !important; line-height: 1.4; }
+    .hero-experiencias h1 { font-size: 1.9rem !important; }
+    .hero-experiencias p { font-size: 0.9rem !important; }
+    .social-feed-grid { grid-template-columns: 1fr; gap: 1.5rem; }
 
-    /* Franja Fina Continua sin Despegues de Bordes */
+    /* Franja Fina Sin Despegues de Bordes Laterales */
     .mobile-floating-dock {
         display: flex; flex-direction: column; position: fixed; bottom: 0; left: 0; right: 0;
         background: rgba(255, 255, 255, 0.97); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
@@ -123,18 +133,18 @@ body {
     .mobile-search-bar input {
         flex: 1; border: none; background: transparent; outline: none; padding: 0.4rem; font-size: 0.85rem;
     }
+    .mobile-search-bar i { color: var(--text-light); padding-right: 0.25rem; }
 
     .mobile-filter-row { display: flex; justify-content: space-between; gap: 0.5rem; }
     .mobile-filter-row .mobile-action-btn, .mobile-filter-row .mobile-trigger-select {
         flex: 1; display: flex; align-items: center; justify-content: center; gap: 0.4rem;
-        padding: 0.55rem; border-radius: 8px; font-size: 0.9rem; font-weight: 600;
+        padding: 0.55rem; border-radius: 8px; font-size: 0.85rem; font-weight: 600;
         background: #f8fafc; color: var(--text-dark); border: 1px solid var(--border); cursor: pointer;
     }
     
-    .mobile-filter-row .mobile-action-btn:active { background: var(--primary); color: white; }
     .mobile-filter-row .mobile-trigger-select { color: var(--primary); }
 
-    /* Ventana emergente móvil de selección */
+    /* Ventana emergente de provincias en móvil */
     .region-picker-modal {
         position: fixed; inset: 0; background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(4px);
         z-index: 10000; display: flex; align-items: flex-end; justify-content: center;
@@ -143,10 +153,11 @@ body {
         background: white; width: 100%; border-radius: 20px 20px 0 0; padding: 1.5rem;
         box-shadow: 0 -10px 25px rgba(0,0,0,0.15); display: flex; flex-direction: column; gap: 1rem;
     }
+    .region-picker-box h4 { margin: 0; font-size: 1.1rem; font-weight: 700; color: var(--text-dark); }
     .region-options-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.5rem; }
     .region-opt-btn {
         padding: 0.6rem; border-radius: 8px; border: 1px solid var(--border); background: var(--surface-2);
-        font-size: 0.85rem; font-weight: 600; cursor: pointer; text-align: center;
+        font-size: 0.85rem; font-weight: 600; cursor: pointer; text-align: center; color: var(--text-dark);
     }
     .region-opt-btn.active { background: var(--primary); color: white; border-color: var(--primary); }
     #closeRegionModal {

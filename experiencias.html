@@ -15,17 +15,19 @@
 </head>
 <body class="experiencias-page">
 
-    <header class="topbar">
-        <div class="logo-wrap">🌿 Bioinsumos CR</div>
-        <button class="menu-toggle" id="menuToggle"><span style="width:24px"></span><span></span><span></span></button>
-        <nav class="nav" id="mainNav">
-          <a href="index.html">Inicio</a>
-          <a href="conocimiento.html" class="active">Conocimiento</a>
-          <a href="experiencias.html">Experiencias</a>
-        </nav>
-      </header>
+<header class="topbar">
+    <div class="logo">🌿 Bioinsumos CR</div>
+    <nav class="main-nav" id="mainNav">
+        <a href="index.html">Inicio</a>
+        <a href="conocimiento.html">Conocimiento</a>
+        <a href="experiencias.html" class="active">Experiencias</a>
+        <a href="ecosistema.html">Ecosistema</a>
+        <a href="entorno.html">Entorno</a>
+    </nav>
+</header>
 
 <main class="page-content">
+    <!-- HERO CONTEXTUAL DE EXPERIENCIAS -->
     <section class="hero hero-experiencias">
         <div class="hero-content">
             <h1>Experiencias e Innovación</h1>
@@ -33,11 +35,12 @@
         </div>
     </section>
 
+    <!-- BARRA DE FILTRADO (ESCRITORIO) -->
     <section class="desktop-filter-bar">
         <div class="filter-wrapper">
             <div class="search-box">
                 <input type="text" class="global-exp-search" placeholder="Buscar por organización, cultivo, bioinsumo o plaga..." />
-                <button><i class="fa-solid fa-magnifying-glass"></i></button>
+                <button aria-label="Buscar"><i class="fa-solid fa-magnifying-glass"></i></button>
             </div>
             <select class="global-exp-select">
                 <option value="Todos">Todas las Provincias</option>
@@ -53,23 +56,31 @@
         </div>
     </section>
     
+    <!-- GRID DE BITÁCORAS / FEED PRINCIPAL -->
     <div class="view-content-wrapper">
         <section class="social-feed-grid" id="socialFeedContainer">
-            </section>
+            <!-- Cargado dinámicamente vía JavaScript -->
+        </section>
     </div>
 </main>
 
+<!-- FRANJA FLOTANTE INFERIOR CONTINUA (EXCLUSIVA MÓVIL) -->
 <div class="mobile-floating-dock">
     <div class="mobile-search-bar">
         <input type="text" class="global-exp-search" placeholder="Buscar en bitácora práctica..." />
-        <i class="fa-solid fa-magnifying-glass" style="color: var(--text-light); padding-right: 0.5rem;"></i>
+        <i class="fa-solid fa-magnifying-glass"></i>
     </div>
     <div class="mobile-filter-row">
-        <button class="mobile-action-btn active" id="refreshFeedBtn" title="Actualizar Feed"><i class="fa-solid fa-arrows-rotate"></i> <span class="mobile-btn-label">Actualizar</span></button>
-        <button class="mobile-trigger-select" id="mobileRegionBtn" title="Filtrar Región"><i class="fa-solid fa-filter"></i> <span class="mobile-btn-label">Provincias</span></button>
+        <button class="mobile-action-btn" id="refreshFeedBtn" title="Actualizar Feed">
+            <i class="fa-solid fa-arrows-rotate"></i> <span class="mobile-btn-label">Actualizar</span>
+        </button>
+        <button class="mobile-trigger-select" id="mobileRegionBtn" title="Filtrar Región">
+            <i class="fa-solid fa-filter"></i> <span class="mobile-btn-label">Provincias</span>
+        </button>
     </div>
 </div>
 
+<!-- MODAL FLOTANTE PROVINCIAS EN CELULARES -->
 <div class="region-picker-modal hidden" id="mobileRegionModal">
     <div class="region-picker-box">
         <h4>Filtrar por Provincia</h4>
@@ -78,20 +89,24 @@
     </div>
 </div>
 
-<footer class="footer">
+<footer class="site-footer">
     <div>
-      <h3 style="color: var(--primary); margin-bottom: 0.5rem;">Bioinsumos Costa Rica</h3>
-      <p style="color: var(--muted); font-size: 0.9rem;">Repositorio oficial para la estandarización y divulgación técnica de alternativas biológicas y sostenibles.</p>
+        <h4>Bioinsumos Costa Rica</h4>
+        <p>Plataforma nacional de gestión del conocimiento.</p>
     </div>
     <div>
-      <h4 style="margin-bottom: 0.5rem;">Ecosistema</h4>
-      <p style="color: var(--text); font-size: 0.85rem; line-height: 1.6;">Ministerio de Agricultura y Ganadería (MAG)<br>IICA · Red de Universidades Públicas</p>
+        <h4>Contacto</h4>
+        <p>proyecto@bioinsumos.cr</p>
     </div>
     <div>
-      <h4 style="margin-bottom: 0.5rem;">Soporte</h4>
-      <p style="color: var(--muted); font-size: 0.85rem;">proyecto@bioinsumos.cr</p>
+        <h4>Instituciones</h4>
+        <p>MAG · IICA · Universidades Públicas</p>
     </div>
-  </footer>
+    <div>
+        <h4>Redes</h4>
+        <p>YouTube · LinkedIn</p>
+    </div>
+</footer>
 
 <script src="js/experiencias.js"></script>
 </body>

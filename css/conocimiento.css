@@ -1,108 +1,205 @@
-/* =========================================================
-   DISEÑO MEJORADO: FRANJA FLOTANTE INFERIOR CONTINUA (MÓVIL)
-========================================================= */
-.mobile-floating-dock {
-  display: none; /* Oculto por defecto en ordenadores */
+/* ==========================================================================
+   HOJA DE ESTILOS: PILAR 1 - GESTIÓN DEL CONOCIMIENTO (BIOINSUMOS CR)
+   ========================================================================== */
+
+   :root {
+    --primary: #166534;        
+    --primary-dark: #14532d;   
+    --accent: #22c55e;         
+    --bg: #f4f7f5;             
+    --surface: #ffffff;
+    --surface-2: #f8fafc;
+    --text-dark: #1f2937;           
+    --text-light: #6b7280;          
+    --border: #e5e7eb;
+    --shadow: 0 10px 30px rgba(22, 101, 52, 0.06);
+    --radius: 16px;
+    --transition: all 0.25s ease;
 }
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--bg);
+    color: var(--text-dark);
+    margin: 0; padding: 0;
+}
+
+/* Hero Sección Conocimiento */
+.hero-conocimiento {
+    background: linear-gradient(rgba(22, 101, 52, 0.7), rgba(15, 23, 42, 0.55)), url("../assets/images/hero.png");
+    background-size: cover;
+    background-position: center;
+    color: white;
+    padding: 4.5rem 8%;
+    text-align: center;
+}
+.hero-content h1 { font-size: 2.6rem; font-weight: 800; margin-bottom: 0.75rem; letter-spacing: -0.02em; }
+.hero-content p { font-size: 1.05rem; line-height: 1.5; max-width: 800px; margin: 0 auto; opacity: 0.95; }
+
+/* Barra de Control de Escritorio */
+.filter-search-section { padding: 2rem 5% 0.5rem; }
+.filter-container-box {
+    background: var(--surface); padding: 0.75rem 1.25rem; border-radius: var(--radius);
+    border: 1px solid var(--border); box-shadow: var(--shadow);
+    display: flex; align-items: center; justify-content: space-between; gap: 1.5rem;
+}
+
+.search-bar-wrap {
+    flex: 1; max-width: 400px; display: flex; background: var(--surface-2); 
+    border: 1px solid var(--border); border-radius: 12px; padding: 0.25rem 0.75rem; align-items: center;
+}
+.search-bar-wrap input {
+    flex: 1; border: none; background: transparent; outline: none; padding: 0.5rem; font-size: 0.9rem;
+}
+.search-bar-wrap button { border: none; background: transparent; color: var(--primary); cursor: pointer; font-size: 1rem; }
+
+/* Pestañas de Categoría (Escritorio) */
+.category-tabs { display: flex; gap: 0.5rem; }
+.tab-btn {
+    background: transparent; border: 1px solid transparent; color: var(--text-light);
+    padding: 0.5rem 1rem; border-radius: 10px; font-weight: 600; font-size: 0.88rem;
+    cursor: pointer; transition: var(--transition);
+}
+.tab-btn:hover { color: var(--primary); background: var(--surface-2); }
+.tab-btn.active { background: rgba(22, 101, 52, 0.08); color: var(--primary); border-color: rgba(22, 101, 52, 0.15); }
+
+.results-counter {
+    font-size: 0.85rem; font-weight: 700; color: var(--primary);
+    background: rgba(22, 101, 52, 0.05); padding: 0.5rem 0.75rem; border-radius: 8px;
+}
+
+/* ==========================================================================
+   CUADRÍCULA DE RECURSOS TÉCNICOS
+   ========================================================================== */
+.resources-grid-section { padding: 1.5rem 5% 5rem; }
+.resources-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 2rem; max-width: 1400px; margin: 0 auto;
+}
+
+/* Tarjetas de Recursos */
+.resource-item-card {
+    background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
+    overflow: hidden; box-shadow: var(--shadow); display: flex; flex-direction: column;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.resource-item-card:hover { transform: translateY(-4px); box-shadow: 0 15px 35px rgba(22,101,52,0.1); }
+
+.card-image-header { position: relative; width: 100%; aspect-ratio: 16 / 10; background-color: #0f172a; }
+.card-image-header img { width: 100%; height: 100%; object-fit: cover; }
+.resource-badge {
+    position: absolute; top: 12px; left: 12px; background: rgba(255, 255, 255, 0.95);
+    color: var(--primary-dark); padding: 0.3rem 0.65rem; border-radius: 6px;
+    font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+.card-body-content { padding: 1.25rem; display: flex; flex-direction: column; gap: 0.5rem; flex-grow: 1; }
+.resource-institution { font-size: 0.75rem; color: var(--primary); font-weight: 700; text-transform: uppercase; }
+.resource-title { font-size: 1.15rem; font-weight: 700; color: var(--text-dark); margin: 0; line-height: 1.3; }
+.resource-excerpt { font-size: 0.88rem; line-height: 1.45; color: var(--text-light); margin: 0; }
+
+.card-tags-wrap { display: flex; flex-wrap: wrap; gap: 0.35rem; margin-top: 0.25rem; }
+.tag-pill { background: var(--surface-2); border: 1px solid var(--border); font-size: 0.7rem; color: var(--text-dark); padding: 0.2rem 0.5rem; border-radius: 4px; font-weight: 500; }
+
+.card-action-footer {
+    padding: 1rem 1.25rem 1.25rem; background: var(--surface-2); border-top: 1px solid var(--border);
+}
+.btn-open-resource {
+    width: 100%; display: flex; align-items: center; justify-content: center; gap: 0.5rem;
+    background: var(--primary); color: white; border: none; padding: 0.65rem;
+    border-radius: 8px; font-weight: 600; font-size: 0.85rem; cursor: pointer;
+    transition: background 0.15s ease;
+}
+.btn-open-resource:hover { background: var(--primary-dark); }
+
+/* Paginación */
+.pagination-controls {
+    display: flex; justify-content: center; align-items: center; gap: 1.5rem; margin-top: 3.5rem;
+}
+.pag-btn {
+    background: var(--surface); border: 1px solid var(--border); color: var(--text-dark);
+    padding: 0.55rem 1.2rem; border-radius: 8px; font-weight: 600; font-size: 0.88rem;
+    cursor: pointer; display: flex; align-items: center; gap: 0.4rem; transition: var(--transition);
+}
+.pag-btn:hover:not(:disabled) { background: var(--primary); color: white; border-color: var(--primary); }
+.pag-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+.page-number-indicator { font-size: 0.9rem; font-weight: 600; color: var(--text-light); }
+
+/* ==========================================================================
+   MODAL DE VISUALIZACIÓN EXTENDIDA
+   ========================================================================== */
+.resource-modal {
+    position: fixed; inset: 0; background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(4px);
+    z-index: 10000; display: flex; align-items: center; justify-content: center; padding: 2rem;
+}
+.modal-card-box {
+    background: var(--surface); width: 100%; max-width: 900px; max-height: 85vh;
+    border-radius: var(--radius); overflow-y: auto; position: relative;
+    box-shadow: 0 25px 50px rgba(0,0,0,0.2); border: 1px solid var(--border);
+}
+.close-modal-btn {
+    position: absolute; top: 1rem; right: 1rem; background: rgba(15, 23, 42, 0.05);
+    border: none; font-size: 1.75rem; width: 36px; height: 36px; border-radius: 50%;
+    cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 10;
+}
+.close-modal-btn:hover { background: #ef4444; color: white; }
+
+.modal-layout-grid { display: grid; grid-template-columns: 40% 1fr; }
+.modal-visual-side { position: relative; background: #0f172a; }
+.modal-visual-side img { width: 100%; height: 100%; object-fit: cover; }
+.modal-info-side { padding: 2.5rem; display: flex; flex-direction: column; gap: 1rem; }
+.modal-meta-row { font-size: 0.8rem; font-weight: 700; color: var(--primary); text-transform: uppercase; }
+.modal-info-side h2 { font-size: 1.6rem; color: var(--text-dark); margin: 0; font-weight: 800; line-height: 1.25; }
+.modal-long-desc { font-size: 0.95rem; line-height: 1.6; color: #4b5563; margin: 0; }
+.modal-download-link {
+    margin-top: 1rem; display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
+    background: var(--primary); color: white; text-decoration: none; padding: 0.75rem 1.5rem;
+    border-radius: 8px; font-weight: 600; font-size: 0.9rem; align-self: flex-start;
+}
+.modal-download-link:hover { background: var(--primary-dark); }
+
+/* ==========================================================================
+   DOCK FLOTANTE COMPACTO DE EXTREMO A EXTREMO (MÓVIL)
+   ========================================================================== */
+.mobile-knowledge-dock { display: none; }
 
 @media (max-width: 768px) {
-  /* Ocultamos las herramientas de escritorio */
-  .search-container-desktop, .map-tabs-container {
-    display: none !important; 
-  }
-
-  /* Margen extra al cuerpo para que el contenido pase por detrás de la franja sin taparse */
-  body {
-    padding-bottom: 125px; 
-  }
-
-  /* Ajuste de fuentes del Hero en Celulares para mayor impacto visual */
-  .dashboard-hero h1 {
-    font-size: 1.9rem !important;
-  }
-  .dashboard-hero p {
-    font-size: 0.95rem !important;
-    line-height: 1.4;
-  }
-
-  /* LA FRANJA INFERIOR CONTINUA (Estilo Header invertido) */
-  .mobile-floating-dock {
-    display: flex;
-    flex-direction: column;
-    position: fixed;
-    bottom: 0; /* Pegado por completo abajo */
-    left: 0;   /* De lado a lado */
-    right: 0;  /* De lado a lado */
-    background: rgba(255, 255, 255, 0.96);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border-top: 1px solid var(--border); /* Línea divisoria superior fina */
+    .filter-search-section { display: none !important; }
+    body { padding-bottom: 120px; } /* Evita solapamientos con el dock inferior */
     
-    /* Esquinas superiores sutilmente redondeadas para suavizar el contacto visual */
-    border-radius: 16px 16px 0 0; 
-    box-shadow: 0 -10px 30px rgba(15, 23, 42, 0.08);
-    padding: 0.65rem 1rem; /* Franja compacta y fina */
-    gap: 0.5rem;
-    z-index: 9999;
-  }
+    .hero-conocimiento h1 { font-size: 1.9rem !important; }
+    .hero-conocimiento p { font-size: 0.9rem !important; }
 
-  /* Entrada de búsqueda integrada en la franja */
-  .mobile-search-bar {
-    display: flex;
-    background: #f1f5f9;
-    border-radius: 10px;
-    padding: 0.2rem 0.6rem;
-    align-items: center;
-    border: 1px solid rgba(0, 0, 0, 0.04);
-  }
-  
-  .mobile-search-bar input {
-    flex: 1;
-    background: transparent;
-    border: none;
-    outline: none;
-    padding: 0.4rem;
-    font-size: 0.85rem;
-    color: var(--text);
-  }
+    .resources-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+    .modal-layout-grid { grid-template-columns: 1fr; }
+    .modal-visual-side { aspect-ratio: 16/9; }
+    .modal-info-side { padding: 1.5rem; }
 
-  /* Fila de botones minimalistas */
-  .mobile-filter-row {
-    display: flex;
-    justify-content: space-between;
-    gap: 0.35rem;
-  }
+    /* Franja flotante sin despegues laterales */
+    .mobile-knowledge-dock {
+        display: flex; flex-direction: column; position: fixed; bottom: 0; left: 0; right: 0;
+        background: rgba(255, 255, 255, 0.97); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+        border-top: 1px solid var(--border); border-radius: 16px 16px 0 0;
+        box-shadow: 0 -8px 30px rgba(15, 23, 42, 0.08); padding: 0.6rem 1rem; gap: 0.5rem; z-index: 9999;
+    }
 
-  /* Iconos estilizados dentro de la franja móvil */
-  .mobile-filter-row .map-tab-btn {
-    flex: 1;
-    justify-content: center;
-    padding: 0.5rem;
-    border-radius: 8px;
-    font-size: 1.1rem;
-    background: #f8fafc;
-    border: 1px solid transparent;
-  }
+    .mobile-search-bar {
+        display: flex; background: #f1f5f9; border-radius: 10px; padding: 0.2rem 0.6rem; align-items: center;
+    }
+    .mobile-search-bar input {
+        flex: 1; border: none; background: transparent; outline: none; padding: 0.4rem; font-size: 0.85rem;
+    }
+    .mobile-search-bar i { color: var(--text-light); padding-right: 0.25rem; }
 
-  .mobile-filter-row .map-tab-btn.active {
-    background: var(--primary);
-    color: white;
-  }
-
-  /* Remueve textos largos en los botones flotantes */
-  .btn-text { 
-    display: none; 
-  }
+    .mobile-actions-row { display: flex; justify-content: space-between; gap: 0.35rem; }
+    .mobile-dock-btn {
+        flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.25rem;
+        padding: 0.45rem; border-radius: 8px; font-size: 0.68rem; font-weight: 600; background: transparent;
+        border: none; color: var(--text-light); cursor: pointer;
+    }
+    .mobile-dock-btn i { font-size: 1.1rem; }
+    .mobile-dock-btn.active { background: rgba(22, 101, 52, 0.08); color: var(--primary); }
 }
 
-/* =========================================================
-     FOOTER INSTITUCIONAL
-  ========================================================= */
-  .footer {
-    background: white;
-    border-top: 1px solid var(--border);
-    padding: 4rem 5%;
-    display: grid;
-    grid-template-columns: 2fr 1fr 1fr;
-    gap: 3rem;
-  }
+.hidden { display: none !important; }
