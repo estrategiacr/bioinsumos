@@ -1,13 +1,12 @@
 /* ==========================================================================
-   CONTROLADOR LÓGICO: PILAR 2 - BITÁCORA VIVA DE EXPERIENCIAS
-   Plataforma Integrada Sincronizada con Google Sheets
+   CONTROLADOR LÓGICO: REPOSITORIO DE EXPERIENCIAS DE CAMPO
+   Bioinsumos Costa Rica - Sincronización Remota por Comas (CSV)
    ========================================================================== */
 
    let repositorioExperiencias = [];
    let datosFiltrados = [];
    let regionSeleccionada = "Todos";
    
-   // URL Base unificada compartida de tu Google Sheets
    const SHEET_BASE = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSugZplAvcSBZjGPZikP3jhTaKA6DtMwZpOZc0_ophORRVGjemhu3Z5JEY3EnsZMUayuhviSia3Gf58/pub?";
    const SHEET_CSV_EXPERIENCIAS = `${SHEET_BASE}gid=615287650&single=true&output=csv`;
    
@@ -17,7 +16,7 @@
    });
    
    // =====================================
-   // UTILIDADES Y PARSEADORES UNIFICADOS
+   // UTILIDADES DE PROCESAMIENTO
    // =====================================
    
    function convertirLinkDriveAImagen(url) {
@@ -28,8 +27,8 @@
    }
    
    /**
-    * Split inteligente para CSV: Separa por COMAS (,), 
-    * respetando textos largos o etiquetas agrupadas entre comillas.
+    * Split inteligente para CSV: Separa por comas (,), 
+    * pero ignora las que estén dentro de bloques de texto protegidos por comillas.
     */
    function parsearLineaCSV(linea) {
      const resultado = [];
@@ -53,9 +52,8 @@
    }
    
    // =====================================
-   // CARGA Y PROCESAMIENTO DE DATOS
+   // EXTRACCIÓN DE INNOVACIONES / BITÁCORA
    // =====================================
-   
    async function cargarDatosDesdeGoogleSheet() {
      try {
        const respuesta = await fetch(SHEET_CSV_EXPERIENCIAS);
@@ -64,42 +62,42 @@
        
        if (filas.length <= 1) {
          document.getElementById("socialFeedContainer").innerHTML = 
-           `<p style="text-align:center; color:var(--muted); padding:4rem 1rem;">La bitácora de campo se encuentra vacía momentáneamente.</p>`;
+           `<p style="text-align:center; color:var(--muted); padding:4rem 1rem;">La bitácora de campo se encuentra vacía.</p>`;
          return;
        }
    
-       // Mapeo adaptado al orden exacto de tus columnas del CSV (Tabla Innovaciones/Experiencias)
+       // Mapeo adaptativo real alineado al parseador de comas de la tabla remota
        repositorioExperiencias = filas.slice(1).map(row => {
          const cols = parsearLineaCSV(row);
          
-         // Separación de tags guardados tradicionalmente por punto y coma (;) o comas
-         let listaTags = ["Campo"];
-         if (cols[8]) {
-           listaTags = cols[8].includes(";") ? cols[8].split(";") : cols[8].split(",");
+         // Manejo inteligente de tags del registro
+         let listaTags = ["Agroecología"];
+         if (cols[7]) {
+           listaTags = cols[7].includes(";") ? cols[7].split(";") : cols[7].split(",");
          } else if (cols[2]) {
-           listaTags = [cols[2]]; // Categoria como tag de respaldo
+           listaTags = [cols[2]];
          }
    
          return {
            id: cols[0] || Math.random().toString(),
            titulo: cols[1] || "Caso práctico sin título",
-           categoria: cols[2] || "Innovación",
+           categoria: cols[2] || "Validación",
            organizacion: cols[3] || "Productor Independiente",
-           region: cols[4] || "San José", // Región/Provincia mapeada dinámicamente
-           descripcion: cols[4] || "Sin detalles en la bitácora de campo.", // Respaldo si varía el orden
+           descripcion: cols[4] || "Sin detalles adicionales registrados en la bitácora de campo.",
            imagenUrl: convertirLinkDriveAImagen(cols[5]),
-           estado: cols[7] === "SI" ? "Destacado" : "Validada", // Lógica basada en tu columna destacado
+           region: cols[6] || "San José", // Región de la finca
+           estado: cols[7] === "SI" ? "Caso Destacado" : "Validado",
            tags: listaTags.map(t => t.trim()),
-           fecha: "Registro de Campo"
+           fecha: "Bitácora Viva"
          };
        });
    
        ejecutarFiltradoYRender();
        construirSelectorProvinciasMovil();
      } catch (e) {
-       console.error("Error sincronizando bitácora remota:", e);
+       console.error("Error cargando repositorio de bitácoras:", e);
        document.getElementById("socialFeedContainer").innerHTML = 
-         `<p style="text-align:center; color:var(--muted); padding:4rem 1rem;">Ocurrió un error al cargar el feed de bitácoras de campo.</p>`;
+         `<p style="text-align:center; color:var(--muted); padding:4rem 1rem;">Error de sincronización con la base de datos de bioinsumos.</p>`;
      }
    }
    
@@ -124,18 +122,17 @@
      });
    
      const contador = document.getElementById("totalItemsDisplay");
-     if (contador) contador.innerHTML = `Casos prácticos visualizados: <b>${datosFiltrados.length}</b>`;
+     if (contador) contador.innerHTML = `Casos de campo registrados: <b>${datosFiltrados.length}</b>`;
      
      renderizarFeedSocial();
    }
    
-   // Renderizado limpio de feed social tipo Facebook/Instagram (Sin botones extra)
    function renderizarFeedSocial() {
      const contenedor = document.getElementById("socialFeedContainer");
      if (!contenedor) return;
    
      if (datosFiltrados.length === 0) {
-       contenedor.innerHTML = `<p style="text-align:center; color:var(--muted); padding:4rem 1rem;">No se hallaron registros prácticos para esta búsqueda.</p>`;
+       contenedor.innerHTML = `<p style="text-align:center; color:var(--muted); padding:4rem 1rem;">No se hallaron registros prácticos para los filtros indicados.</p>`;
        return;
      }
    
@@ -158,7 +155,7 @@
            
            <div class="social-card-body">
              <p class="social-caption-text">
-               <b>${item.titulo}</b> — ${item.descripcion}
+               <b>${item.titulo}:</b> ${item.descripcion}
              </p>
              <div class="social-tags-row">${tagsHTML}</div>
            </div>
@@ -193,7 +190,6 @@
    }
    
    function asociarComponentesUI() {
-     // Menú hamburguesa móvil básico
      const menuToggle = document.getElementById("menuToggle");
      if (menuToggle) {
        menuToggle.addEventListener("click", () => {
@@ -201,7 +197,6 @@
        });
      }
    
-     // Entrada de búsquedas coordinada
      document.querySelectorAll(".global-exp-search").forEach(input => {
        input.addEventListener("input", (e) => {
          document.querySelectorAll(".global-exp-search").forEach(x => x.value = e.target.value);
@@ -209,7 +204,6 @@
        });
      });
    
-     // Selector geográfico de escritorio
      const select = document.querySelector(".global-exp-select");
      if (select) {
        select.addEventListener("change", (e) => {
@@ -218,7 +212,6 @@
        });
      }
    
-     // Modales y Controles del Dock Flotante Móvil
      const btnReg = document.getElementById("mobileRegionBtn");
      const modalReg = document.getElementById("mobileRegionModal");
      const btnCloseReg = document.getElementById("closeRegionModal");
