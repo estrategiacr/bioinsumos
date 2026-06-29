@@ -1,90 +1,335 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Centro Nacional de Conocimiento | Bioinsumos Costa Rica</title>
+/* =========================================================
+   VARIABLES GLOBALES (Paleta Bioinsumos Costa Rica)
+========================================================= */
+:root {
+    --primary: #166534;        /* Verde Bosque */
+    --primary-dark: #14532d;   /* Verde Oscuro */
+    --accent: #22c55e;         /* Verde Clorofila */
+    --success: #15803d;
+    --bg: #f4f7f5;             
+    --surface: #ffffff;
+    --surface-2: #f8fafc;
+    --text: #1f2937;           
+    --muted: #6b7280;          
+    --border: #e5e7eb;
+    --shadow: 0 10px 30px rgba(22, 101, 52, 0.06);
+  }
   
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
-  <link rel="stylesheet" href="css/conocimiento.css" />
-</head>
-<body>
-
-  <header class="topbar">
-    <div class="logo-wrap">🌿 Bioinsumos CR</div>
-
-    <button class="menu-toggle" id="menuToggle" aria-label="Abrir menú">
-      <span></span><span></span><span></span>
-    </button>
-
-    <nav class="nav" id="mainNav">
-      <a href="index.html">Inicio</a>
-      <a href="conocimiento.html" class="active">Conocimiento</a>
-      <a href="experiencias.html">Experiencias</a>
-      <a href="ecosistema.html">Ecosistema</a>
-      <a href="entorno.html">Entorno</a>
-    </nav>
-  </header>
-
-  <section class="dashboard-hero">
-    <div style="position: relative; z-index: 2; width: 100%;">
-      <span class="hero-tag">Pilar 1: Biblioteca de Recursos</span>
-      <h1 style="font-size: 2.4rem; font-weight: 800; line-height: 1.2;">Centro Nacional de Conocimiento</h1>
-      <p style="margin-top: 0.4rem; font-size: 1rem; opacity: 0.95;">Fichas de capacitación, documentación científica y material multimedia.</p>
-      
-      <div class="search-box">
-        <input type="text" id="resourceSearch" placeholder="Buscar por título, palabra clave o tema..." />
-        <button id="resourceSearchBtn"><i class="fa-solid fa-magnifying-glass"></i> Buscar</button>
-      </div>
-    </div>
-  </section>
-
-  <div class="map-tabs-container">
-    <button class="map-tab-btn active" data-cat="Todos">Todos los Recursos</button>
-    <button class="map-tab-btn" data-cat="Tecnica">📚 Fichas Técnicas</button>
-    <button class="map-tab-btn" data-cat="Multimedia">🎥 Multimedia</button>
-    <button class="map-tab-btn" data-cat="Capacitacion">🎓 Capacitación</button>
-  </div>
-
-  <main style="padding: 0 5%;">
-    <p id="resourceCount" style="color: var(--muted); font-weight: 500; margin-bottom: 1.5rem; text-align: center;"></p>
-    
-    <div class="tech-grid" id="recursosGrid"></div>
-
-    <div class="pagination-container" id="paginationControls"></div>
-  </main>
-
-  <footer class="footer">
-    <div>
-      <h3 style="color: var(--primary); margin-bottom: 0.5rem;">Bioinsumos Costa Rica</h3>
-      <p style="color: var(--muted); font-size: 0.9rem;">Repositorio oficial para la estandarización y divulgación técnica de alternativas biológicas y sostenibles.</p>
-    </div>
-    <div>
-      <h4 style="margin-bottom: 0.5rem;">Ecosistema</h4>
-      <p style="color: var(--text); font-size: 0.85rem; line-height: 1.6;">Ministerio de Agricultura y Ganadería (MAG)<br>IICA · Red de Universidades Públicas</p>
-    </div>
-    <div>
-      <h4 style="margin-bottom: 0.5rem;">Soporte</h4>
-      <p style="color: var(--muted); font-size: 0.85rem;">proyecto@bioinsumos.cr</p>
-    </div>
-  </footer>
-
-  <div class="resource-modal hidden" id="resourceModal">
-    <div class="modal-box">
-      <div style="padding: 1rem; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; background: var(--surface-2);">
-        <strong id="modalTitle" style="color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 70%;">Visualizador de Recurso</strong>
-        <div style="display: flex; gap: 0.4rem;">
-          <button id="fullscreenBtn" style="background: white; border: 1px solid var(--border); padding: 0.5rem; border-radius: 8px; cursor: pointer; width: 40px; height: 40px;">⛶</button>
-          <button id="closeModal" style="background: #ef4444; color: white; border: none; padding: 0.5rem; border-radius: 8px; cursor: pointer; width: 40px; height: 40px;">&times;</button>
-        </div>
-      </div>
-      <div id="modalContent" style="flex: 1; background: #000;"></div>
-    </div>
-  </div>
-
-  <script src="js/conocimiento.js"></script>
-</body>
-</html>
+  /* =========================================================
+     TOPBAR STICKY Y COMPONENTES
+  ========================================================= */
+  .topbar {
+    position: sticky;
+    top: 0;
+    z-index: 2000;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(12px);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 5%;
+    border-bottom: 1px solid var(--border);
+  }
+  
+  .logo-wrap {
+    font-size: 1.3rem;
+    font-weight: 800;
+    color: var(--primary);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  
+  .nav {
+    display: flex;
+    gap: 1.5rem;
+  }
+  
+  .nav a {
+    text-decoration: none;
+    color: #374151;
+    font-weight: 600;
+    padding: 0.5rem 1rem;
+    border-radius: 12px;
+    transition: .25s ease;
+  }
+  
+  .nav a:hover, .nav a.active {
+    color: var(--primary);
+    background: rgba(22, 101, 52, 0.08);
+  }
+  
+  /* =========================================================
+     CORRECCIÓN: HERO OPTIMIZADO (Menos alto/ancho visual)
+  ========================================================= */
+  .dashboard-hero {
+    background: linear-gradient(rgba(22, 101, 52, 0.55), rgba(15, 23, 42, 0.45)), url("../assets/images/hero.png");
+    background-size: cover;
+    background-position: center;
+    min-height: 35vh; /* Reducido de 45vh para que no ocupe demasiada pantalla */
+    display: flex;
+    align-items: center;
+    padding: 3rem 5%;
+    color: white;
+  }
+  
+  .hero-tag {
+    display: inline-block;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(4px);
+    padding: 0.35rem 0.85rem;
+    border-radius: 100px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-bottom: 0.75rem;
+  }
+  
+  .search-box {
+    background: var(--surface);
+    padding: 0.4rem;
+    border-radius: 14px;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+    display: flex;
+    gap: 0.5rem;
+    max-width: 600px; /* Caja de búsqueda contenida */
+    margin-top: 1.2rem;
+  }
+  
+  .search-box input {
+    flex: 1;
+    border: none;
+    outline: none;
+    padding: 0.6rem 0.8rem;
+    font-size: 0.95rem;
+    color: var(--text);
+    background: transparent;
+  }
+  
+  .search-box button {
+    background: var(--primary);
+    color: white;
+    border: none;
+    padding: 0.6rem 1.2rem;
+    border-radius: 10px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  
+  .search-box button:hover {
+    background: var(--primary-dark);
+  }
+  
+  /* =========================================================
+     CORRECCIÓN: PESTAÑAS ADAPTADAS A CELULARES
+  ========================================================= */
+  .map-tabs-container {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin: 2.5rem 5% 1.5rem 5%;
+    padding-bottom: 0.5rem;
+  }
+  
+  @media (max-width: 600px) {
+    .map-tabs-container {
+      justify-content: flex-start;
+      overflow-x: auto; /* Permite scroll de categorías sin deformar la pantalla */
+      white-space: nowrap;
+      -webkit-overflow-scrolling: touch;
+      padding: 0.5rem 1rem;
+      margin: 1.5rem 0 1rem 0;
+    }
+    .map-tab-btn {
+      flex: 0 0 auto; /* Evita que los botones se encojan en pantallas pequeñas */
+    }
+  }
+  
+  .map-tab-btn {
+    background: white;
+    border: 1px solid var(--border);
+    padding: 0.6rem 1.2rem;
+    border-radius: 100px;
+    font-weight: 600;
+    color: var(--muted);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  
+  .map-tab-btn.active, .map-tab-btn:hover {
+    background: var(--primary);
+    color: white;
+    border-color: var(--primary);
+    box-shadow: 0 4px 12px rgba(22, 101, 52, 0.15);
+  }
+  
+  /* =========================================================
+     REJILLA DE RECURSOS (3 Columnas Fluidas)
+  ========================================================= */
+  .tech-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1.75rem;
+    margin-top: 1rem;
+  }
+  
+  .tech-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 1.25rem;
+    box-shadow: var(--shadow);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  
+  .tech-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 15px 35px rgba(22, 101, 52, 0.12);
+  }
+  
+  /* Contenedor de la Vista Previa de la Tarjeta */
+  .card-preview-area {
+    position: relative;
+    border-radius: 14px;
+    overflow: hidden;
+    aspect-ratio: 16 / 9;
+    background: #e2e8f0;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .card-preview-area img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  /* =========================================================
+     COMPONENTE: BOTONES DE PAGINACIÓN INTERACTIVOS
+  ========================================================= */
+  .pagination-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.75rem;
+    margin: 3rem 0;
+  }
+  
+  .pagination-btn {
+    background: white;
+    border: 1px solid var(--border);
+    color: var(--text);
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    transition: all 0.2s;
+  }
+  
+  .pagination-btn:hover:not(:disabled) {
+    border-color: var(--primary);
+    color: var(--primary);
+    background: rgba(22, 101, 52, 0.04);
+  }
+  
+  .pagination-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+  
+  .pagination-btn.active {
+    background: var(--primary);
+    color: white;
+    border-color: var(--primary);
+  }
+  
+  .page-indicator {
+    font-size: 0.95rem;
+    color: var(--muted);
+    font-weight: 500;
+  }
+  
+  /* =========================================================
+     MODAL MULTIMEDIA ADAPTATIVO
+  ========================================================= */
+  .resource-modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.8);
+    backdrop-filter: blur(8px);
+    z-index: 99999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+  }
+  
+  .modal-box {
+    background: white;
+    border-radius: 24px;
+    width: min(96vw, 1000px);
+    height: min(85vh, 750px);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  }
+  
+  /* =========================================================
+     FOOTER INSTITUCIONAL
+  ========================================================= */
+  .footer {
+    background: white;
+    border-top: 1px solid var(--border);
+    padding: 4rem 5%;
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 3rem;
+  }
+  
+  /* MENÚ HAMBURGUESA MÓVIL */
+  .menu-toggle {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .menu-toggle span {
+    width: 25px;
+    height: 3px;
+    background: var(--primary);
+    border-radius: 2px;
+    transition: 0.3s;
+  }
+  
+  @media (max-width: 768px) {
+    .menu-toggle { display: flex; }
+    .nav {
+      display: none;
+      position: absolute;
+      top: 100%; left: 0; right: 0;
+      background: white;
+      flex-direction: column;
+      padding: 1.5rem;
+      border-bottom: 1px solid var(--border);
+      box-shadow: var(--shadow);
+    }
+    .nav.open { display: flex; }
+    .footer { grid-template-columns: 1fr; gap: 2rem; }
+    .search-box { flex-direction: column; background: transparent; box-shadow: none; padding: 0; }
+    .search-box input { background: white; border-radius: 12px; margin-bottom: 0.5rem; border: 1px solid var(--border); }
+  }
+  .hidden { display: none !important; }
