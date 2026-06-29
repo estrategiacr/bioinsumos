@@ -83,12 +83,13 @@
            titulo: cols[1] || "Caso práctico sin título",
            categoria: cols[2] || "Validación",
            organizacion: cols[3] || "Productor Independiente",
+           region: cols[6] || "San José", // Región de la finca
            descripcion: cols[4] || "Sin detalles adicionales registrados en la bitácora de campo.",
            imagenUrl: convertirLinkDriveAImagen(cols[5]),
-           region: cols[6] || "San José", // Región de la finca
+           
            estado: cols[7] === "SI" ? "Caso Destacado" : "Validado",
            tags: listaTags.map(t => t.trim()),
-           fecha: "Bitácora Viva"
+           fecha: cols[8]
          };
        });
    
