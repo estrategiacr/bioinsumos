@@ -1,94 +1,96 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bioinsumos Costa Rica - Experiencias e Innovación</title>
-    
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
-    
-    <link rel="stylesheet" href="css/main.css">
-    <link rel="stylesheet" href="css/experiencias.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Repositorio de Experiencias | Bioinsumos Costa Rica</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <link rel="stylesheet" href="css/experiencias.css" />
 </head>
 <body class="experiencias-page">
 
-    <header class="topbar">
-        <div class="logo-wrap">🌿 Bioinsumos CR</div>
-        <button class="menu-toggle" id="menuToggle"><span></span><span></span><span></span></button>
-        <nav class="nav" id="mainNav">
-          <a href="index.html">Inicio</a>
-          <a href="conocimiento.html" class="active">Conocimiento</a>
-          <a href="experiencias.html">Experiencias</a>
-        </nav>
-      </header>
+  <!-- CABECERA PRINCIPAL (Sincronizada exactamente con Conocimiento) -->
+  <header class="topbar">
+    <div class="logo-wrap">🌿 Bioinsumos CR</div>
+    <button class="menu-toggle" id="menuToggle"><span></span><span></span><span></span></button>
+    <nav class="nav" id="mainNav">
+      <a href="index.html">Inicio</a>
+      <a href="conocimiento.html">Conocimiento</a>
+      <a href="experiencias.html" class="active">Experiencias</a>
+    </nav>
+  </header>
 
-<main class="page-content">
-    <!-- HERO CONTEXTUAL DE EXPERIENCIAS -->
-    <section class="hero hero-experiencias">
-        <div class="hero-content">
-            <h1>Experiencias e Innovación</h1>
-            <p>La bitácora práctica del agro costarricense. Monitoreo directo de casos de éxito, validaciones tecnológicas en parcelas demostrativas y el día a día de las biofábricas nacionales para evitar la pérdida del conocimiento de campo.</p>
+  <!-- SECCIÓN HERO UNIFICADA (Con Barra de Búsqueda y Selector de Escritorio) -->
+  <section class="dashboard-hero">
+    <div class="hero-content">
+      <h1>Experiencias e Innovación</h1>
+      <p>La bitácora práctica del agro costarricense. Monitoreo directo de casos de éxito, validaciones en parcelas demostrativas y el día a día de las biofábricas nacionales.</p>
+      
+      <!-- Buscador y Filtro para Escritorio -->
+      <div class="search-container-desktop">
+        <div class="search-box-composite">
+          <div class="search-box">
+            <input type="text" class="global-exp-search" placeholder="Buscar por finca, cultivo o bioinsumo..." />
+            <button aria-label="Buscar"><i class="fa-solid fa-magnifying-glass"></i></button>
+          </div>
+          <select class="global-exp-select">
+            <option value="Todos">Todas las Provincias</option>
+            <option value="San José">San José</option>
+            <option value="Alajuela">Alajuela</option>
+            <option value="Cartago">Cartago</option>
+            <option value="Heredia">Heredia</option>
+            <option value="Guanacaste">Guanacaste</option>
+            <option value="Puntarenas">Puntarenas</option>
+            <option value="Limón">Limón</option>
+          </select>
         </div>
-    </section>
-
-    <!-- BARRA DE FILTRADO (ESCRITORIO) -->
-    <section class="desktop-filter-bar">
-        <div class="filter-wrapper">
-            <div class="search-box">
-                <input type="text" class="global-exp-search" placeholder="Buscar por organización, cultivo, bioinsumo o plaga..." />
-                <button aria-label="Buscar"><i class="fa-solid fa-magnifying-glass"></i></button>
-            </div>
-            <select class="global-exp-select">
-                <option value="Todos">Todas las Provincias</option>
-                <option value="San José">San José</option>
-                <option value="Alajuela">Alajuela</option>
-                <option value="Cartago">Cartago</option>
-                <option value="Heredia">Heredia</option>
-                <option value="Guanacaste">Guanacaste</option>
-                <option value="Puntarenas">Puntarenas</option>
-                <option value="Limón">Limón</option>
-            </select>
-            <div class="counter-badge">Casos registrados: <span id="totalItemsCount">0</span></div>
-        </div>
-    </section>
-    
-    <!-- GRID DE BITÁCORAS / FEED PRINCIPAL -->
-    <div class="view-content-wrapper">
-        <section class="social-feed-grid" id="socialFeedContainer">
-            <!-- Cargado dinámicamente vía JavaScript -->
-        </section>
+      </div>
     </div>
-</main>
+  </section>
 
-<!-- FRANJA FLOTANTE INFERIOR CONTINUA (EXCLUSIVA MÓVIL) -->
-<div class="mobile-floating-dock">
+  <!-- CONTENIDO PRINCIPAL: FEED SOCIAL ESTILO RED SOCIAL -->
+  <main class="feed-main-container">
+    <div class="feed-status-header">
+      <p id="totalItemsDisplay">Casos de campo registrados: <b>0</b></p>
+    </div>
+    
+    <!-- Columna Central Limpia (Estilo UI Instagram / Facebook) -->
+    <div class="social-feed-stream" id="socialFeedContainer">
+      <!-- Inyección dinámica de bitácoras -->
+    </div>
+  </main>
+
+  <!-- FRANJA COMPACTA INFERIOR DE NAVEGACIÓN FIJA (MÓVIL) -->
+  <div class="mobile-floating-dock">
     <div class="mobile-search-bar">
-        <input type="text" class="global-exp-search" placeholder="Buscar en bitácora práctica..." />
-        <i class="fa-solid fa-magnifying-glass"></i>
+      <input type="text" class="global-exp-search" placeholder="Buscar en la bitácora..." />
+      <i class="fa-solid fa-magnifying-glass" style="color: var(--text-light); padding-right: 0.5rem;"></i>
     </div>
     <div class="mobile-filter-row">
-        <button class="mobile-action-btn" id="refreshFeedBtn" title="Actualizar Feed">
-            <i class="fa-solid fa-arrows-rotate"></i> <span class="mobile-btn-label">Actualizar</span>
-        </button>
-        <button class="mobile-trigger-select" id="mobileRegionBtn" title="Filtrar Región">
-            <i class="fa-solid fa-filter"></i> <span class="mobile-btn-label">Provincias</span>
-        </button>
+      <button class="mobile-action-btn" id="refreshFeedBtn" title="Sincronizar Datos">
+        <i class="fa-solid fa-arrows-rotate"></i> <span>Sincronizar</span>
+      </button>
+      <button class="mobile-trigger-select" id="mobileRegionBtn" title="Filtrar por Región">
+        <i class="fa-solid fa-location-dot"></i> <span>Provincias</span>
+      </button>
     </div>
-</div>
+  </div>
 
-<!-- MODAL FLOTANTE PROVINCIAS EN CELULARES -->
-<div class="region-picker-modal hidden" id="mobileRegionModal">
+  <!-- MODAL BOTTOM-SHEET PARA SELECCIÓN DE PROVINCIAS EN MÓVIL -->
+  <div class="region-picker-modal hidden" id="mobileRegionModal">
     <div class="region-picker-box">
-        <h4>Filtrar por Provincia</h4>
-        <div class="region-options-grid" id="mobileRegionOptions"></div>
-        <button id="closeRegionModal">Aplicar Filtro</button>
+      <h4>Filtrar por Provincia</h4>
+      <div class="region-options-grid" id="mobileRegionOptions"></div>
+      <button id="closeRegionModal">Aplicar Filtro Geográfico</button>
     </div>
-</div>
+  </div>
 
-<footer class="main-footer">
+  <!-- PIE DE PÁGINA INSTITUTIONAL (Idéntico a Conocimiento) -->
+  <footer class="main-footer">
     <div class="footer-grid">
       <div class="footer-brand">
         <h3>Bioinsumos Costa Rica</h3>
@@ -114,6 +116,7 @@
       <p>&copy; 2026 Bioinsumos CR. Todos los derechos reservados.</p>
     </div>
   </footer>
-<script src="js/experiencias.js"></script>
+
+  <script src="js/experiencias.js"></script>
 </body>
 </html>

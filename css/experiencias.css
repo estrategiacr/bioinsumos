@@ -1,8 +1,7 @@
-/* ==========================================================================
-   HOJA DE ESTILOS: PILAR 2 - EXPERIENCIAS E INNOVACIÓN (BIOINSUMOS CR)
-   ========================================================================== */
-
-   :root {
+/* =========================================================
+   VARIABLES GLOBALES (Bioinsumos Costa Rica - Identidad Corporativa)
+========================================================= */
+:root {
     --primary: #166534;        
     --primary-dark: #14532d;   
     --accent: #22c55e;         
@@ -13,162 +12,25 @@
     --text-light: #6b7280;          
     --border: #e5e7eb;
     --shadow: 0 10px 30px rgba(22, 101, 52, 0.06);
-    --radius: 16px;
-    --transition: all 0.25s ease;
-}
-
-body {
+  }
+  
+  * { box-sizing: border-box; }
+  
+  body {
     font-family: 'Inter', sans-serif;
-    background-color: var(--bg);
+    background: var(--bg);
     color: var(--text-dark);
-    margin: 0; padding: 0;
-}
-
-/* Hero Sección Experiencias */
-.hero-experiencias {
-    background: linear-gradient(rgba(22, 101, 52, 0.7), rgba(15, 23, 42, 0.55)), url("../assets/images/hero.png");
-    background-size: cover; 
-    background-position: center;
-    color: white; 
-    padding: 4.5rem 8%; 
-    text-align: center;
-}
-.hero-content h1 { font-size: 2.6rem; font-weight: 800; margin-bottom: 0.75rem; letter-spacing: -0.02em; }
-.hero-content p { font-size: 1.05rem; line-height: 1.5; max-width: 800px; margin: 0 auto; opacity: 0.95; }
-
-/* Barra de Filtros Escritorio */
-.desktop-filter-bar { padding: 2rem 5% 0.5rem; }
-.filter-wrapper {
-    background: var(--surface); padding: 0.75rem 1.25rem; border-radius: var(--radius);
-    border: 1px solid var(--border); box-shadow: var(--shadow);
-    display: flex; align-items: center; gap: 1.5rem;
-}
-.filter-wrapper .search-box {
-    flex: 1; display: flex; background: var(--surface-2); border: 1px solid var(--border); border-radius: 12px; padding: 0.25rem 0.75rem; align-items: center;
-}
-.filter-wrapper .search-box input {
-    flex: 1; border: none; background: transparent; outline: none; padding: 0.5rem; font-size: 0.9rem;
-}
-.filter-wrapper .search-box button { border: none; background: transparent; color: var(--primary); cursor: pointer; }
-.filter-wrapper select {
-    padding: 0.65rem 1.2rem; border-radius: 12px; border: 1px solid var(--border); background: var(--surface-2); outline: none; font-weight: 500; color: var(--text-dark);
-}
-.counter-badge {
-    padding: 0.5rem 0.75rem; font-size: 0.85rem; font-weight: 700; color: var(--primary); background: rgba(22, 101, 52, 0.05); border-radius: 8px;
-}
-
-/* ==========================================================================
-   GRID DE PUBLICACIONES (ESTILO BITÁCORA EDITORIAL)
-   ========================================================================== */
-.view-content-wrapper { padding: 1.5rem 5% 5rem; }
-
-.social-feed-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-    gap: 2.5rem;
-    max-width: 1400px;
-    margin: 0 auto;
-}
-
-.social-card {
-    background: var(--surface); border: 1px solid var(--border);
-    border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow);
-    display: flex; flex-direction: column; transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-.social-card:hover { transform: translateY(-4px); box-shadow: 0 15px 35px rgba(22,101,52,0.1); }
-
-.social-card-header {
-    padding: 1.25rem; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--surface-2);
-}
-.header-profile-info { display: flex; flex-direction: column; }
-.profile-title { font-weight: 800; font-size: 1.05rem; color: var(--text-dark); }
-.profile-subtitle { font-size: 0.78rem; color: var(--text-light); font-weight: 600; margin-top: 0.15rem; }
-
-.social-card-media {
-    position: relative; width: 100%; aspect-ratio: 4 / 3; background-color: #0f172a; overflow: hidden;
-}
-.social-card-media img { width: 100%; height: 100%; object-fit: cover; }
-.social-status-tag {
-    position: absolute; top: 12px; right: 12px; background: rgba(22, 101, 52, 0.9);
-    color: white; padding: 0.35rem 0.75rem; border-radius: 6px; font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;
-}
-
-.social-interactions-bar {
-    padding: 1rem 1.25rem 0.25rem; display: flex; gap: 1.2rem; font-size: 1.35rem; color: var(--text-dark);
-}
-.action-icon-btn { cursor: pointer; transition: color 0.15s ease; }
-.action-icon-btn.liked { color: #dc2626; }
-
-.social-card-body { padding: 0 1.25rem 1.5rem 1.25rem; display: flex; flex-direction: column; gap: 0.5rem; flex-grow: 1; }
-.likes-counter { font-size: 0.88rem; font-weight: 700; color: var(--text-dark); }
-.social-caption-text { font-size: 0.92rem; line-height: 1.5; color: #374151; margin: 0; }
-.social-tags-row { display: flex; flex-wrap: wrap; gap: 0.35rem; margin-top: 0.4rem; }
-.social-pill { background: var(--surface-2); border: 1px solid var(--border); color: var(--primary); font-size: 0.72rem; font-weight: 600; padding: 0.2rem 0.5rem; border-radius: 4px; }
-
-/* ==========================================================================
-   ESTILOS DOCK FLOTANTE CONTINUO (MÓVIL)
-   ========================================================================== */
-.mobile-floating-dock { display: none; }
-.region-picker-modal { display: none; }
-
-@media (max-width: 768px) {
-    .desktop-filter-bar { display: none !important; }
-    body { padding-bottom: 120px; }
-    
-    .hero-experiencias h1 { font-size: 1.9rem !important; }
-    .hero-experiencias p { font-size: 0.9rem !important; }
-    .social-feed-grid { grid-template-columns: 1fr; gap: 1.5rem; }
-
-    /* Franja Fina Sin Despegues de Bordes Laterales */
-    .mobile-floating-dock {
-        display: flex; flex-direction: column; position: fixed; bottom: 0; left: 0; right: 0;
-        background: rgba(255, 255, 255, 0.97); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-        border-top: 1px solid var(--border); border-radius: 16px 16px 0 0;
-        box-shadow: 0 -8px 30px rgba(15, 23, 42, 0.08); padding: 0.6rem 1rem; gap: 0.5rem; z-index: 9999;
-    }
-
-    .mobile-search-bar {
-        display: flex; background: #f1f5f9; border-radius: 10px; padding: 0.2rem 0.6rem; align-items: center;
-    }
-    .mobile-search-bar input {
-        flex: 1; border: none; background: transparent; outline: none; padding: 0.4rem; font-size: 0.85rem;
-    }
-    .mobile-search-bar i { color: var(--text-light); padding-right: 0.25rem; }
-
-    .mobile-filter-row { display: flex; justify-content: space-between; gap: 0.5rem; }
-    .mobile-filter-row .mobile-action-btn, .mobile-filter-row .mobile-trigger-select {
-        flex: 1; display: flex; align-items: center; justify-content: center; gap: 0.4rem;
-        padding: 0.55rem; border-radius: 8px; font-size: 0.85rem; font-weight: 600;
-        background: #f8fafc; color: var(--text-dark); border: 1px solid var(--border); cursor: pointer;
-    }
-    
-    .mobile-filter-row .mobile-trigger-select { color: var(--primary); }
-
-    /* Ventana emergente de provincias en móvil */
-    .region-picker-modal {
-        position: fixed; inset: 0; background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(4px);
-        z-index: 10000; display: flex; align-items: flex-end; justify-content: center;
-    }
-    .region-picker-box {
-        background: white; width: 100%; border-radius: 20px 20px 0 0; padding: 1.5rem;
-        box-shadow: 0 -10px 25px rgba(0,0,0,0.15); display: flex; flex-direction: column; gap: 1rem;
-    }
-    .region-picker-box h4 { margin: 0; font-size: 1.1rem; font-weight: 700; color: var(--text-dark); }
-    .region-options-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.5rem; }
-    .region-opt-btn {
-        padding: 0.6rem; border-radius: 8px; border: 1px solid var(--border); background: var(--surface-2);
-        font-size: 0.85rem; font-weight: 600; cursor: pointer; text-align: center; color: var(--text-dark);
-    }
-    .region-opt-btn.active { background: var(--primary); color: white; border-color: var(--primary); }
-    #closeRegionModal {
-        background: var(--primary); color: white; border: none; padding: 0.75rem; border-radius: 10px; font-weight: 700; cursor: pointer;
-    }
-}
-
-/* =========================================================
-   HEADER / TOPBAR
-========================================================= */
-.topbar {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+  
+  /* =========================================================
+     HEADER / NAVIGATION
+  ========================================================= */
+  .topbar {
     position: sticky;
     top: 0;
     z-index: 2000;
@@ -187,11 +49,7 @@ body {
     color: var(--primary);
   }
   
-  .nav { 
-    display: flex; 
-    gap: 1.5rem; 
-  }
-  
+  .nav { display: flex; gap: 1.5rem; }
   .nav a {
     text-decoration: none;
     color: #374151;
@@ -200,67 +58,225 @@ body {
     border-radius: 12px;
     transition: .25s ease;
   }
-  
   .nav a:hover, .nav a.active {
     color: var(--primary);
     background: rgba(22, 101, 52, 0.08);
   }
-
-.hidden { display: none !important; }
-
-/* =========================================================
-   FOOTER INSTITUCIONAL COMPLETO
-========================================================= */
-.main-footer {
-    background: #0f172a;
-    color: #94a3b8;
-    padding: 3rem 5% 2rem;
+  
+  /* =========================================================
+     HERO ADAPTADO CON BUSCADOR COMPUESTO
+  ========================================================= */
+  .dashboard-hero {
+    background: linear-gradient(rgba(22, 101, 52, 0.65), rgba(15, 23, 42, 0.6)), url("../assets/images/hero.png");
+    background-size: cover;
+    background-position: center;
+    min-height: 32vh;
+    display: flex;
+    align-items: center;
+    padding: 3rem 5%;
+    color: white;
+  }
+  
+  .hero-content { width: 100%; max-width: 800px; }
+  .hero-content h1 { font-size: 2.3rem; font-weight: 800; margin: 0 0 0.5rem 0; letter-spacing: -0.02em; }
+  .hero-content p { font-size: 1.05rem; line-height: 1.5; color: rgba(255, 255, 255, 0.9); margin: 0 0 1.5rem 0; }
+  
+  .search-container-desktop { display: block; }
+  .search-box-composite {
+    background: var(--surface);
+    padding: 0.35rem;
+    border-radius: 14px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+    display: flex;
+    gap: 0.5rem;
+    max-width: 650px;
+  }
+  
+  .search-box-composite .search-box { flex: 1; display: flex; align-items: center; }
+  .search-box-composite input {
+    width: 100%; border: none; outline: none; padding: 0.6rem; font-size: 0.95rem; color: var(--text-dark);
+  }
+  .search-box-composite button {
+    background: transparent; border: none; color: var(--primary); cursor: pointer; padding-right: 0.5rem;
+  }
+  .search-box-composite select {
+    border: none; background: var(--surface-2); border-left: 1px solid var(--border);
+    padding: 0 1rem; font-size: 0.9rem; font-weight: 600; color: var(--text-dark); outline: none; border-radius: 0 10px 10px 0;
+  }
+  
+  /* =========================================================
+     FEED CENTRAL: FILOSOFÍA INSTAGRAM / FACEBOOK
+  ========================================================= */
+  .feed-main-container {
+    flex: 1;
+    max-width: 680px; /* Ancho idéntico al feed central clásico de redes sociales */
+    width: 100%;
+    margin: 2rem auto 5rem;
+    padding: 0 1rem;
+  }
+  
+  .feed-status-header {
+    text-align: center;
+    margin-bottom: 1.5rem;
+    color: var(--text-light);
     font-size: 0.9rem;
-    border-top: 4px solid var(--primary);
   }
   
-  .footer-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: 2rem;
-    margin-bottom: 2rem;
+  .social-feed-stream {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem; /* Separación clara entre publicaciones consecutivas */
   }
   
-  .footer-brand h3 {
-    color: white;
-    margin: 0 0 0.75rem 0;
-    font-size: 1.25rem;
+  /* LA TARJETA SOCIAL */
+  .social-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px; /* Esquinas ligeramente suavizadas, estilo feed limpio */
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
   }
   
-  .footer-links h4 {
-    color: white;
-    margin: 0 0 1rem 0;
-    font-size: 1rem;
+  /* Cabecera del Post */
+  .social-card-header {
+    padding: 0.9rem 1.2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #f1f5f9;
   }
   
-  .footer-links ul {
-    list-style: none;
-    padding: 0;
+  .header-profile-info { display: flex; flex-direction: column; }
+  .profile-title { font-weight: 700; font-size: 0.95rem; color: var(--text-dark); }
+  .profile-subtitle { font-size: 0.75rem; color: var(--text-light); margin-top: 0.1rem; font-weight: 500; }
+  .post-time-stamp { font-size: 0.75rem; color: var(--text-light); font-weight: 500; }
+  
+  /* Contenedor Multimedia Flexible */
+  .social-card-media {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 4 / 3; /* Proporción balanceada para fotos de fincas */
+    background: #0f172a;
+  }
+  .social-card-media img { width: 100%; height: 100%; object-fit: cover; }
+  
+  /* Etiqueta de validación técnica en la esquina */
+  .social-status-tag {
+    position: absolute; top: 12px; right: 12px;
+    background: rgba(22, 101, 52, 0.92); color: white;
+    padding: 0.3rem 0.6rem; border-radius: 6px;
+    font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;
+  }
+  
+  /* Bloque Informativo Inferior (Caption) */
+  .social-card-body {
+    padding: 1.2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+  
+  .social-caption-text {
+    font-size: 0.92rem;
+    line-height: 1.5;
+    color: #2c3e50;
     margin: 0;
   }
+  .social-caption-text b { color: #000; font-weight: 700; margin-right: 0.3rem; }
   
-  .footer-links ul li {
-    margin-bottom: 0.5rem;
+  .social-tags-row { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+  .social-pill {
+    color: #1d4ed8; /* Tono azul clásico de hipervínculos/etiquetas en redes sociales */
+    font-size: 0.85rem; font-weight: 600; text-decoration: none;
   }
   
-  .footer-links ul li a {
-    color: #94a3b8;
-    text-decoration: none;
-    transition: color 0.2s;
+  /* =========================================================
+     SISTEMA DE DISEÑO RESPONSIVO (BARRA INFERIOR DE LADO A LADO)
+  ========================================================= */
+  .mobile-floating-dock { display: none; }
+  .region-picker-modal { display: none; }
+  
+  .menu-toggle {
+    display: none; flex-direction: column; gap: 4px; background: none; border: none; cursor: pointer;
+  }
+  .menu-toggle span { width: 22px; height: 3px; background: var(--primary); border-radius: 2px; }
+  
+  @media (max-width: 768px) {
+    .search-container-desktop { display: none !important; }
+    body { padding-bottom: 120px; }
+    .menu-toggle { display: flex; }
+    
+    .nav {
+      display: none; position: absolute; top: 100%; left: 0; right: 0;
+      background: white; flex-direction: column; padding: 1rem 5%;
+      border-bottom: 1px solid var(--border); box-shadow: 0 10px 15px rgba(0,0,0,0.05); z-index: 999;
+    }
+    .nav.open { display: flex; }
+  
+    /* Muelle Flotante Fino (Lado a Lado sin separación de bordes) */
+    .mobile-floating-dock {
+      display: flex;
+      flex-direction: column;
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      background: rgba(255, 255, 255, 0.96);
+      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      border-top: 1px solid var(--border);
+      padding: 0.6rem 5% calc(0.6rem + env(safe-area-inset-bottom, 0px));
+      gap: 0.5rem;
+      z-index: 9999;
+      box-shadow: 0 -8px 25px rgba(15, 23, 42, 0.08);
+    }
+  
+    .mobile-search-bar {
+      display: flex; background: #f1f5f9; border-radius: 10px; padding: 0.2rem 0.5rem; align-items: center;
+    }
+    .mobile-search-bar input {
+      flex: 1; background: transparent; border: none; outline: none; padding: 0.4rem; font-size: 0.9rem; color: var(--text-dark);
+    }
+  
+    .mobile-filter-row { display: flex; justify-content: space-between; gap: 0.5rem; }
+    .mobile-filter-row button {
+      flex: 1; display: flex; align-items: center; justify-content: center; gap: 0.4rem;
+      padding: 0.55rem; border-radius: 10px; font-size: 0.85rem; font-weight: 600;
+      background: #f8fafc; color: var(--text-dark); border: 1px solid var(--border); cursor: pointer;
+    }
+    .mobile-filter-row .mobile-trigger-select { color: var(--primary); border-color: rgba(22, 101, 52, 0.2); }
+  
+    /* Modal Bottom-Sheet */
+    .region-picker-modal {
+      position: fixed; inset: 0; background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(4px);
+      z-index: 10000; display: flex; align-items: flex-end; justify-content: center;
+    }
+    .region-picker-box {
+      background: white; width: 100%; border-radius: 20px 20px 0 0; padding: 1.5rem;
+      box-shadow: 0 -10px 25px rgba(0,0,0,0.15); display: flex; flex-direction: column; gap: 1rem;
+    }
+    .region-picker-box h4 { margin: 0; font-size: 1.1rem; color: var(--text-dark); font-weight: 700; }
+    .region-options-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.5rem; }
+    .region-opt-btn {
+      padding: 0.6rem; border-radius: 8px; border: 1px solid var(--border); background: var(--surface-2);
+      font-size: 0.85rem; font-weight: 600; cursor: pointer; text-align: center; color: var(--text-dark);
+    }
+    .region-opt-btn.active { background: var(--primary); color: white; border-color: var(--primary); }
+    #closeRegionModal {
+      background: var(--primary); color: white; border: none; padding: 0.75rem; border-radius: 10px; font-weight: 700; cursor: pointer;
+    }
   }
   
-  .footer-links ul li a:hover {
-    color: var(--accent);
-  }
+  .hidden { display: none !important; }
   
-  .footer-bottom {
-    border-top: 1px solid #334155;
-    padding-top: 1.5rem;
-    text-align: center;
-    font-size: 0.8rem;
+  /* =========================================================
+     FOOTER (Sincronizado Exactamente)
+  ========================================================= */
+  .main-footer {
+    background: #0f172a; color: #94a3b8; padding: 3rem 5% 2rem; font-size: 0.9rem; border-top: 4px solid var(--primary);
   }
+  .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 2rem; margin-bottom: 2rem; }
+  .footer-brand h3 { color: white; margin: 0 0 0.75rem 0; font-size: 1.25rem; }
+  .footer-links h4 { color: white; margin: 0 0 1rem 0; font-size: 1rem; }
+  .footer-links ul { list-style: none; padding: 0; margin: 0; }
+  .footer-links ul li { margin-bottom: 0.5rem; }
+  .footer-links ul li a { color: #94a3b8; text-decoration: none; transition: color 0.2s; }
+  .footer-links ul li a:hover { color: var(--accent); }
+  .footer-bottom { border-top: 1px solid #334155; padding-top: 1.5rem; text-align: center; font-size: 0.8rem; }
