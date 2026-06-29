@@ -14,14 +14,10 @@
 <body>
 
   <header class="topbar">
-    <div class="logo-wrap">
-      🌿 Bioinsumos CR
-    </div>
+    <div class="logo-wrap">🌿 Bioinsumos CR</div>
 
     <button class="menu-toggle" id="menuToggle" aria-label="Abrir menú">
-      <span></span>
-      <span></span>
-      <span></span>
+      <span></span><span></span><span></span>
     </button>
 
     <nav class="nav" id="mainNav">
@@ -35,50 +31,52 @@
 
   <section class="dashboard-hero">
     <div style="position: relative; z-index: 2; width: 100%;">
-      <span class="hero-tag">Pilar 1: Gestión de Información</span>
-      <h1 style="font-size: 2.8rem; font-weight: 800; line-height: 1.2; max-width: 700px;">Centro Nacional de Conocimiento sobre Bioinsumos</h1>
-      <p style="margin-top: 0.5rem; font-size: 1.1rem; opacity: 0.9;">Acceda a manuales técnicos, videos explicativos, webinars y fichas de capacitación.</p>
+      <span class="hero-tag">Pilar 1: Biblioteca de Recursos</span>
+      <h1 style="font-size: 2.4rem; font-weight: 800; line-height: 1.2;">Centro Nacional de Conocimiento</h1>
+      <p style="margin-top: 0.4rem; font-size: 1rem; opacity: 0.95;">Fichas de capacitación, documentación científica y material multimedia.</p>
       
       <div class="search-box">
-        <input type="text" id="resourceSearch" placeholder="Buscar Trichoderma, compostaje, microorganismos..." />
+        <input type="text" id="resourceSearch" placeholder="Buscar por título, palabra clave o tema..." />
         <button id="resourceSearchBtn"><i class="fa-solid fa-magnifying-glass"></i> Buscar</button>
       </div>
     </div>
   </section>
 
   <div class="map-tabs-container">
-    <button class="map-tab-btn active" data-cat="Todos">Todos</button>
-    <button class="map-tab-btn" data-cat="Capacitación">🎓 Capacitación</button>
-    <button class="map-tab-btn" data-cat="Documentación">📚 Documentación</button>
-    <button class="map-tab-btn" data-cat="Fichas">📄 Fichas Técnicas</button>
+    <button class="map-tab-btn active" data-cat="Todos">Todos los Recursos</button>
+    <button class="map-tab-btn" data-cat="Tecnica">📚 Fichas Técnicas</button>
+    <button class="map-tab-btn" data-cat="Multimedia">🎥 Multimedia</button>
+    <button class="map-tab-btn" data-cat="Capacitacion">🎓 Capacitación</button>
   </div>
 
-  <main class="container" style="padding: 0 5% 5rem 5%;">
-    <p id="resourceCount" style="color: var(--muted); font-weight: 500; margin-bottom: 1.5rem;"></p>
+  <main style="padding: 0 5%;">
+    <p id="resourceCount" style="color: var(--muted); font-weight: 500; margin-bottom: 1.5rem; text-align: center;"></p>
     
     <div class="tech-grid" id="recursosGrid"></div>
+
+    <div class="pagination-container" id="paginationControls"></div>
   </main>
 
   <footer class="footer">
     <div>
-      <h3 style="color: var(--primary); margin-bottom: 0.75rem;">Bioinsumos Costa Rica</h3>
-      <p style="color: var(--muted); font-size: 0.95rem;">Plataforma nacional para la promoción, estandarización y conocimiento técnico de alternativas biológicas en el sector agropecuario.</p>
+      <h3 style="color: var(--primary); margin-bottom: 0.5rem;">Bioinsumos Costa Rica</h3>
+      <p style="color: var(--muted); font-size: 0.9rem;">Repositorio oficial para la estandarización y divulgación técnica de alternativas biológicas y sostenibles.</p>
     </div>
     <div>
-      <h4 style="margin-bottom: 0.75rem;">Instituciones</h4>
-      <p style="color: var(--text); font-size: 0.9rem; line-height: 1.8;">MAG · IICA · Universidades Públicas</p>
+      <h4 style="margin-bottom: 0.5rem;">Ecosistema</h4>
+      <p style="color: var(--text); font-size: 0.85rem; line-height: 1.6;">Ministerio de Agricultura y Ganadería (MAG)<br>IICA · Red de Universidades Públicas</p>
     </div>
     <div>
-      <h4 style="margin-bottom: 0.75rem;">Contacto</h4>
-      <p style="color: var(--muted); font-size: 0.9rem;">proyecto@bioinsumos.cr</p>
+      <h4 style="margin-bottom: 0.5rem;">Soporte</h4>
+      <p style="color: var(--muted); font-size: 0.85rem;">proyecto@bioinsumos.cr</p>
     </div>
   </footer>
 
   <div class="resource-modal hidden" id="resourceModal">
     <div class="modal-box">
       <div style="padding: 1rem; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; background: var(--surface-2);">
-        <strong id="modalTitle" style="color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 70%;">Visualizador Multimedia</strong>
-        <div style="display: flex; gap: 0.5rem;">
+        <strong id="modalTitle" style="color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 70%;">Visualizador de Recurso</strong>
+        <div style="display: flex; gap: 0.4rem;">
           <button id="fullscreenBtn" style="background: white; border: 1px solid var(--border); padding: 0.5rem; border-radius: 8px; cursor: pointer; width: 40px; height: 40px;">⛶</button>
           <button id="closeModal" style="background: #ef4444; color: white; border: none; padding: 0.5rem; border-radius: 8px; cursor: pointer; width: 40px; height: 40px;">&times;</button>
         </div>
