@@ -3,38 +3,42 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Repositorio de Experiencias | Bioinsumos Costa Rica</title>
+  <title>Experiencias | AgroLINC</title>
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  
+  <link rel="stylesheet" href="css/index.css" />
   <link rel="stylesheet" href="css/experiencias.css" />
 </head>
 <body class="experiencias-page">
 
-  <!-- CABECERA PRINCIPAL (Sincronizada exactamente con Conocimiento) -->
   <header class="topbar">
-    <div class="logo-wrap">🌿 Bioinsumos CR</div>
-    <button class="menu-toggle" id="menuToggle"><span></span><span></span><span></span></button>
+    <div class="logo-wrap">
+      <img src="assets/images/agrolinc.svg" alt="AgroLINC" class="institution-logo">
+    </div>
+    <button class="menu-toggle" id="menuToggle">
+      <span></span><span></span><span></span>
+    </button>
     <nav class="nav" id="mainNav">
       <a href="index.html">Inicio</a>
-      <a href="conocimiento.html">Conocimiento</a>
+      <a href="index.html#ruta">Mi Ruta</a>
+      <a href="agroideas.html">AgroIdeas</a>
       <a href="experiencias.html" class="active">Experiencias</a>
     </nav>
   </header>
 
-  <!-- SECCIÓN HERO UNIFICADA (Con Barra de Búsqueda y Selector de Escritorio) -->
   <section class="dashboard-hero">
     <div class="hero-content">
-      <h1>Experiencias e Innovación</h1>
-      <p>La bitácora práctica del agro costarricense. Monitoreo directo de casos de éxito, validaciones en parcelas demostrativas y el día a día de las biofábricas nacionales.</p>
+      <h1>Experiencias de Campo</h1>
+      <p>La bitácora viva del agro. Monitoreo en tiempo real de innovaciones aplicadas, parcelas demostrativas y transferencia de conocimiento técnico-empírico directo.</p>
       
-      <!-- Buscador y Filtro para Escritorio -->
       <div class="search-container-desktop">
         <div class="search-box-composite">
           <div class="search-box">
-            <input type="text" class="global-exp-search" placeholder="Buscar por finca, cultivo o bioinsumo..." />
+            <input type="text" class="global-exp-search" placeholder="Buscar fincas, tecnologías, cultivos..." />
             <button aria-label="Buscar"><i class="fa-solid fa-magnifying-glass"></i></button>
           </div>
           <select class="global-exp-select">
@@ -52,70 +56,61 @@
     </div>
   </section>
 
-  <!-- CONTENIDO PRINCIPAL: FEED SOCIAL ESTILO RED SOCIAL -->
   <main class="feed-main-container">
     <div class="feed-status-header">
-      <p id="totalItemsDisplay">Casos de campo registrados: <b>0</b></p>
+      <p id="totalItemsDisplay">Casos prácticos visualizados: <b>0</b></p>
     </div>
     
-    <!-- Columna Central Limpia (Estilo UI Instagram / Facebook) -->
     <div class="social-feed-stream" id="socialFeedContainer">
-      <!-- Inyección dinámica de bitácoras -->
-    </div>
+      </div>
   </main>
 
-  <!-- FRANJA COMPACTA INFERIOR DE NAVEGACIÓN FIJA (MÓVIL) -->
   <div class="mobile-floating-dock">
     <div class="mobile-search-bar">
-      <input type="text" class="global-exp-search" placeholder="Buscar en la bitácora..." />
-      <i class="fa-solid fa-magnifying-glass" style="color: var(--text-light); padding-right: 0.5rem;"></i>
+      <i class="fa-solid fa-magnifying-glass" style="color: var(--muted); margin-left: 0.5rem;"></i>
+      <input type="text" class="global-exp-search" placeholder="Buscar en bitácora..." />
     </div>
     <div class="mobile-filter-row">
-      <button class="mobile-action-btn" id="refreshFeedBtn" title="Sincronizar Datos">
-        <i class="fa-solid fa-arrows-rotate"></i> <span>Sincronizar</span>
+      <button class="mobile-action-btn" id="refreshFeedBtn">
+        <i class="fa-solid fa-sync"></i> <span>Actualizar</span>
       </button>
-      <button class="mobile-trigger-select" id="mobileRegionBtn" title="Filtrar por Región">
-        <i class="fa-solid fa-location-dot"></i> <span>Provincias</span>
+      <button class="mobile-trigger-select" id="mobileRegionBtn">
+        <i class="fa-solid fa-map-pin"></i> <span>Provincias</span>
       </button>
     </div>
   </div>
 
-  <!-- MODAL BOTTOM-SHEET PARA SELECCIÓN DE PROVINCIAS EN MÓVIL -->
   <div class="region-picker-modal hidden" id="mobileRegionModal">
     <div class="region-picker-box">
-      <h4>Filtrar por Provincia</h4>
+      <h4>Filtrar por Ubicación</h4>
       <div class="region-options-grid" id="mobileRegionOptions"></div>
-      <button id="closeRegionModal">Aplicar Filtro Geográfico</button>
+      <button id="closeRegionModal">Aplicar Configuración</button>
     </div>
   </div>
 
-  <!-- PIE DE PÁGINA INSTITUTIONAL (Idéntico a Conocimiento) -->
-  <footer class="main-footer">
-    <div class="footer-grid">
-      <div class="footer-brand">
-        <h3>Bioinsumos Costa Rica</h3>
-        <p>Plataforma para el fomento, investigación y desarrollo de alternativas biológicas en el sector agropecuario nacional.</p>
-      </div>
-      <div class="footer-links">
-        <h4>Secciones</h4>
-        <ul>
-          <li><a href="index.html">Inicio</a></li>
-          <li><a href="conocimiento.html">Centro de Conocimiento</a></li>
-          <li><a href="experiencias.html">Repositorio de Experiencias</a></li>
-        </ul>
-      </div>
-      <div class="footer-links">
-        <h4>Contacto</h4>
-        <ul>
-          <li><i class="fa-solid fa-envelope"></i> info@bioinsumos.cr</li>
-          <li><i class="fa-solid fa-location-dot"></i> San José, Costa Rica</li>
-        </ul>
+  <footer class="footer">
+    <div class="footer-brand">
+      <h3>AgroLINC</h3>
+      <p>Plataforma de formación, innovación y tecnologías aplicadas para el sector agroalimentario.</p>
+      <div class="footer-institution">
+        <span>Desarrollado por</span>
+        <div class="footer-logos">
+          <img style="height: 65px;" src="assets/images/fablab.png" alt="FabLab">
+        </div>
       </div>
     </div>
-    <div class="footer-bottom">
-      <p>&copy; 2026 Bioinsumos CR. Todos los derechos reservados.</p>
+    <div class="footer-col">
+      <strong>Contacto</strong>
+      <p>fablab@iica.int</p>
+    </div>
+    <div class="footer-col">
+      <strong>Plataforma</strong>
+      <p>Inicio · Mi Ruta · AgroIdeas · Experiencias</p>
     </div>
   </footer>
+  <div class="footer-bottom">
+    © 2026 AgroLINC
+  </div>
 
   <script src="js/experiencias.js"></script>
 </body>
