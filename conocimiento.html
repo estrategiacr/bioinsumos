@@ -15,70 +15,61 @@
 
   <header class="topbar">
     <div class="logo-wrap">🌿 Bioinsumos CR</div>
-
-    <button class="menu-toggle" id="menuToggle" aria-label="Abrir menú">
-      <span></span><span></span><span></span>
-    </button>
-
+    <button class="menu-toggle" id="menuToggle"><span style="width:24px"></span><span></span><span></span></button>
     <nav class="nav" id="mainNav">
       <a href="index.html">Inicio</a>
       <a href="conocimiento.html" class="active">Conocimiento</a>
       <a href="experiencias.html">Experiencias</a>
-      <a href="ecosistema.html">Ecosistema</a>
-      <a href="entorno.html">Entorno</a>
     </nav>
   </header>
 
   <section class="dashboard-hero">
     <div style="position: relative; z-index: 2; width: 100%;">
-      <span class="hero-tag">Pilar 1: Biblioteca de Recursos</span>
-      <h1 style="font-size: 2.4rem; font-weight: 800; line-height: 1.2;">Centro Nacional de Conocimiento</h1>
-      <p style="margin-top: 0.4rem; font-size: 1rem; opacity: 0.95;">Fichas de capacitación, documentación científica y material multimedia.</p>
+      <span class="hero-tag">Pilar 1</span>
+      <h1 style="font-size: 2.1rem; font-weight: 800; letter-spacing: -0.02em;">Centro de Conocimiento</h1>
       
-      <div class="search-box">
-        <input type="text" id="resourceSearch" placeholder="Buscar por título, palabra clave o tema..." />
-        <button id="resourceSearchBtn"><i class="fa-solid fa-magnifying-glass"></i> Buscar</button>
+      <div class="search-container-desktop">
+        <div class="search-box">
+          <input type="text" class="global-search-input" placeholder="Buscar fichas o recursos..." />
+          <button class="global-search-btn"><i class="fa-solid fa-magnifying-glass"></i></button>
+        </div>
       </div>
     </div>
   </section>
 
   <div class="map-tabs-container">
-    <button class="map-tab-btn active" data-cat="Todos">Todos los Recursos</button>
-    <button class="map-tab-btn" data-cat="Tecnica">📚 Fichas Técnicas</button>
-    <button class="map-tab-btn" data-cat="Multimedia">🎥 Multimedia</button>
-    <button class="map-tab-btn" data-cat="Capacitacion">🎓 Capacitación</button>
+    <button class="map-tab-btn active" data-cat="Todos"><i class="fa-solid fa-layer-group"></i> Todos</button>
+    <button class="map-tab-btn" data-cat="Tecnica"><i class="fa-solid fa-book"></i> Fichas Técnicas</button>
+    <button class="map-tab-btn" data-cat="Multimedia"><i class="fa-solid fa-clapperboard"></i> Multimedia</button>
+    <button class="map-tab-btn" data-cat="Capacitacion"><i class="fa-solid fa-graduation-cap"></i> Capacitación</button>
   </div>
 
-  <main style="padding: 0 5%;">
-    <p id="resourceCount" style="color: var(--muted); font-weight: 500; margin-bottom: 1.5rem; text-align: center;"></p>
-    
+  <main style="padding: 0 5% 4rem;">
+    <p id="resourceCount" style="color: var(--muted); font-size: 0.9rem; margin-bottom: 1rem; text-align: center;"></p>
     <div class="tech-grid" id="recursosGrid"></div>
-
     <div class="pagination-container" id="paginationControls"></div>
   </main>
 
-  <footer class="footer">
-    <div>
-      <h3 style="color: var(--primary); margin-bottom: 0.5rem;">Bioinsumos Costa Rica</h3>
-      <p style="color: var(--muted); font-size: 0.9rem;">Repositorio oficial para la estandarización y divulgación técnica de alternativas biológicas y sostenibles.</p>
+  <div class="mobile-floating-dock">
+    <div class="mobile-search-bar">
+      <input type="text" class="global-search-input" placeholder="Buscar recurso biológico..." />
+      <i class="fa-solid fa-magnifying-glass" style="color: var(--muted); padding-right: 0.5rem;"></i>
     </div>
-    <div>
-      <h4 style="margin-bottom: 0.5rem;">Ecosistema</h4>
-      <p style="color: var(--text); font-size: 0.85rem; line-height: 1.6;">Ministerio de Agricultura y Ganadería (MAG)<br>IICA · Red de Universidades Públicas</p>
+    <div class="mobile-filter-row">
+      <button class="map-tab-btn active" data-cat="Todos" title="Todos"><i class="fa-solid fa-square-rss"></i></button>
+      <button class="map-tab-btn" data-cat="Tecnica" title="Fichas Técnicas"><i class="fa-solid fa-file-shield"></i></button>
+      <button class="map-tab-btn" data-cat="Multimedia" title="Multimedia"><i class="fa-solid fa-circle-play"></i></button>
+      <button class="map-tab-btn" data-cat="Capacitacion" title="Capatitación"><i class="fa-solid fa-user-graduate"></i></button>
     </div>
-    <div>
-      <h4 style="margin-bottom: 0.5rem;">Soporte</h4>
-      <p style="color: var(--muted); font-size: 0.85rem;">proyecto@bioinsumos.cr</p>
-    </div>
-  </footer>
+  </div>
 
   <div class="resource-modal hidden" id="resourceModal">
-    <div class="modal-box">
-      <div style="padding: 1rem; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; background: var(--surface-2);">
-        <strong id="modalTitle" style="color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 70%;">Visualizador de Recurso</strong>
-        <div style="display: flex; gap: 0.4rem;">
-          <button id="fullscreenBtn" style="background: white; border: 1px solid var(--border); padding: 0.5rem; border-radius: 8px; cursor: pointer; width: 40px; height: 40px;">⛶</button>
-          <button id="closeModal" style="background: #ef4444; color: white; border: none; padding: 0.5rem; border-radius: 8px; cursor: pointer; width: 40px; height: 40px;">&times;</button>
+    <div class="modal-box" id="modalBox">
+      <div class="modal-header-bar">
+        <strong id="modalTitle">Visualizador de Material</strong>
+        <div style="display: flex; gap: 0.3rem;">
+          <button id="fullscreenBtn" style="background:transparent; border:none; color:inherit; width:35px; height:35px; cursor:pointer;"><i class="fa-solid fa-expand"></i></button>
+          <button id="closeModal" style="background:transparent; border:none; color:#ef4444; width:35px; height:35px; cursor:pointer; font-size:1.2rem;"><i class="fa-solid fa-xmark"></i></button>
         </div>
       </div>
       <div id="modalContent" style="flex: 1; background: #000;"></div>
