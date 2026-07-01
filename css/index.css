@@ -101,7 +101,7 @@ body {
    HERO SECCIÓN HOME
 ========================================================= */
 .hero-home {
-  background: linear-gradient(rgba(94, 119, 35, 0.401), rgba(29, 100, 30, 0.212)), url("../assets/images/hero.png");
+  background: linear-gradient(rgba(94, 119, 35, 0.2), rgba(29, 100, 30, 0.4)), url("../assets/images/hero.png");
   background-size: cover;
   background-position: center;
   min-height: 55vh;
