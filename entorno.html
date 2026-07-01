@@ -1,94 +1,109 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-
-<title>Bioinsumos Costa Rica</title>
-
-<link rel="stylesheet" href="css/main.css">
-<link rel="stylesheet" href="css/header-footer.css">
-<link rel="stylesheet" href="css/home.css">
-<link rel="stylesheet" href="css/entorno.css">
-<script src="js/data.js"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Entorno Habilitador | Bioinsumos Costa Rica</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  
+  <link rel="stylesheet" href="css/main.css"> 
+  <link rel="stylesheet" href="css/entorno.css" />
 </head>
+<body class="entorno-page">
 
-<body>
+  <!-- CABECERA PRINCIPAL INSTITUCIONAL -->
+  <header class="topbar">
+    <div class="logo-wrap">🌿 Bioinsumos CR</div>
+    <button class="menu-toggle" id="menuToggle"><span></span><span></span><span></span></button>
+    <nav class="nav" id="mainNav">
+      <a href="index.html">Inicio</a>
+      <a href="conocimiento.html">Conocimiento</a>
+      <a href="experiencias.html">Experiencias</a>
+      <a href="ecosistema.html">Ecosistema</a>
+      <a href="entorno.html" class="active">Entorno</a>
+    </nav>
+  </header>
 
-<header class="topbar">
-
-  <div class="logo">
-    🌿 Bioinsumos CR
-  </div>
-
-  <nav class="main-nav">
-    <a href="index.html">Inicio</a>
-    <a href="conocimiento.html">Conocimiento</a>
-    <a href="experiencias.html">Experiencias</a>
-    <a href="ecosistema.html">Ecosistema</a>
-    <a href="entorno.html" class="active">Entorno</a>
-  </nav>
-
-</header>
-
-<main class="page-content">
-    <section class="hero hero-entorno">
-        <div class="hero-content">
-        <h1>
-        Entorno Habilitador
-        </h1>
-        
-        <p>
-        Normativa,
-        financiamiento,
-        eventos y convocatorias.
-        </p>
+  <!-- HERO SECCIÓN DEL PILAR 4 -->
+  <section class="entorno-hero">
+    <div class="hero-content">
+      <span class="hero-badge">Pilar 4 · Infraestructura y Soporte</span>
+      <h1>Entorno Habilitador de Bioinsumos</h1>
+      <p>Acceda a las normativas, mecanismos de financiamiento, convocatorias vigentes e indicadores clave que impulsan y regulan el sector agropecuario biológico.</p>
     </div>
-        </section>
+  </section>
 
-        <section class="kpi-section">
+  <!-- SECCIÓN DE INDICADORES SECTORIALES (Tarjetas de Control Rápido) -->
+  <section class="indicadores-section">
+    <div class="indicadores-container" id="indicadoresGrid">
+      <!-- Se inyecta dinámicamente desde JS -->
+    </div>
+  </section>
 
-            <div id="heroStats"></div>
-            
-            </section>
+  <!-- ESPACIO DE TRABAJO: FILTROS Y CONTENEDOR MULTITAB -->
+  <section class="entorno-workspace">
+    
+    <!-- Barra de Navegación por Categorías (Tabs) -->
+    <div class="entorno-tabs-container">
+      <button class="tab-btn active" data-categoria="Regulaciones">
+        <i class="fa-solid fa-gavel"></i> Marco Regulatorio y Normas
+      </button>
+      <button class="tab-btn" data-categoria="Oportunidades">
+        <i class="fa-solid fa-hand-holding-dollar"></i> Financiamiento y Becas
+      </button>
+      <button class="tab-btn" data-categoria="Actualidad">
+        <i class="fa-solid fa-newspaper"></i> Convocatorias y Noticias
+      </button>
+    </div>
 
-            <section class="entorno-grid">
+    <!-- Buscador Integrado Interno -->
+    <div class="entorio-search-bar">
+      <div class="search-box">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <input type="text" id="entornoSearch" placeholder="Buscar regulaciones, convocatorias, becas, trámites..." />
+      </div>
+    </div>
 
-                <div id="normativasGrid"></div>
-                
-                <div id="financiamientoGrid"></div>
-                
-                <div id="eventosGrid"></div>
-                
-                <div id="noticiasGrid"></div>
-                
-                </section>
-</main>
+    <!-- Contenedor Dinámico de Resultados -->
+    <div class="resources-grid" id="resourcesGrid">
+      <!-- Inyección dinámica de tarjetas vía JS -->
+    </div>
+  </section>
 
-<footer class="site-footer">
+  <!-- PIE DE PÁGINA (FOOTER INSTITUCIONAL COMPLETO) -->
+  <footer class="main-footer">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <h3>Bioinsumos Costa Rica</h3>
+        <p>Plataforma para el fomento, investigación y desarrollo de alternativas biológicas en el sector agropecuario nacional.</p>
+      </div>
+      <div class="footer-links">
+        <h4>Secciones</h4>
+        <ul>
+          <li><a href="index.html">Inicio</a></li>
+          <li><a href="conocimiento.html">Centro de Conocimiento</a></li>
+          <li><a href="experiencias.html">Repositorio de Experiencias</a></li>
+          <li><a href="ecosistema.html">Ecosistema Nacional</a></li>
+          <li><a href="entorno.html">Entorno Habilitador</a></li>
+        </ul>
+      </div>
+      <div class="footer-links">
+        <h4>Contacto</h4>
+        <ul>
+          <li><i class="fa-solid fa-envelope"></i> info@bioinsumos.cr</li>
+          <li><i class="fa-solid fa-location-dot"></i> San José, Costa Rica</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 Bioinsumos CR. Todos los derechos reservados.</p>
+    </div>
+  </footer>
 
-<div>
-<h4>Bioinsumos Costa Rica</h4>
-<p>Plataforma nacional de gestión del conocimiento.</p>
-</div>
-
-<div>
-<h4>Contacto</h4>
-<p>proyecto@bioinsumos.cr</p>
-</div>
-
-<div>
-<h4>Instituciones</h4>
-<p>MAG · IICA · Universidades</p>
-</div>
-
-<div>
-<h4>Redes</h4>
-<p>YouTube · LinkedIn</p>
-</div>
-
-</footer>
-
-
+  <script src="js/entorno.js"></script>
 </body>
 </html>
