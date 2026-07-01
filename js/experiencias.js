@@ -19,54 +19,56 @@
    // UTILIDADES DE PROCESAMIENTO
    // =====================================
    
-   function convertirLinkDriveAImagen(url) {
+  // 1. Reemplaza la función de la imagen por una versión tolerante y limpia
+function convertirLinkDriveAImagen(url) {
     if (!url) return "https://images.unsplash.com/photo-1592417817098-8f3d6eb19675?q=80&w=600";
     
-    let id = "";
+    // Limpieza previa por si se colaron comillas o fragmentos de texto por el desajuste del CSV
+    let urlLimpia = url.trim().replace(/^"|"$/g, '');
+  
+    const regExp = /\/d\/([a-zA-Z0-9_-]+)/;
+    const match = urlLimpia.match(regExp);
     
-    // 1. Extraer ID del formato estándar /d/[ID]
-    let match = url.match(/\/d\/([a-zA-Z0-9_-]+)/);
-    if (match && match[1]) id = match[1];
-    
-    // 2. Extraer ID del formato alternativo ?id=[ID]
-    if (!id) {
-      match = url.match(/[?&]id=([a-zA-Z0-9_-]+)/);
-      if (match && match[1]) id = match[1];
+    if (match && match[1]) {
+      return `https://docs.google.com/uc?export=view&id=${match[1]}`;
     }
     
-    // Si encontramos el ID, usamos el endpoint de miniaturas de Google, 
-    // el cual no requiere cookies de sesión de terceros para renderizar imágenes públicas en etiquetas <img>.
-    if (id) {
-      return `https://lh3.googleusercontent.com/u/0/d/${id}=w800-h600-iv1`;
+    // Si no encuentra el formato estándar, intenta buscar parámetros ?id=
+    const matchId = urlLimpia.match(/[?&]id=([a-zA-Z0-9_-]+)/);
+    if (matchId && matchId[1]) {
+      return `https://docs.google.com/uc?export=view&id=${matchId[1]}`;
     }
-    
-    return url;
+  
+    return urlLimpia;
+  }
+  
+  // 2. Asegúrate de que el parseador de comas corte exactamente igual que en AgroIdeas
+  function parsearLineaCSV(linea) {
+    const resultado = [];
+    let dentroDeComillas = false;
+    let entradaActual = "";
+  
+    for (let i = 0; i < linea.length; i++) {
+      const char = linea[i];
+  
+      if (char === '"') {
+        dentroDeComillas = !dentroDeComillas; 
+      } else if (char === ',' && !dentroDeComillas) { // Sincronizado a comas puras
+        resultado.push(entradaActual.trim().replace(/^"|"$/g, ''));
+        entradaActual = "";
+      } else {
+        entradaActual += char;
+      }
+    }
+    resultado.push(entradaActual.trim().replace(/^"|"$/g, ''));
+    return resultado;
   }
    
    /**
     * Split inteligente para CSV: Separa por comas (,), 
     * pero ignora las que estén dentro de bloques de texto protegidos por comillas.
     */
-   function parsearLineaCSV(linea) {
-     const resultado = [];
-     let dentroDeComillas = false;
-     let entradaActual = "";
-   
-     for (let i = 0; i < linea.length; i++) {
-       const char = linea[i];
-   
-       if (char === '"') {
-         dentroDeComillas = !dentroDeComillas; 
-       } else if (char === ',' && !dentroDeComillas) {
-         resultado.push(entradaActual.trim().replace(/^"|"$/g, ''));
-         entradaActual = "";
-       } else {
-         entradaActual += char;
-       }
-     }
-     resultado.push(entradaActual.trim().replace(/^"|"$/g, ''));
-     return resultado;
-   }
+ 
    
    // =====================================
    // EXTRACCIÓN DE INNOVACIONES / BITÁCORA
