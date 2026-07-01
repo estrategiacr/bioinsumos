@@ -144,7 +144,7 @@
            <div class="social-card-header">
              <div class="header-profile-info">
                <span class="profile-title">${item.organizacion}</span>
-               <span class="profile-subtitle">📍 ${item.region} · ${item.categoria}</span>
+               <span class="profile-subtitle">📍 ${item.region}</span>
              </div>
              <span class="post-time-stamp">${item.fecha}</span>
            </div>
