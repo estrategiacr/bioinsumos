@@ -44,7 +44,7 @@ body {
 /* HERO SECCIÓN */
 .entorno-hero {
     background: linear-gradient(rgba(15, 23, 42, 0.8), rgba(22, 101, 52, 0.75)), url("../assets/images/hero.png") no-repeat center/cover;
-    color: white; padding: 5rem 5%; text-align: center;
+    color: white; padding: 3rem 5%; text-align: center;
 }
 .hero-content { max-width: 800px; margin: 0 auto; }
 .hero-badge { background: rgba(255, 255, 255, 0.2); padding: 0.4rem 1rem; border-radius: 100px; font-size: 0.8rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; }
