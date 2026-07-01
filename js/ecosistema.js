@@ -65,13 +65,13 @@
          const columnas = parsearLineaCSVStandard(lineas[i]);
          if (columnas.length >= 7) {
            actoresEcosistema.push({
-             nombre: columnas[0],
-             tipo: columnas[1],
-             provincia: columnas[2],
-             canton: columnas[3],
-             contacto: columnas[4],
-             descripcion: columnas[5],
-             imagen: columnas[6] || "https://images.unsplash.com/photo-1592417817098-8f3d6eb19675?q=80&w=600",
+             nombre: columnas[1],
+             tipo: columnas[2],
+             provincia: columnas[3],
+             canton: columnas[5],
+             contacto: columnas[6],
+             descripcion: columnas[4],
+             imagen: columnas[9] || "https://images.unsplash.com/photo-1592417817098-8f3d6eb19675?q=80&w=600",
              lat: parseFloat(columnas[7]),
              lng: parseFloat(columnas[8])
            });
