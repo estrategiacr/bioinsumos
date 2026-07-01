@@ -1,13 +1,12 @@
 /* ==========================================================================
-   CONTROLADOR LÓGICO: PILAR 4 - ENTORNO HABILITADOR
-   Bioinsumos Costa Rica - Sincronización Remota e Interactividad Unificada
+   CONTROLADOR LÓGICO: ECOSISTEMA NACIONAL Y MAPA DE BIOFÁBRICAS
+   Bioinsumos Costa Rica - Pilar 3 (Articulación Sectorial)
    ========================================================================== */
 
-   let recursosEcosistema = [];
-   let recursosFiltrados = [];
+   let actoresEcosistema = [];
+   let actoresFiltrados = [];
    let filtroTipoActual = "Todos";
    
-   // URL única del Google Sheets publicada en formato CSV
    const SHEET_CSV_ECOSISTEMA = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSugZplAvcSBZjGPZikP3jhTaKA6DtMwZpOZc0_ophORRVGjemhu3Z5JEY3EnsZMUayuhviSia3Gf58/pub?gid=966344977&single=true&output=csv";
    
    let mapaEcosistema = null;
@@ -16,7 +15,7 @@
    document.addEventListener("DOMContentLoaded", () => {
      inicializarMenuMovil();
      inicializarMapaNacional();
-     asociarEventosFiltrosYTabs();
+     asociarEventosFiltros();
      cargarDatosEcosistema();
    });
    
@@ -29,11 +28,10 @@
    }
    
    /**
-    * Normaliza las URLs de Google Drive utilizando el endpoint /thumbnail.
-    * Esto evade bloqueos estricto por directivas de rastreo en Microsoft Edge.
+    * Normaliza enlaces de Google Drive usando el endpoint /thumbnail sin causar bloqueos
     */
    function convertirLinkDriveAImagen(url) {
-     if (!url) return "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?q=80&w=600";
+     if (!url) return "https://images.unsplash.com/photo-1592417817098-8f3d6eb19675?q=80&w=600";
      let urlLimpia = url.trim().replace(/^"|"$/g, '');
    
      const regExpDrive = /\/d\/([a-zA-Z0-9_-]+)/;
@@ -50,7 +48,7 @@
    }
    
    /**
-    * Monta la instancia base de Leaflet con los MARCADORES ESTÁNDAR NATIVOS (Punto-flecha)
+    * Configura Leaflet con mapas base claros e interactivos
     */
    function inicializarMapaNacional() {
      const mapContainer = document.getElementById("mapaEcosistema");
@@ -71,7 +69,7 @@
    }
    
    /**
-    * Carga remota y parseo de datos
+    * Consulta y parseo adaptativo de Google Sheets
     */
    async function cargarDatosEcosistema() {
      try {
@@ -81,37 +79,38 @@
    
        if (filas.length <= 1) {
          document.getElementById("directorioGrid").innerHTML = 
-           `<p style="grid-column: 1/-1; text-align:center; color:var(--muted); padding:3rem;">No se registran datos para el Entorno Habilitador.</p>`;
+           `<p style="grid-column:1/-1; text-align:center; color:var(--muted); padding:3rem;">El ecosistema nacional no registra actores mapeados en este momento.</p>`;
          return;
        }
    
-       recursosEcosistema = filas.slice(1).map((fila, index) => {
+       actoresEcosistema = filas.slice(1).map((fila, index) => {
          const columnas = parsearLineaCSVStandard(fila);
          return {
-           id: columnas[0] || `recurso-${index}`,
-           nombre: columnas[1] || "Recurso Habilitador",
-           tipo: columnas[2] || "Marco regulatorio", // Ajustado por defecto al Pilar 4
+           id: columnas[0] || `actor-${index}`,
+           nombre: columnas[1] || "Actor sin identificar",
+           tipo: columnas[2] || "Otros",
            provincia: columnas[3] || "San José",
            contacto: columnas[4] || "No especificado",
            latitud: parseFloat(columnas[5]) || null,
            longitud: parseFloat(columnas[6]) || null,
            imagenUrl: convertirLinkDriveAImagen(columnas[7]),
-           descripcion: columnas[8] || "Sin descripción legal o técnica registrada."
+           descripcion: columnas[8] || "Sin descripción disponible en la ficha técnica sectorial."
          };
        });
    
        ejecutarProcesamientoRender();
-   
      } catch (error) {
-       console.error("Error cargando pilar 4:", error);
+       console.error("Error en sincronización del Ecosistema Nacional:", error);
        document.getElementById("directorioGrid").innerHTML = 
-         `<p style="grid-column: 1/-1; text-align:center; color:var(--muted); padding:3rem;">Error de red al sincronizar el Entorno Habilitador.</p>`;
+         `<p style="grid-column:1/-1; text-align:center; color:var(--muted); padding:3rem;">Error de conexión con la base de datos de articulación.</p>`;
      }
    }
    
    function ejecutarProcesamientoRender() {
-     recursosFiltrados = recursosEcosistema.filter(rec => {
-       return (filtroTipoActual === "Todos" || rec.tipo.toLowerCase() === filtroTipoActual.toLowerCase());
+     actoresFiltrados = actoresEcosistema.filter(actor => {
+       if (filtroTipoActual === "Todos") return true;
+       return actor.tipo.toLowerCase().includes(filtroTipoActual.toLowerCase()) || 
+              filtroTipoActual.toLowerCase().includes(actor.tipo.toLowerCase());
      });
    
      actualizarMarcadoresMapa();
@@ -119,26 +118,38 @@
    }
    
    /**
-    * Dibuja los MARCADORES ESTÁNDAR NATIVOS (Punto-Flecha) y maneja el evento Click de forma reactiva
+    * Dibuja los pines tradicionales de gota usando Leaflet nativo,
+    * adaptando colores con filtros y sincronizando clics con las fichas técnicas.
     */
    function actualizarMarcadoresMapa() {
      if (!mapaEcosistema || !grupoMarcadores) return;
      grupoMarcadores.clearLayers();
    
-     recursosFiltrados.forEach(recurso => {
-       if (recurso.latitud && recurso.longitud) {
-         // Usamos el marcador estándar por defecto (Icono punto/flecha nativo azul con sombra)
-         const marcador = L.marker([recurso.latitud, recurso.longitud]);
+     actoresFiltrados.forEach(actor => {
+       if (actor.latitud && actor.longitud) {
+         
+         // Crear marcador nativo tradicional (Punta / Gota clásica)
+         const marcador = L.marker([actor.latitud, actor.longitud]);
    
-         // Al hacer clic en el marcador, cargamos la información y controlamos las pestañas móviles
-         marcador.on('click', () => {
-           inyectarInformacionFicha(recurso);
-           
-           // EVALUACIÓN MÓVIL DIRECTA: Si las pestañas móviles están visibles, cambiar automáticamente a detalles
-           const tabsMobile = document.querySelector(".workspace-tabs-mobile");
-           if (tabsMobile && window.getComputedStyle(tabsMobile).display !== "none") {
-             activarPestañaMovil("detalles");
+         // Modificar el color de la gota tradicional usando filtros CSS según el tipo de actor
+         let filtroCSS = "hue-rotate(0deg) saturate(100%)"; // Verde / Por defecto
+         if (actor.tipo.toLowerCase().includes("universidad") || actor.tipo.toLowerCase().includes("investigación")) {
+           filtroCSS = "hue-rotate(140deg) brightness(90%)"; // Azul estratégico
+         } else if (actor.tipo.toLowerCase().includes("institución") || actor.tipo.toLowerCase().includes("laboratorio")) {
+           filtroCSS = "hue-rotate(240deg) saturate(80%)"; // Morado/Púrpura institucional
+         } else if (actor.tipo.toLowerCase().includes("empresa")) {
+           filtroCSS = "hue-rotate(40deg) brightness(110%)"; // Naranja / Comercial
+         }
+   
+         marcador.on('add', function() {
+           if (marcador._icon) {
+             marcador._icon.style.filter = filtroCSS;
            }
+         });
+   
+         // LÓGICA DE CLIC EN EL MARCADOR (MÓVIL Y ESCRITORIO CONJUNTO)
+         marcador.on('click', () => {
+           mostrarDetalleFichaEntidad(actor);
          });
    
          grupoMarcadores.addLayer(marcador);
@@ -147,51 +158,77 @@
    }
    
    /**
-    * Inyecta dinámicamente la información estructurada en la Ficha Técnica lateral/móvil
+    * Inyecta la ficha técnica en la barra lateral y gestiona de manera transparente 
+    * las pestañas en móviles sin abrir popups invasivos dentro del mapa.
     */
-   function inyectarInformacionFicha(recurso) {
-     const contenedorSidebar = document.getElementById("sidebarDynamicContent");
-     if (!contenedorSidebar) return;
+   function mostrarDetalleFichaEntidad(actor) {
+     const sidebar = document.getElementById("sidebarDynamicContent");
+     if (!sidebar) return;
    
-     contenedorSidebar.innerHTML = `
-       <div class="sidebar-active-card">
-         <img src="${recurso.imagenUrl}" alt="${recurso.nombre}">
-         <h4>${recurso.nombre}</h4>
-         <span class="badge">${recurso.tipo}</span>
-         <p>${recurso.descripcion}</p>
-         <div class="meta-item"><b>📍 Ámbito/Provincia:</b> ${recurso.provincia}</div>
-         <div class="meta-item"><b>📞 Contacto/Enlace:</b> ${recurso.contacto}</div>
+     // Inyectar estructura HTML enriquecida en la ficha lateral
+     sidebar.innerHTML = `
+       <div class="ficha-tecnica-activa">
+         <img src="${actor.imagenUrl}" alt="${actor.nombre}" class="ficha-img">
+         <span class="ficha-badge">${actor.tipo}</span>
+         <h4>${actor.nombre}</h4>
+         <p class="ficha-loc">📍 Región: <b>${actor.provincia}</b></p>
+         <div class="ficha-divider"></div>
+         <h5>Descripción Técnica</h5>
+         <p class="ficha-desc">${actor.descripcion}</p>
+         <div class="ficha-divider"></div>
+         <h5>Canales de Articulación</h5>
+         <p class="ficha-contacto"><i class="fa-solid fa-address-book"></i> Enlace: ${actor.contacto}</p>
        </div>
      `;
+   
+     // Evaluar si estamos en dispositivo móvil (si las pestañas están activas)
+     const tabsMobile = document.querySelector(".workspace-tabs-mobile");
+     if (tabsMobile && window.getComputedStyle(tabsMobile).display !== "none") {
+       
+       // 1. Activar visualmente la pestaña de detalles
+       document.querySelectorAll(".map-tab-btn").forEach(b => b.classList.remove("active"));
+       const tabDetalles = document.getElementById("tabDetallesMovil");
+       if (tabDetalles) tabDetalles.classList.add("active");
+   
+       // 2. Swappear las clases del contenedor para revelar el panel y ocultar el mapa
+       const mapWrapper = document.getElementById("mapWrapper");
+       if (mapWrapper) mapWrapper.classList.add("show-details");
+       
+       // 3. Desplazar suavemente la pantalla hacia la ficha
+       document.getElementById("mapWrapper").scrollIntoView({ behavior: 'smooth', block: 'start' });
+     } else {
+       // Si es escritorio, hacer scroll suave directo hacia el panel lateral para mejor enfoque
+       document.getElementById("mapSidebar").scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+     }
    }
    
    /**
-    * Renderizado de las tarjetas inferiores del catálogo institucional
+    * Renderiza el directorio inferior de actores
     */
    function renderizarDirectorioTarjetas() {
      const contenedorGrid = document.getElementById("directorioGrid");
      if (!contenedorGrid) return;
    
-     if (recursosFiltrados.length === 0) {
-       contenedorGrid.innerHTML = `<p style="grid-column: 1/-1; text-align:center; color:var(--muted); padding:4rem 1rem;">No hay recursos disponibles para los filtros seleccionados.</p>`;
+     if (actoresFiltrados.length === 0) {
+       contenedorGrid.innerHTML = `<p style="grid-column: 1/-1; text-align:center; color:var(--muted); padding:4rem 1rem;">No se encontraron entidades registradas bajo esta categoría específica.</p>`;
        return;
      }
    
-     contenedorGrid.innerHTML = recursosFiltrados.map(recurso => {
+     contenedorGrid.innerHTML = actoresFiltrados.map(actor => {
        return `
-         <div class="actor-card" id="card-${recurso.id}">
+         <div class="actor-card" id="card-${actor.id}">
            <div class="actor-card-media">
-             <img src="${recurso.imagenUrl}" alt="${recurso.nombre}">
-             <span class="actor-badge">${recurso.tipo}</span>
+             <img src="${actor.imagenUrl}" alt="${actor.nombre}">
+             <span class="actor-badge">${actor.tipo}</span>
            </div>
            <div class="actor-card-body">
-             <h4>${recurso.nombre}</h4>
-             <span class="actor-location">📍 Región: <b>${recurso.provincia}</b></span>
-             <p>${recurso.descripcion}</p>
+             <h4>${actor.nombre}</h4>
+             <span class="actor-location">📍 Ubicación: <b>${actor.provincia}</b></span>
+             <p>${actor.descripcion}</p>
              <div class="actor-card-footer">
-               <span class="actor-contact"><i class="fa-solid fa-circle-nodes"></i> ${recurso.contacto}</span>
-               <button class="btn-locate" onclick="centrarFocoHabilitador(${recurso.latitud}, ${recurso.longitud}, '${recurso.id}')">
-                 <i class="fa-solid fa-location-crosshairs"></i> Ubicar
+               <span class="actor-contact"><i class="fa-solid fa-address-book"></i> ${actor.contacto}</span>
+               <button class="btn-locate" onclick="solicitarFocoDesdeTarjeta('${actor.id}', ${actor.latitud}, ${actor.longitude || actor.longitud})">
+                 <i class="fa-solid fa-map-location-dot"></i> Ficha & Mapa
                </button>
              </div>
            </div>
@@ -201,66 +238,55 @@
    }
    
    /**
-    * Al presionar "Ubicar" desde una tarjeta inferior
+    * Vinculación bidireccional cuando pulsan "Ficha & Mapa" desde el directorio inferior
     */
-   window.centrarFocoHabilitador = function(lat, lng, idRecurso) {
-     if (!mapaEcosistema || !lat || !lng) return;
+   window.solicitarFocoDesdeTarjeta = function(id, lat, lng) {
+     const actor = actoresEcosistema.find(a => a.id === id);
+     if (!actor) return;
    
-     // 1. Buscar el objeto del recurso para cargar la ficha técnica de inmediato
-     const recurso = recursosEcosistema.find(r => r.id === idRecurso);
-     if (recurso) inyectarInformacionFicha(recurso);
+     // Renderizar la ficha técnica arriba
+     mostrarDetalleFichaEntidad(actor);
    
-     // 2. Mover la cámara del mapa
-     mapaEcosistema.setView([lat, lng], 13, { animate: true, duration: 1 });
-     
-     // 3. Si está en móvil, activar la pestaña del mapa para ver la animación
-     const tabsMobile = document.querySelector(".workspace-tabs-mobile");
-     if (tabsMobile && window.getComputedStyle(tabsMobile).display !== "none") {
-       activarPestañaMovil("mapa");
+     // Si tiene coordenadas válidas, centrar el mapa nativo detrás
+     if (lat && lng && mapaEcosistema) {
+       mapaEcosistema.setView([lat, lng], 13, { animate: true, duration: 1.2 });
+       
+       // Si el usuario vuelve al mapa en móvil, ya estará centrado en el punto
+       const tabsMobile = document.querySelector(".workspace-tabs-mobile");
+       if (!tabsMobile || window.getComputedStyle(tabsMobile).display === "none") {
+         document.getElementById("mapWrapper").scrollIntoView({ behavior: 'smooth', block: 'center' });
+       }
      }
-   
-     document.getElementById("mapaEcosistema").scrollIntoView({ behavior: 'smooth' });
    };
    
    /**
-    * Abstracción de activación y conmutación de pestañas en entornos móviles
+    * Inicialización y control de eventos de filtros y tabs
     */
-   function activarPestañaMovil(targetTab) {
-     const mapWrapper = document.getElementById("mapWrapper");
-     const tabMapaBtn = document.getElementById("tabMapaBtn");
-     const tabDetallesBtn = document.getElementById("tabDetallesBtn");
-   
-     if (targetTab === "detalles") {
-       if (mapWrapper) mapWrapper.classList.add("show-details");
-       if (tabMapaBtn) tabMapaBtn.classList.remove("active");
-       if (tabDetallesBtn) tabDetallesBtn.classList.add("active");
-     } else {
-       if (mapWrapper) mapWrapper.classList.remove("show-details");
-       if (tabDetallesBtn) tabDetallesBtn.classList.remove("active");
-       if (tabMapaBtn) tabMapaBtn.classList.add("active");
-       
-       // Corregir renderizado asíncrono de Leaflet al recuperar contenedor oculto
-       setTimeout(() => { if (mapaEcosistema) mapaEcosistema.invalidateSize(); }, 200);
-     }
-   }
-   
-   /**
-    * Vinculación y escucha de selectores y botones de tabs móviles
-    */
-   function asociarEventosFiltrosYTabs() {
-     const selectorEscritorio = document.getElementById("tipoActorSelect");
-     if (selectorEscritorio) {
-       selectorEscritorio.addEventListener("change", (e) => {
+   function asociarEventosFiltros() {
+     const selector = document.getElementById("tipoActorSelect");
+     if (selector) {
+       selector.addEventListener("change", (e) => {
          filtroTipoActual = e.target.value;
          ejecutarProcesamientoRender();
        });
      }
    
-     // Escucha manual de clicks en las dos pestañas de cabecera móvil
-     document.querySelectorAll(".map-tab-btn").forEach(btn => {
+     // Lógica de Pestañas Manuales para Móvil
+     const tabButtons = document.querySelectorAll(".map-tab-btn");
+     const mapWrapper = document.getElementById("mapWrapper");
+   
+     tabButtons.forEach(btn => {
        btn.addEventListener("click", () => {
+         tabButtons.forEach(b => b.classList.remove("active"));
+         btn.classList.add("active");
+   
          const tabDestino = btn.getAttribute("data-tab");
-         activarPestañaMovil(tabDestino);
+         if (tabDestino === "detalles") {
+           if (mapWrapper) mapWrapper.classList.add("show-details");
+         } else {
+           if (mapWrapper) mapWrapper.classList.remove("show-details");
+           setTimeout(() => { if (mapaEcosistema) mapaEcosistema.invalidateSize(); }, 250);
+         }
        });
      });
    }

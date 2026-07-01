@@ -17,7 +17,7 @@
 
   <header class="topbar">
     <div class="logo-wrap">🌿 Bioinsumos CR</div>
-    <button class="menu-toggle" id="menuToggle" aria-label="Abrir menú">
+    <button class="menu-toggle" id=\"menuToggle\" aria-label="Abrir menú">
       <span></span><span></span><span></span>
     </button>
     <nav class="nav" id="mainNav">
@@ -28,51 +28,55 @@
     </nav>
   </header>
 
-  <main class="page-content">
-    
-    <section class="hero-ecosistema">
-      <div class="container-hero">
+  <main>
+    <section class="ecosistema-hero">
+      <div class="hero-overlay"></div>
+      <div class="hero-content">
+        <span class="hero-badge">Pilar 3: Articulación Sectorial</span>
         <h1>Ecosistema Nacional de Bioinsumos</h1>
-        <p>Mapeo de biofábricas, centros de investigación, laboratorios y organizaciones clave en Costa Rica.</p>
+        <p>Mapeo inteligente, directorio de actores clave y redes de colaboración estratégica para el desarrollo bioagropecuario de Costa Rica.</p>
       </div>
     </section>
 
-    <div class="workspace-tabs-mobile">
-      <button class="map-tab-btn active" data-tab="mapa">
-        <i class="fa-solid fa-map"></i> Ver Mapa
-      </button>
-      <button class="map-tab-btn" data-tab="detalles" id="tabDetallesBtn">
-        <i class="fa-solid fa-circle-info"></i> Detalles
-      </button>
-    </div>
+    <section class="workspace-section">
+      
+      <div class="workspace-tabs-mobile">
+        <button class="map-tab-btn active" data-tab="mapa">
+          <i class="fa-solid fa-map-location-dot"></i> Mapa de Biofábricas
+        </button>
+        <button class="map-tab-btn" data-tab="detalles" id="tabDetallesMovil">
+          <i class="fa-solid fa-circle-info"></i> Ficha Técnica
+        </button>
+      </div>
 
-    <section class="map-section-container">
       <div class="map-wrapper-container" id="mapWrapper">
-        
         <div class="mapa-leaflet-canvas" id="mapaEcosistema"></div>
         
         <div class="map-details-sidebar" id="mapSidebar">
-          <div class="sidebar-placeholder-text" id="sidebarPlaceholder">
-            <i class="fa-solid fa-location-dot" style="font-size: 2.5rem; color: var(--muted); margin-bottom: 1rem;"></i>
-            <h3>Detalles del Actor</h3>
-            <p>Selecciona un punto en el mapa nacional para desplegar la ficha de información técnica y su imagen correspondiente.</p>
+          <h3><i class="fa-solid fa-seedling text-primary"></i> Detalle de Entidad</h3>
+          <div id="sidebarDynamicContent">
+            <p class="sidebar-placeholder">Selecciona una biofábrica o actor en el mapa para desplegar su ficha técnica e información detallada de contacto.</p>
           </div>
-          <div class="sidebar-dynamic-content d-none" id="sidebarDynamicContent"></div>
         </div>
-
       </div>
     </section>
 
-    <section class="container-directory">
-      <div class="directory-header">
-        <h2>Directorio de Actores Sectoriales</h2>
-        <div class="filter-box">
-          <i class="fa-solid fa-filter"></i>
-          <select id="filtroTipoEcosistema" class="directory-select">
-            <option value="Todos">Todos los sectores</option>
-            <option value="Biofábrica">Biofábricas / Fincas</option>
+    <section class="directorio-section">
+      <div class="section-header-row">
+        <div class="title-block">
+          <h2>Directorio de Actores Clave</h2>
+          <p>Filtra y encuentra organizaciones aliadas en toda la cadena de valor.</p>
+        </div>
+        
+        <div class="filter-block">
+          <label for="tipoActorSelect"><i class="fa-solid fa-filter"></i> Categoría:</label>
+          <select id="tipoActorSelect" class="directorio-select">
+            <option value="Todos">Todos los Actores</option>
+            <option value="Productor">Productores / Biofábricas Locales</option>
+            <option value="Empresa">Empresas y Comercializadoras</option>
             <option value="Universidad">Universidades y Academia</option>
-            <option value="Investigación">Centros de Investigación / Laboratorios</option>
+            <option value="Centros de investigación">Centros de Investigación</option>
+            <option value="Laboratorio">Laboratorios Especializados</option>
             <option value="Institución">Instituciones Públicas</option>
           </select>
         </div>
@@ -81,6 +85,30 @@
       <div class="directorio-grid" id="directorioGrid"></div>
     </section>
 
+    <section class="articulacion-complementaria">
+      <div class="container-complemento">
+        <div class="articulacion-card">
+          <div class="articulacion-icon color-1"><i class="fa-solid fa-hubspot"></i></div>
+          <h3>Redes de Colaboración</h3>
+          <p>Conectamos la oferta tecnológica con las necesidades de campo. Alianzas público-privadas e intercambios horizontales.</p>
+          <a href="#" class="articulacion-link">Explorar Redes <i class="fa-solid fa-arrow-right"></i></a>
+        </div>
+
+        <div class="articulacion-card">
+          <div class="articulacion-icon color-2"><i class="fa-solid fa-diagram-project"></i></div>
+          <h3>Proyectos en Ejecución</h3>
+          <p>Monitoreo de iniciativas de validación e investigación de campo vigentes lideradas por nuestro ecosistema nacional.</p>
+          <a href="#" class="articulacion-link">Ver Proyectos <i class="fa-solid fa-arrow-right"></i></a>
+        </div>
+
+        <div class="articulacion-card">
+          <div class="articulacion-icon color-3"><i class="fa-solid fa-comments"></i></div>
+          <h3>Comunidades de Práctica</h3>
+          <p>Espacios virtuales y presenciales de co-aprendizaje para técnicos y productores especializados en formulación biológica.</p>
+          <a href="#" class="articulacion-link">Unirse al Foro <i class="fa-solid fa-arrow-right"></i></a>
+        </div>
+      </div>
+    </section>
   </main>
 
   <footer class="main-footer">
