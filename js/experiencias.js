@@ -81,13 +81,13 @@
          return {
            id: cols[0] || Math.random().toString(),
            titulo: cols[1] || "Caso práctico sin título",
-           categoria: cols[2] || "Validación",
-           organizacion: cols[3] || "Productor Independiente",
-           region: cols[6] || "San José", // Región de la finca
+        //    categoria: cols[2] || "Validación",
+           organizacion: cols[2] || "Productor Independiente",
+           region: cols[3] || "San José", // Región de la finca
            descripcion: cols[4] || "Sin detalles adicionales registrados en la bitácora de campo.",
            imagenUrl: convertirLinkDriveAImagen(cols[5]),
            
-           estado: cols[7] === "SI" ? "Caso Destacado" : "Validado",
+           estado: cols[6] === "SI" ? "Caso Destacado" : "Validado",
            tags: listaTags.map(t => t.trim()),
            fecha: cols[8]
          };
