@@ -20,13 +20,14 @@
    // =====================================
    
    /**
-    * Transforma un enlace compartido de Google Drive en una URL de renderizado directo (Direct View).
-    * Maneja parámetros con '/d/', formatos de consulta '?id=' y limpia caracteres extraños del CSV.
+    * Transforma un enlace compartido de Google Drive en una URL de renderizado directo.
+    * Se utiliza el endpoint /thumbnail con tamaño asignado, ya que evita bloqueos de 
+    * políticas de rastreo y de cookies de terceros impuestos por navegadores como Edge y Safari.
     */
    function convertirLinkDriveAImagen(url) {
      if (!url) return "https://images.unsplash.com/photo-1592417817098-8f3d6eb19675?q=80&w=600";
      
-     // Limpieza estricta de comillas o fragmentos residuales del parseo por comas
+     // Limpieza estricta de comillas o fragmentos residuales del parseo
      let urlLimpia = url.trim().replace(/^"|"$/g, '');
    
      // 1. Intentar capturar ID con el formato estándar /d/ID_DE_IMAGEN/
@@ -34,16 +35,16 @@
      const matchDrive = urlLimpia.match(regExpDrive);
      
      if (matchDrive && matchDrive[1]) {
-       return `https://docs.google.com/uc?export=view&id=${matchDrive[1]}`;
+       return `https://docs.google.com/thumbnail?sz=w800&id=${matchDrive[1]}`;
      }
      
      // 2. Intentar capturar ID si viene como parámetro estructurado (?id=ID_DE_IMAGEN)
      const matchIdParam = urlLimpia.match(/[?&]id=([a-zA-Z0-9_-]+)/);
      if (matchIdParam && matchIdParam[1]) {
-       return `https://docs.google.com/uc?export=view&id=${matchIdParam[1]}`;
+       return `https://docs.google.com/thumbnail?sz=w800&id=${matchIdParam[1]}`;
      }
    
-     // Si no es un enlace de Google Drive, retorna la URL limpia tal cual (por si es externa)
+     // Si no es un enlace de Google Drive, retorna la URL limpia original
      return urlLimpia;
    }
    
@@ -168,7 +169,7 @@
            </div>
            
            <div class="social-card-media">
-             <img src="${item.imagenUrl}" alt="${item.titulo}" loading="lazy">
+             <img src="${item.imagenUrl}" alt="${item.titulo}">
            </div>
            
            <div class="social-card-body">
