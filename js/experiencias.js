@@ -20,11 +20,22 @@
    // =====================================
    
    function convertirLinkDriveAImagen(url) {
-     if (!url) return "https://images.unsplash.com/photo-1592417817098-8f3d6eb19675?q=80&w=600";
-     const match = url.match(/\/d\/([a-zA-Z0-9_-]+)/);
-     if (!match) return url;
-     return `https://docs.google.com/uc?export=view&id=${match[1]}`;
-   }
+    if (!url) return "https://images.unsplash.com/photo-1592417817098-8f3d6eb19675?q=80&w=600";
+    
+    // 1. Intenta el formato estándar /d/[ID]
+    let match = url.match(/\/d\/([a-zA-Z0-9_-]+)/);
+    if (match && match[1]) {
+      return `https://docs.google.com/uc?export=view&id=${match[1]}`;
+    }
+    
+    // 2. Intenta el formato alternativo ?id=[ID] o &id=[ID]
+    match = url.match(/[?&]id=([a-zA-Z0-9_-]+)/);
+    if (match && match[1]) {
+      return `https://docs.google.com/uc?export=view&id=${match[1]}`;
+    }
+    
+    return url; // Retorno de respaldo
+  }
    
    /**
     * Split inteligente para CSV: Separa por comas (,), 
