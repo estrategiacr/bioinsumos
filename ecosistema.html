@@ -1,225 +1,117 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-
-<title>Bioinsumos Costa Rica</title>
-
-<link rel="stylesheet" href="css/main.css">
-<link rel="stylesheet" href="css/header-footer.css">
-<link rel="stylesheet" href="css/home.css">
-<link rel="stylesheet" href="css/ecosistema.css">
-<link
-  rel="stylesheet"
-  href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-/>
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-<script src="js/data.js"></script>
-<script src="js/ecosistema.js"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ecosistema Nacional de Bioinsumos | Bioinsumos Costa Rica</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  
+  <link rel="stylesheet" href="css/main.css"> <link rel="stylesheet" href="css/ecosistema.css" />
 </head>
+<body class="ecosistema-page">
 
-<body>
+  <header class="topbar">
+    <div class="logo-wrap">🌿 Bioinsumos CR</div>
+    <button class="menu-toggle" id="menuToggle"><span></span><span></span><span></span></button>
+    <nav class="nav" id="mainNav">
+      <a href="index.html">Inicio</a>
+      <a href="conocimiento.html">Conocimiento</a>
+      <a href="experiencias.html">Experiencias</a>
+      <a href="ecosistema.html" class="active">Ecosistema</a>
+    </nav>
+  </header>
 
-<header class="topbar">
+  <section class="ecosistema-hero">
+    <div class="hero-content">
+      <span class="hero-badge">Pilar 3 · Articulación Sectorial</span>
+      <h1>Ecosistema Nacional de Bioinsumos</h1>
+      <p>La red de integración entre productores, empresas, la academia e instituciones públicas para impulsar el desarrollo biológico nacional.</p>
+    </div>
+  </section>
 
-  <div class="logo">
-    🌿 Bioinsumos CR
-  </div>
+  <section class="map-workspace">
+    <div class="workspace-tabs-mobile">
+      <button class="map-tab-btn active" data-tab="mapa"><i class="fa-solid fa-map-location-dot"></i> Mapa Nacional</button>
+      <button class="map-tab-btn" data-tab="detalles"><i class="fa-solid fa-address-card"></i> Ficha Actor</button>
+    </div>
 
-  <nav class="main-nav">
-    <a href="index.html">Inicio</a>
-    <a href="conocimiento.html">Conocimiento</a>
-    <a href="experiencias.html">Experiencias</a>
-    <a href="ecosistema.html" class="active">Ecosistema</a>
-    <a href="entorno.html">Entorno</a>
-  </nav>
-
-</header>
-
-<main class="page-content">
-
-    <!-- HERO -->
-    <section class="hero hero-ecosistema">
-
-        <div class="hero-overlay">
-
-            <div class="hero-content">
-
-               
-
-                <h1>
-                    Ecosistema Nacional
-                    de Bioinsumos
-                </h1>
-
-                <p>
-                    Plataforma de articulación sectorial
-                    que conecta productores,
-                    biofábricas, universidades,
-                    empresas e instituciones.
-                </p>
-
-            </div>
-
-            <div class="hero-stats">
-
-                <div class="stat-card">
-                    <strong id="totalActores">
-                        -
-                    </strong>
-                    <span>Actores</span>
-                </div>
-
-                <div class="stat-card">
-                    <strong id="totalBiofabricas">
-                        -
-                    </strong>
-                    <span>Biofábricas</span>
-                </div>
-
-                <div class="stat-card">
-                    <strong id="totalProyectos">
-                        -
-                    </strong>
-                    <span>Proyectos</span>
-                </div>
-
-            </div>
-
+    <div class="map-wrapper-container" id="mapWrapper">
+      <div id="ecosistemaMapa" class="mapa-leaflet-canvas"></div>
+      
+      <div class="map-details-sidebar" id="mapSidebar">
+        <div class="sidebar-default-msg" id="sidebarDefaultMsg">
+          <i class="fa-solid fa-location-crosshairs"></i>
+          <h3>Mapa de Biofábricas y Actores</h3>
+          <p>Selecciona cualquier marcador en el mapa nacional para auditar sus proyectos, redes de colaboración y líneas de acción en tiempo real.</p>
         </div>
+        <div class="sidebar-active-content hidden" id="sidebarActiveContent">
+          </div>
+      </div>
+    </div>
+  </section>
 
-    </section>
+  <section class="directorio-section">
+    <div class="section-title-block">
+      <h2><i class="fa-solid fa-users-gear"></i> Directorio y Redes de Colaboración</h2>
+      <p>Explora, filtra y contacta de manera directa a los agentes clave que conforman el motor de innovación del sector.</p>
+    </div>
 
-    <!-- DIRECTORIO -->
+    <div class="directorio-filter-bar">
+      <div class="search-box">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <input type="text" id="directorioSearch" placeholder="Buscar por organización, proyectos, tecnologías..." />
+      </div>
+      <div class="select-box">
+        <i class="fa-solid fa-sliders"></i>
+        <select id="directorioFilterTipo">
+          <option value="Todos">Todos los Actores</option>
+          <option value="Productor">Productores / Biofábricas de campo</option>
+          <option value="Empresa">Empresas Comerciales</option>
+          <option value="Universidad">Universidades y Academia</option>
+          <option value="Investigación">Centros de Investigación / Laboratorios</option>
+          <option value="Institución">Instituciones Públicas</option>
+        </select>
+      </div>
+    </div>
 
-    <section class="content-section">
+    <div class="directorio-grid" id="directorioGrid">
+      </div>
+  </section>
 
-        <div class="section-head">
+  <footer class="main-footer">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <h3>Bioinsumos Costa Rica</h3>
+        <p>Plataforma para el fomento, investigación y desarrollo de alternativas biológicas en el sector agropecuario nacional.</p>
+      </div>
+      <div class="footer-links">
+        <h4>Secciones</h4>
+        <ul>
+          <li><a href="index.html">Inicio</a></li>
+          <li><a href="conocimiento.html">Centro de Conocimiento</a></li>
+          <li><a href="experiencias.html">Repositorio de Experiencias</a></li>
+          <li><a href="ecosistema.html">Ecosistema Nacional</a></li>
+        </ul>
+      </div>
+      <div class="footer-links">
+        <h4>Contacto</h4>
+        <ul>
+          <li><i class="fa-solid fa-envelope"></i> info@bioinsumos.cr</li>
+          <li><i class="fa-solid fa-location-dot"></i> San José, Costa Rica</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 Bioinsumos CR. Todos los derechos reservados.</p>
+    </div>
+  </footer>
 
-            <h2>
-                Directorio de Actores
-            </h2>
-
-            <input
-                type="text"
-                id="actorSearch"
-                placeholder="Buscar actores..."
-            >
-
-        </div>
-
-        <div
-            id="actoresGrid"
-            class="actor-grid">
-        </div>
-
-    </section>
-
-    <!-- MAPA -->
-
-    <section class="content-section">
-
-        <div class="section-head">
-
-            <h2>
-                Mapa Nacional
-                de Biofábricas
-            </h2>
-
-        </div>
-
-        <div
-            id="map"
-            class="ecosystem-map">
-        </div>
-
-    </section>
-
-    <!-- REDES -->
-
-    <section class="content-section">
-
-        <div class="section-head">
-
-            <h2>
-                Redes de Colaboración
-            </h2>
-
-        </div>
-
-        <div
-            id="networkCards"
-            class="network-grid">
-        </div>
-
-    </section>
-
-    <!-- PROYECTOS -->
-
-    <section class="content-section">
-
-        <div class="section-head">
-
-            <h2>
-                Proyectos en Ejecución
-            </h2>
-
-        </div>
-
-        <div
-            id="proyectosGrid"
-            class="project-grid">
-        </div>
-
-    </section>
-
-    <!-- COMUNIDADES -->
-
-    <section class="content-section">
-
-        <div class="section-head">
-
-            <h2>
-                Comunidades de Práctica
-            </h2>
-
-        </div>
-
-        <div
-            id="comunidadesGrid"
-            class="community-grid">
-        </div>
-
-    </section>
-
-</main>
-
-<footer class="site-footer">
-
-<div>
-<h4>Bioinsumos Costa Rica</h4>
-<p>Plataforma nacional de gestión del conocimiento.</p>
-</div>
-
-<div>
-<h4>Contacto</h4>
-<p>proyecto@bioinsumos.cr</p>
-</div>
-
-<div>
-<h4>Instituciones</h4>
-<p>MAG · IICA · Universidades</p>
-</div>
-
-<div>
-<h4>Redes</h4>
-<p>YouTube · LinkedIn</p>
-</div>
-
-</footer>
-
-
-
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script src="js/ecosistema.js"></script>
 </body>
 </html>
