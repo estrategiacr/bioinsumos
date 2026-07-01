@@ -29,21 +29,46 @@
     min-height: 100vh;
   }
   
-  /* HEADER / TOPBAR */
-  .topbar {
+  /* =========================================================
+   HEADER / TOPBAR
+========================================================= */
+.topbar {
     position: sticky;
-    top: 0; z-index: 2000;
+    top: 0;
+    z-index: 2000;
     background: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(12px);
-    display: flex; justify-content: space-between; align-items: center;
-    padding: 1.2rem 5%; border-bottom: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 5%;
+    border-bottom: 1px solid var(--border);
   }
-  .logo-wrap { font-size: 1.3rem; font-weight: 800; color: var(--primary); display: flex; align-items: center; gap: 0.5rem; }
-  .nav { display: flex; gap: 2rem; }
-  .nav a { text-decoration: none; color: var(--muted); font-weight: 600; font-size: 0.95rem; transition: .2s; }
-  .nav a:hover, .nav a.active { color: var(--primary); }
-  .menu-toggle { display: none; flex-direction: column; gap: 5px; background: transparent; border: none; cursor: pointer; }
-  .menu-toggle span { width: 25px; height: 3px; background: var(--primary); border-radius: 2px; }
+  
+  .logo-wrap {
+    font-size: 1.3rem;
+    font-weight: 800;
+    color: var(--primary);
+  }
+  
+  .nav { 
+    display: flex; 
+    gap: 1.5rem; 
+  }
+  
+  .nav a {
+    text-decoration: none;
+    color: #374151;
+    font-weight: 600;
+    padding: 0.5rem 1rem;
+    border-radius: 12px;
+    transition: .25s ease;
+  }
+  
+  .nav a:hover, .nav a.active {
+    color: var(--primary);
+    background: rgba(22, 101, 52, 0.08);
+  }
   
   /* HERO SECTION */
   .ecosistema-hero {

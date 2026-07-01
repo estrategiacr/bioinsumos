@@ -90,11 +90,12 @@
            nombre: columnas[1] || "Actor sin identificar",
            tipo: columnas[2] || "Otros",
            provincia: columnas[3] || "San José",
-           contacto: columnas[4] || "No especificado",
-           latitud: parseFloat(columnas[5]) || null,
-           longitud: parseFloat(columnas[6]) || null,
+           descripcion: columnas[4] || "Sin descripción disponible en la ficha técnica sectorial.",
+           contacto: columnas[6] || "No especificado",
+           latitud: parseFloat(columnas[7]) || null,
+           longitud: parseFloat(columnas[8]) || null,
            imagenUrl: convertirLinkDriveAImagen(columnas[7]),
-           descripcion: columnas[8] || "Sin descripción disponible en la ficha técnica sectorial."
+           
          };
        });
    
