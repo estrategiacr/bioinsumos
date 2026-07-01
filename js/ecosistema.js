@@ -94,7 +94,7 @@
            contacto: columnas[6] || "No especificado",
            latitud: parseFloat(columnas[7]) || null,
            longitud: parseFloat(columnas[8]) || null,
-           imagenUrl: convertirLinkDriveAImagen(columnas[7]),
+           imagenUrl: convertirLinkDriveAImagen(columnas[9]),
            
          };
        });
