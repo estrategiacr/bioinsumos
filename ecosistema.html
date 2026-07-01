@@ -11,78 +11,77 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
   <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
   
-  <link rel="stylesheet" href="css/main.css"> <link rel="stylesheet" href="css/ecosistema.css" />
+  <link rel="stylesheet" href="css/ecosistema.css" />
 </head>
 <body class="ecosistema-page">
 
   <header class="topbar">
     <div class="logo-wrap">🌿 Bioinsumos CR</div>
-    <button class="menu-toggle" id="menuToggle"><span></span><span></span><span></span></button>
+    <button class="menu-toggle" id="menuToggle" aria-label="Abrir menú">
+      <span></span><span></span><span></span>
+    </button>
     <nav class="nav" id="mainNav">
       <a href="index.html">Inicio</a>
       <a href="conocimiento.html">Conocimiento</a>
       <a href="experiencias.html">Experiencias</a>
       <a href="ecosistema.html" class="active">Ecosistema</a>
-      <a href="entorno.html" >Entorno</a>
     </nav>
   </header>
 
-  <section class="ecosistema-hero">
-    <div class="hero-content">
-      <span class="hero-badge">Pilar 3 · Articulación Sectorial</span>
-      <h1>Ecosistema Nacional de Bioinsumos</h1>
-      <p>La red de integración entre productores, empresas, la academia e instituciones públicas para impulsar el desarrollo biológico nacional.</p>
-    </div>
-  </section>
+  <main class="page-content">
+    
+    <section class="hero-ecosistema">
+      <div class="container-hero">
+        <h1>Ecosistema Nacional de Bioinsumos</h1>
+        <p>Mapeo de biofábricas, centros de investigación, laboratorios y organizaciones clave en Costa Rica.</p>
+      </div>
+    </section>
 
-  <section class="map-workspace">
     <div class="workspace-tabs-mobile">
-      <button class="map-tab-btn active" data-tab="mapa"><i class="fa-solid fa-map-location-dot"></i> Mapa Nacional</button>
-      <button class="map-tab-btn" data-tab="detalles"><i class="fa-solid fa-address-card"></i> Ficha Actor</button>
+      <button class="map-tab-btn active" data-tab="mapa">
+        <i class="fa-solid fa-map"></i> Ver Mapa
+      </button>
+      <button class="map-tab-btn" data-tab="detalles" id="tabDetallesBtn">
+        <i class="fa-solid fa-circle-info"></i> Detalles
+      </button>
     </div>
 
-    <div class="map-wrapper-container" id="mapWrapper">
-      <div id="ecosistemaMapa" class="mapa-leaflet-canvas"></div>
-      
-      <div class="map-details-sidebar" id="mapSidebar">
-        <div class="sidebar-default-msg" id="sidebarDefaultMsg">
-          <i class="fa-solid fa-location-crosshairs"></i>
-          <h3>Mapa de Biofábricas y Actores</h3>
-          <p>Selecciona cualquier marcador en el mapa nacional para auditar sus proyectos, redes de colaboración y líneas de acción en tiempo real.</p>
-        </div>
-        <div class="sidebar-active-content hidden" id="sidebarActiveContent">
+    <section class="map-section-container">
+      <div class="map-wrapper-container" id="mapWrapper">
+        
+        <div class="mapa-leaflet-canvas" id="mapaEcosistema"></div>
+        
+        <div class="map-details-sidebar" id="mapSidebar">
+          <div class="sidebar-placeholder-text" id="sidebarPlaceholder">
+            <i class="fa-solid fa-location-dot" style="font-size: 2.5rem; color: var(--muted); margin-bottom: 1rem;"></i>
+            <h3>Detalles del Actor</h3>
+            <p>Selecciona un punto en el mapa nacional para desplegar la ficha de información técnica y su imagen correspondiente.</p>
           </div>
-      </div>
-    </div>
-  </section>
+          <div class="sidebar-dynamic-content d-none" id="sidebarDynamicContent"></div>
+        </div>
 
-  <section class="directorio-section">
-    <div class="section-title-block">
-      <h2><i class="fa-solid fa-users-gear"></i> Directorio y Redes de Colaboración</h2>
-      <p>Explora, filtra y contacta de manera directa a los agentes clave que conforman el motor de innovación del sector.</p>
-    </div>
+      </div>
+    </section>
 
-    <div class="directorio-filter-bar">
-      <div class="search-box">
-        <i class="fa-solid fa-magnifying-glass"></i>
-        <input type="text" id="directorioSearch" placeholder="Buscar por organización, proyectos, tecnologías..." />
+    <section class="container-directory">
+      <div class="directory-header">
+        <h2>Directorio de Actores Sectoriales</h2>
+        <div class="filter-box">
+          <i class="fa-solid fa-filter"></i>
+          <select id="filtroTipoEcosistema" class="directory-select">
+            <option value="Todos">Todos los sectores</option>
+            <option value="Biofábrica">Biofábricas / Fincas</option>
+            <option value="Universidad">Universidades y Academia</option>
+            <option value="Investigación">Centros de Investigación / Laboratorios</option>
+            <option value="Institución">Instituciones Públicas</option>
+          </select>
+        </div>
       </div>
-      <div class="select-box">
-        <i class="fa-solid fa-sliders"></i>
-        <select id="directorioFilterTipo">
-          <option value="Todos">Todos los Actores</option>
-          <option value="Productor">Productores / Biofábricas de campo</option>
-          <option value="Empresa">Empresas Comerciales</option>
-          <option value="Universidad">Universidades y Academia</option>
-          <option value="Investigación">Centros de Investigación / Laboratorios</option>
-          <option value="Institución">Instituciones Públicas</option>
-        </select>
-      </div>
-    </div>
 
-    <div class="directorio-grid" id="directorioGrid">
-      </div>
-  </section>
+      <div class="directorio-grid" id="directorioGrid"></div>
+    </section>
+
+  </main>
 
   <footer class="main-footer">
     <div class="footer-grid">
