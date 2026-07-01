@@ -22,19 +22,25 @@
    function convertirLinkDriveAImagen(url) {
     if (!url) return "https://images.unsplash.com/photo-1592417817098-8f3d6eb19675?q=80&w=600";
     
-    // 1. Intenta el formato estándar /d/[ID]
+    let id = "";
+    
+    // 1. Extraer ID del formato estándar /d/[ID]
     let match = url.match(/\/d\/([a-zA-Z0-9_-]+)/);
-    if (match && match[1]) {
-      return `https://docs.google.com/uc?export=view&id=${match[1]}`;
+    if (match && match[1]) id = match[1];
+    
+    // 2. Extraer ID del formato alternativo ?id=[ID]
+    if (!id) {
+      match = url.match(/[?&]id=([a-zA-Z0-9_-]+)/);
+      if (match && match[1]) id = match[1];
     }
     
-    // 2. Intenta el formato alternativo ?id=[ID] o &id=[ID]
-    match = url.match(/[?&]id=([a-zA-Z0-9_-]+)/);
-    if (match && match[1]) {
-      return `https://docs.google.com/uc?export=view&id=${match[1]}`;
+    // Si encontramos el ID, usamos el endpoint de miniaturas de Google, 
+    // el cual no requiere cookies de sesión de terceros para renderizar imágenes públicas en etiquetas <img>.
+    if (id) {
+      return `https://lh3.googleusercontent.com/u/0/d/${id}=w800-h600-iv1`;
     }
     
-    return url; // Retorno de respaldo
+    return url;
   }
    
    /**
