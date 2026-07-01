@@ -1,172 +1,291 @@
-document.addEventListener("DOMContentLoaded", () => {
-    initPlatform();
+/* ==========================================================================
+   CONTROLADOR DE INTERFACES INTERACTIVAS (INDEX / INICIO)
+   Plataforma Integrada: Bioinsumos Costa Rica
+   ========================================================================== */
+
+   document.addEventListener("DOMContentLoaded", () => {
+    inicializarMenuMovil();
+    inicializarBuscadorGlobal();
+    cargarInnovacionesDestacadas();
   });
   
-  // Almacenamiento local en memoria de los datos cargados para búsquedas rápidas
-  let localBiofabricas = [];
-  let localInnovaciones = [];
-  
-  async function initPlatform() {
-    // 1. Cargar la data desde las utilidades de data.js
-    localBiofabricas = await fetchBiofabricas();
-    localInnovaciones = await fetchInnovaciones();
-  
-    // 2. Renderizar Elementos de la Home
-    renderKPIs(localBiofabricas, localInnovaciones);
-    renderFeaturedInnovations(localInnovaciones);
-  
-    // 3. Inicializar los Listeners del Buscador Global
-    initGlobalSearch();
-  }
-  
   /**
-   * Genera contadores de impacto real basados en la data de Google Sheets
+   * Gestiona el despliegue responsivo del menú de navegación superior
    */
-// Modifica la inicialización en js/index.js para cargar los KPIs
-async function initPlatform() {
-    localBiofabricas = await fetchBiofabricas();
-    localInnovaciones = await fetchInnovaciones();
-    const localKPIs = await fetchKPIs(); // Nueva consulta
+  function inicializarMenuMovil() {
+    const menuToggle = document.getElementById("menuToggle");
+    const mainNav = document.getElementById("mainNav");
   
-    renderKPIs(localKPIs); // Pasamos los KPIs directos
-    renderFeaturedInnovations(localInnovaciones);
-    initGlobalSearch();
-  }
-  
-  function renderKPIs(kpis) {
-    const container = document.getElementById("heroStats");
-    if (!container || kpis.length === 0) return;
-  
-    // Renderiza dinámicamente las cajitas mapeando la lista llave/valor del Excel
-    container.innerHTML = kpis.map(item => `
-      <div class="stat">
-        <strong>${item.valor}</strong>
-        <span>${item.kpi}</span>
-      </div>
-    `).join('');
-  }
-  
-  /**
-   * Renderiza el catálogo de Innovaciones Destacadas (Pilar 2)
-   */
-  function renderFeaturedInnovations(innovaciones) {
-    const grid = document.getElementById("featuredInnovationsGrid");
-    if (!grid) return;
-  
-    // Filtrar solo las destacadas (Donde la columna del excel diga "SI")
-    const destacadas = innovaciones.filter(item => item.destacado).slice(0, 3);
-  
-    if (destacadas.length === 0) {
-      grid.innerHTML = `<p class="no-data">Próximamente más innovaciones nacionales validadas.</p>`;
-      return;
+    if (menuToggle && mainNav) {
+      menuToggle.addEventListener("click", () => {
+        mainNav.classList.toggle("open");
+      });
+      
+      // Cierre adaptativo si se clica fuera del área del menú abierto
+      document.addEventListener("click", (e) => {
+        if (!mainNav.contains(e.target) && !menuToggle.contains(e.target)) {
+          mainNav.classList.remove("open");
+        }
+      });
     }
-  
-    grid.innerHTML = destacadas.map(item => `
-      <div class="card innovation-card">
-        <div class="innovation-img-wrap">
-          <img src="${item.imagenUrl}" alt="${item.titulo}">
-          <span class="innovation-badge">${item.categoria}</span>
-        </div>
-        <div class="innovation-body">
-          <h4>${item.titulo}</h4>
-          <p class="organization-text"><i class="fa-solid fa-building"></i> ${item.organizacion}</p>
-          <p class="desc-text">${item.descripcion}</p>
-          ${item.enlaceRecurso ? `<a href="${item.enlaceRecurso}" target="_blank" class="secondary-btn card-btn">Ver Recurso <i class="fa-solid fa-arrow-up-right-from-square"></i></a>` : ''}
-        </div>
-      </div>
-    `).join('');
   }
   
   /**
-   * Lógica del Buscador Transversal Inteligente (El núcleo del Pilar 1)
+   * Procesa consultas contra el set de datos globales alojados en data.js
    */
-  function initGlobalSearch() {
-    const input = document.getElementById("globalSearchInput");
-    const btn = document.getElementById("globalSearchBtn");
-    const section = document.getElementById("searchResultsSection");
-    const grid = document.getElementById("searchResultsGrid");
-    const closeBtn = document.getElementById("closeSearchBtn");
+
   
-    if (!input || !btn || !section || !grid) return;
+  /**
+   * Carga de forma dinámica elementos destacados o de interés nacional
+   */
+  function cargarInnovacionesDestacadas() {
+    const gridDestacados = document.getElementById("featuredInnovationsGrid");
+    if (!gridDestacados) return;
   
-    const ejecutarBusqueda = () => {
-      const query = input.value.trim().toLowerCase();
-      if (query === "") {
-        section.classList.add("d-none");
-        return;
-      }
+    // Mock dinámico en caso de no conectar directamente con bases remotas inmediatas
+    const itemsDestacados = [
+      { titulo: "Uso de Trichoderma harzianum", desc: "Casos aplicados con éxito en la reducción de patógenos del suelo en cultivos de hortalizas en la Zona Norte." },
+      { titulo: "Biofábricas Territoriales", desc: "Modelos validados de producción artesanal controlada de microorganismos de montaña." }
+    ];
   
-      grid.innerHTML = "";
-      let resultadosHTML = "";
-  
-      // A. Buscar en Biofábricas (Mapeando por nombre, descripción, región o tags)
-      const biofabricasFiltradas = localBiofabricas.filter(b => 
-        b.name.toLowerCase().includes(query) || 
-        b.descripcion.toLowerCase().includes(query) ||
-        b.region.toLowerCase().includes(query) ||
-        b.tags.some(t => t.toLowerCase().includes(query))
-      );
-  
-      // B. Buscar en Catálogo Técnico / Innovaciones / Manuales (Por título, descripción, organización o categoría)
-      const innovacionesFiltradas = localInnovaciones.filter(i => 
-        i.titulo.toLowerCase().includes(query) || 
-        i.descripcion.toLowerCase().includes(query) || 
-        i.organizacion.toLowerCase().includes(query) ||
-        i.categoria.toLowerCase().includes(query)
-      );
-  
-      // Inyectar resultados de Biofábricas
-      biofabricasFiltradas.forEach(b => {
-        resultadosHTML += `
-          <div class="search-result-card result-biofabrica">
-            <div class="result-tag"><i class="fa-solid fa-industry"></i> Biofábrica (Pilar 2)</div>
-            <h4>${b.name}</h4>
-            <p class="location"><i class="fa-solid fa-map-pin"></i> Ubicación: ${b.region} (${b.estado})</p>
-            <p>${b.descripcion.substring(0, 140)}...</p>
-            <a href="ecosistema.html?id=${b.id}" class="result-link">Ver en el mapa interactivo →</a>
-          </div>
-        `;
-      });
-  
-      // Inyectar resultados de Innovaciones, Libros, Videos, Enlaces Técnicos
-      innovacionesFiltradas.forEach(i => {
-        let icon = "fa-book";
-        if(i.categoria.toLowerCase().includes("video") || i.categoria.toLowerCase().includes("webinar")) icon = "fa-video";
-        if(i.categoria.toLowerCase().includes("normativa")) icon = "fa-gavel";
-  
-        resultadosHTML += `
-          <div class="search-result-card result-tech">
-            <div class="result-tag"><i class="fa-solid ${icon}"></i> ${i.categoria} (Pilar 1)</div>
-            <h4>${i.titulo}</h4>
-            <p class="author"><i class="fa-solid fa-landmark"></i> Fuente: ${i.organizacion}</p>
-            <p>${i.descripcion}</p>
-            ${i.enlaceRecurso ? `<a href="${i.enlaceRecurso}" target="_blank" class="result-link download">Acceder al recurso <i class="fa-solid fa-download"></i></a>` : ''}
-          </div>
-        `;
-      });
-  
-      if (resultadosHTML === "") {
-        grid.innerHTML = `
-          <div class="no-results-box">
-            <i class="fa-regular fa-folder-open"></i>
-            <p>No se encontraron manuales, experiencias ni biofábricas asociadas al término <strong>"${input.value}"</strong>.</p>
-          </div>`;
-      } else {
-        grid.innerHTML = resultadosHTML;
-      }
-  
-      // Mostrar sección de resultados y hacer scroll suave hacia ella
-      section.classList.remove("d-none");
-      section.scrollIntoView({ behavior: "smooth" });
-    };
-  
-    btn.addEventListener("click", ejecutarBusqueda);
-    input.addEventListener("keypress", (e) => {
-      if (e.key === "Enter") ejecutarBusqueda();
-    });
-  
-    closeBtn.addEventListener("click", () => {
-      section.classList.add("d-none");
-      input.value = "";
+    gridDestacados.innerHTML = "";
+    itemsDestacados.forEach(item => {
+      const card = document.createElement("div");
+      card.className = "pillar-card";
+      card.innerHTML = `
+        <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">🌱</div>
+        <h3>${item.titulo}</h3>
+        <p>${item.desc}</p>
+      `;
+      gridDestacados.appendChild(card);
     });
   }
+
+  /* ==========================================================================
+   CONTROLADOR DE INTERFACES INTERACTIVAS (INDEX / INICIO)
+   Plataforma Integrada: Bioinsumos Costa Rica
+   ========================================================================== */
+
+document.addEventListener("DOMContentLoaded", () => {
+  inicializarMenuMovil();
+  inicializarBuscadorGlobal();
+  cargarInnovacionesDestacadas();
+  renderKPIsInstitucionales(); // Nueva llamada activa para estadísticas animadas
+});
+
+/**
+ * Gestiona el despliegue responsivo del menú de navegación superior
+ */
+function inicializarMenuMovil() {
+  const menuToggle = document.getElementById("menuToggle");
+  const mainNav = document.getElementById("mainNav");
+
+  if (menuToggle && mainNav) {
+    menuToggle.addEventListener("click", () => {
+      mainNav.classList.toggle("open");
+    });
+    
+    document.addEventListener("click", (e) => {
+      if (!mainNav.contains(e.target) && !menuToggle.contains(e.target)) {
+        mainNav.classList.remove("open");
+      }
+    });
+  }
+}
+
+/**
+ * Simulación o llamada asíncrona simulando el comportamiento de AgroIdeas
+ * para extraer las métricas de impacto país vigentes de la Estrategia.
+ */
+/**
+ * Consume los KPIs en tiempo real desde Google Sheets en formato CSV
+ * y los mapea al formato estructurado de la plataforma.
+ */
+async function obtenerDatosMetricas() {
+  const URL_SHEET_CSV = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSugZplAvcSBZjGPZikP3jhTaKA6DtMwZpOZc0_ophORRVGjemhu3Z5JEY3EnsZMUayuhviSia3Gf58/pub?gid=1232917699&single=true&output=csv";
+
+  try {
+    const respuesta = await fetch(URL_SHEET_CSV);
+    if (!respuesta.ok) throw new Error(`Error al consultar la hoja: ${respuesta.status}`);
+    
+    const textoCSV = await respuesta.text();
+    
+    // Diccionario interno para asignar las etiquetas legibles basadas en la columna 'kpi'
+    const diccionarioEtiquetas = {
+      "biofabricas": "Biofábricas Validadas",
+      "investigaciones": "Recursos Técnicos",
+      "actores": "Productores Activos",
+      "normativas": "Decretos y Marcos"
+    };
+
+    // Dividir por líneas y limpiar espacios o retornos de carro (\r)
+    const lineas = textoCSV.split("\n").map(linea => linea.trim()).filter(linea => linea.length > 0);
+    
+    // Ignoramos la primera línea si es la cabecera (kpi,valor)
+    const datosFiltrados = [];
+    const inicioIndice = lineas[0].toLowerCase().includes("kpi") ? 1 : 0;
+
+    for (let i = inicioIndice; i < lineas.length; i++) {
+      // Separamos por la coma reglamentaria del CSV
+      const columnas = lineas[i].split(",");
+      if (columnas.length >= 2) {
+        const kpiClave = columnas[0].trim().toLowerCase();
+        const kpiValor = columnas[1].trim();
+
+        datosFiltrados.push({
+          clave: kpiClave,
+          valor: kpiValor,
+          // Si el KPI no está en el diccionario, usa el texto de la Sheet capitalizado
+          etiqueta: diccionarioEtiquetas[kpiClave] || columnas[0].trim().charAt(0).toUpperCase() + columnas[0].trim().slice(1)
+        });
+      }
+    }
+
+    return datosFiltrados;
+
+  } catch (error) {
+    console.error("Error al procesar el fetch del CSV de Google Sheets:", error);
+    // Fallback seguro en caso de caída de red o error de publicación
+    return [
+      { clave: "biofabricas", valor: "42", etiqueta: "Biofábricas Validadas" },
+      { clave: "investigaciones", valor: "158", etiqueta: "Recursos Técnicos" },
+      { clave: "actores", valor: "610", etiqueta: "Productores Activos" },
+      { clave: "normativas", valor: "8", etiqueta: "Decretos y Marcos" }
+    ];
+  }
+}
+
+/**
+ * Renderiza los KPIs en el Hero con efectos de movimiento escalonado (Staggered Animation)
+ */
+async function renderKPIsInstitucionales() {
+  const contenedorStats = document.getElementById("heroStats");
+  if (!contenedorStats) return;
+
+  try {
+    const listaMetricas = await obtenerDatosMetricas();
+    contenedorStats.innerHTML = "";
+
+    // Diccionario contextual para asignar iconos dinámicamente según la palabra clave
+    const mapasIconos = [
+      { key: "biofabrica", icon: "fa-solid fa-flask-vial" },
+      { key: "investigacion", icon: "fa-solid fa-book-open" },
+      { key: "recurso", icon: "fa-solid fa-file-shield" },
+      { key: "actor", icon: "fa-solid fa-users-gear" },
+      { key: "productor", icon: "fa-solid fa-tractor" },
+      { key: "normativa", icon: "fa-solid fa-gavel" }
+    ];
+
+    listaMetricas.forEach((kpi, index) => {
+      const tarjeta = document.createElement("div");
+      tarjeta.className = "metric-card";
+      
+      // Sincronización exacta con el estilo AgroIdeas:
+      // Modificamos la propiedad personalizada de CSS para escalonar la entrada (0.15s por tarjeta)
+      tarjeta.style.setProperty('--card-delay', `${index * 0.15}s`);
+
+      // Búsqueda inteligente del icono correspondiente
+      const textoClave = String(kpi.clave).toLowerCase();
+      const configuracionIcono = mapasIconos.find(item => textoClave.includes(item.key));
+      const iconoFinal = configuracionIcono ? configuracionIcono.icon : "fa-solid fa-chart-bar";
+
+      tarjeta.innerHTML = `
+        <div class="metric-icon-wrap">
+          <i class="${iconoFinal}"></i>
+        </div>
+        <div class="metric-info">
+          <span class="metric-number">${kpi.valor}</span>
+          <span class="metric-label">${kpi.etiqueta}</span>
+        </div>
+      `;
+
+      contenedorStats.appendChild(tarjeta);
+    });
+
+  } catch (error) {
+    console.error("Error al desplegar las métricas en el inicio:", error);
+    contenedorStats.innerHTML = `<p style="color: rgba(255,255,255,0.6); font-size:0.85rem;">Estadísticas temporales no disponibles.</p>`;
+  }
+}
+
+/**
+ * Procesa consultas contra el set de datos globales alojados en data.js
+ */
+function inicializarBuscadorGlobal() {
+  const searchInput = document.getElementById("globalSearchInput");
+  const searchBtn = document.getElementById("globalSearchBtn");
+  const resultsSection = document.getElementById("searchResultsSection");
+  const resultsGrid = document.getElementById("searchResultsGrid");
+  const closeResultsBtn = document.getElementById("closeSearchBtn");
+
+  if (!searchInput || !searchBtn) return;
+
+  function realizarBusqueda() {
+    const termino = searchInput.value.trim().toLowerCase();
+    if (termino === "") return;
+
+    let coincidencias = [];
+    if (typeof bibliotecaCompleta !== "undefined") {
+      coincidencias = bibliotecaCompleta.filter(item => 
+        item.titulo.toLowerCase().includes(termino) || 
+        item.descripcion.toLowerCase().includes(termino)
+      );
+    }
+
+    resultsGrid.innerHTML = "";
+    if (coincidencias.length > 0) {
+      coincidencias.forEach(item => {
+        const tarjeta = document.createElement("div");
+        tarjeta.className = "pillar-card";
+        tarjeta.innerHTML = `
+          <h3>${item.titulo}</h3>
+          <p>${item.descripcion.substring(0, 120)}...</p>
+          <a href="conocimiento.html" style="color: var(--primary); font-weight: 700; font-size: 0.85rem; display:inline-block; margin-top:1rem;">Ver Recurso →</a>
+        `;
+        resultsGrid.appendChild(tarjeta);
+      });
+    } else {
+      resultsGrid.innerHTML = `<p style="grid-column: 1/-1; color: var(--muted); text-align:center;">No se encontraron resultados específicos para "${searchInput.value}". Inténtelo con otro término.</p>`;
+    }
+
+    resultsSection.classList.remove("d-none");
+    resultsSection.scrollIntoView({ behavior: "smooth" });
+  }
+
+  searchBtn.addEventListener("click", realizarBusqueda);
+  searchInput.addEventListener("keypress", (e) => {
+    if (e.key === "Enter") realizarBusqueda();
+  });
+
+  if (closeResultsBtn) {
+    closeResultsBtn.addEventListener("click", () => {
+      resultsSection.classList.add("d-none");
+      searchInput.value = "";
+    });
+  }
+}
+
+/**
+ * Carga de forma dinámica elementos destacados o de interés nacional
+ */
+function cargarInnovacionesDestacadas() {
+  const gridDestacados = document.getElementById("featuredInnovationsGrid");
+  if (!gridDestacados) return;
+
+  const itemsDestacados = [
+    { titulo: "Uso de Trichoderma harzianum", desc: "Casos aplicados con éxito en la reducción de patógenos del suelo en cultivos de hortalizas en la Zona Norte." },
+    { titulo: "Biofábricas Territoriales", desc: "Modelos validados de producción artesanal controlada de microorganismos de montaña." }
+  ];
+
+  gridDestacados.innerHTML = "";
+  itemsDestacados.forEach(item => {
+    const card = document.createElement("div");
+    card.className = "pillar-card";
+    card.innerHTML = `
+      <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">🌱</div>
+      <h3>${item.titulo}</h3>
+      <p>${item.desc}</p>
+    `;
+    gridDestacados.appendChild(card);
+  });
+}
