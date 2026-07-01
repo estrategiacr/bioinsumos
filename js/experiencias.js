@@ -98,7 +98,7 @@
            descripcion: cols[4] || "Sin detalles adicionales registrados en la bitácora de campo.",
            imagenUrl: convertirLinkDriveAImagen(cols[5]),
            
-           estado: cols[6] === "SI" ? "Caso Destacado" : "Validado",
+         //  estado: cols[6] === "SI" ? "Caso Destacado" : "Validado",
            tags: listaTags.map(t => t.trim()),
            fecha: cols[8]
          };
@@ -162,7 +162,7 @@
            
            <div class="social-card-media">
              <img src="${item.imagenUrl}" alt="${item.titulo}" loading="lazy">
-             <span class="social-status-tag">${item.estado}</span>
+             
            </div>
            
            <div class="social-card-body">
