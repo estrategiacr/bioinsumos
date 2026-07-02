@@ -273,15 +273,16 @@ async function renderKPIsInstitucionales() {
       const tarjeta = document.createElement("div");
       tarjeta.className = "metric-card";
       
-      // Sincronización exacta con el estilo AgroIdeas:
-      // Modificamos la propiedad personalizada de CSS para escalonar la entrada (0.15s por tarjeta)
+      // Sincronización exacta con el estilo AgroIdeas (0.15s escalonado)
       tarjeta.style.setProperty('--card-delay', `${index * 0.15}s`);
-
-      // Búsqueda inteligente del icono correspondiente
+    
+      // BÚSQUEDA INTELIGENTE CORREGIDA: Usa el objeto kpiPlataformaEstrategica que declaraste arriba
       const textoClave = String(kpi.clave).toLowerCase();
-      const configuracionIcono = mapasIconos.find(item => textoClave.includes(item.key));
-      const iconoFinal = configuracionIcono ? configuracionIcono.icon : "fa-solid fa-chart-bar";
-
+      const configuracionLocal = kpiPlataformaEstrategica[textoClave];
+      
+      // Si existe en tu objeto usa su ícono, si no, usa el genérico de barra de gráficos
+      const iconoFinal = configuracionLocal ? configuracionLocal.icon : "fa-solid fa-chart-bar";
+    
       tarjeta.innerHTML = `
         <div class="metric-icon-wrap">
           <i class="${iconoFinal}"></i>
@@ -291,7 +292,7 @@ async function renderKPIsInstitucionales() {
           <span class="metric-label">${kpi.etiqueta}</span>
         </div>
       `;
-
+    
       contenedorStats.appendChild(tarjeta);
     });
 
