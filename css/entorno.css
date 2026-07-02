@@ -45,6 +45,7 @@ body {
 .entorno-hero {
     background: linear-gradient(rgba(134, 70, 183, 0.5), rgba(134, 70, 183, 0.35)), url("../assets/images/hero.png") no-repeat center/cover;
     color: white; padding: 3rem 5%; text-align: center;
+    height: 300px;
 }
 .hero-content { max-width: 800px; margin: 0 auto; }
 .hero-badge { background: rgba(255, 255, 255, 0.2); padding: 0.4rem 1rem; border-radius: 100px; font-size: 0.8rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; }
