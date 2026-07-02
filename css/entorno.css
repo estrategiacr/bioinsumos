@@ -34,7 +34,7 @@ body {
     display: flex; justify-content: space-between; align-items: center;
     padding: 1rem 5%; border-bottom: 1px solid var(--border);
 }
-.logo-wrap { font-size: 1.25rem; font-weight: 800; color: var(--primary); }
+.logo-wrap { font-size: 1.3rem; font-weight: 800; color: var(--primary); }
 .nav { display: flex; gap: 1.5rem; }
 .nav a { text-decoration: none; color: #475569; font-weight: 600; padding: 0.5rem 1rem; border-radius: var(--radius-md); transition: .2s ease; }
 .nav a:hover, .nav a.active { color: var(--primary); background: rgba(22, 101, 52, 0.08); }
