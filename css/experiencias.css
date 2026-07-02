@@ -164,10 +164,13 @@
   ========================================================= */
   .feed-main-container {
     flex: 1;
-    max-width: 650px; /* Tamaño ideal centralizado de feed móvil/escritorio */
     width: 100%;
+    /* Elige el 50% de la pantalla, pero si el 50% es MENOR a 650px, se queda en 650px (en móviles/tablets) */
+    /* Dicho al revés: en pantallas gigantes usará el 50%, expandiéndose más allá de los 650px */
+    max-width: max(650px, 50%); 
     margin: 2.5rem auto 5rem;
     padding: 0 1rem;
+    box-sizing: border-box;
   }
   
   .feed-status-header {
@@ -180,7 +183,7 @@
   .social-feed-stream {
     display: flex;
     flex-direction: column;
-    gap: 1.8rem;
+    gap: 0.5rem;
   }
   
   /* TARJETA VISUAL ESTILO POST */
