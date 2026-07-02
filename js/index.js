@@ -167,14 +167,107 @@ async function renderKPIsInstitucionales() {
     contenedorStats.innerHTML = "";
 
     // Diccionario contextual para asignar iconos dinámicamente según la palabra clave
-    const mapasIconos = [
-      { key: "biofabrica", icon: "fa-solid fa-flask-vial" },
-      { key: "investigacion", icon: "fa-solid fa-book-open" },
-      { key: "recurso", icon: "fa-solid fa-file-shield" },
-      { key: "actor", icon: "fa-solid fa-users-gear" },
-      { key: "productor", icon: "fa-solid fa-tractor" },
-      { key: "normativa", icon: "fa-solid fa-gavel" }
-    ];
+    const kpiPlataformaEstrategica = {
+      // ==========================================
+      // BLOQUE 1: INFRAESTRUCTURA Y CAPACIDAD (Pilar 2 / Biofábricas)
+      // ==========================================
+      biofabricas: {
+        label: "Biofábricas Validadas",
+        icon: "fa-solid fa-flask-vial",
+        value: "12",
+        unit: "unidades",
+        categoria: "infraestructura"
+      },
+      parcelas: {
+        label: "Parcelas Demostrativas",
+        icon: "fa-solid fa-seedling", // Ideal para innovación vegetal en campo
+        value: "0", 
+        unit: "fincas",
+        categoria: "infraestructura"
+      },
+      tecnologias: {
+        label: "Biopreparados Catalogados",
+        icon: "fa-solid fa-dna", // Refleja la innovación biológica de las fórmulas
+        value: "0",
+        unit: "fórmulas",
+        categoria: "infraestructura"
+      },
+    
+      // ==========================================
+      // BLOQUE 2: GESTIÓN DEL CONOCIMIENTO (Pilar 1 / Biblioteca)
+      // ==========================================
+      recursos: {
+        label: "Recursos Técnicos",
+        icon: "fa-solid fa-book-open",
+        value: "17",
+        unit: "documentos",
+        categoria: "conocimiento"
+      },
+      multimedia: {
+        label: "Biblioteca Multimedia",
+        icon: "fa-solid fa-video", // Videos, webinars y conferencias
+        value: "0",
+        unit: "archivos",
+        categoria: "conocimiento"
+      },
+      capacitaciones: {
+        label: "Cursos y Diplomados",
+        icon: "fa-solid fa-graduation-cap",
+        value: "0",
+        unit: "módulos",
+        categoria: "conocimiento"
+      },
+    
+      // ==========================================
+      // BLOQUE 3: ALCANCE Y ECOSISTEMA (Pilar 3 / Territorio)
+      // ==========================================
+      provincias: {
+        label: "Provincias con Presencia",
+        icon: "fa-solid fa-map-location-dot",
+        value: "7",
+        unit: "regiones",
+        categoria: "ecosistema"
+      },
+      cobertura: {
+        label: "Cobertura Nacional",
+        icon: "fa-solid fa-percent", // Representa el 100% de alcance institucional
+        value: "100",
+        unit: "%",
+        categoria: "ecosistema"
+      },
+      productores: {
+        label: "Productores Vinculados",
+        icon: "fa-solid fa-tractor",
+        value: "0",
+        unit: "usuarios",
+        categoria: "ecosistema"
+      },
+      actores: {
+        label: "Actores del Directorio",
+        icon: "fa-solid fa-users-viewfinder", // Ideal para mapeo de actores sectoriales
+        value: "0",
+        unit: "contactos",
+        categoria: "ecosistema"
+      },
+    
+      // ==========================================
+      // BLOQUE 4: ENTORNO Y REGULACIÓN (Pilar 4 / Habilitador)
+      // ==========================================
+      normativas: {
+        label: "Marcos Regulatorios",
+        icon: "fa-solid fa-gavel",
+        value: "0",
+        unit: "normas",
+        categoria: "gobernanza"
+      },
+      financiamiento: {
+        label: "Oportunidades Financieras",
+        icon: "fa-solid fa-hand-holding-dollar", // Ayudas financieras y créditos verdes
+        value: "0",
+        unit: "fondos",
+        categoria: "gobernanza"
+      }
+    };
 
     listaMetricas.forEach((kpi, index) => {
       const tarjeta = document.createElement("div");
