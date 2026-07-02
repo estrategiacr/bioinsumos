@@ -145,6 +145,20 @@ body {
   color: rgba(255, 255, 255, 0.9);
 }
 
+.pillar-icon {
+  width: 64px;
+  height: 64px;
+  background-color: #e8f5e9; /* Un verde orgánico sumamente claro y sutil */
+  border-radius: 50%;
+  margin: 0 auto 1.2rem;
+  color: #1b5e20; /* Verde oscuro profesional */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14px; /* Espacio para que el icono respire dentro del círculo */
+  box-sizing: border-box;
+}
+
 /* Buscador Flotante */
 .search-box-container {
   background: var(--surface);
@@ -213,10 +227,10 @@ body {
   border-color: var(--accent);
 }
 
-.pillar-icon {
+/* .pillar-icon {
   font-size: 2.5rem;
   margin-bottom: 1rem;
-}
+} */
 
 .pillar-card h3 {
   font-size: 1.25rem;
