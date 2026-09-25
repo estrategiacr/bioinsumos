@@ -4,59 +4,51 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Ecosistema Nacional de Bioinsumos | Bioinsumos Costa Rica</title>
-  <link 
-  rel="stylesheet" 
-  href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-  integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
-  crossorigin="" 
-/>
-<link rel="stylesheet" href="css/leaflet.css" />
-<script src="js/leaflet.js"></script>
-<script 
-  src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-  integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
-  crossorigin=""
-></script>
+
+  <!-- Google Fonts & FontAwesome -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
-  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+
+  <!-- Leaflet Map CSS y JS (Única importación limpia desde CDNJS) -->
   <link 
-  rel="stylesheet" 
-  href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" 
-/>
-<script 
-  src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"
-></script>
+    rel="stylesheet" 
+    href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" 
+  />
+  <script 
+    src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"
+  ></script>
+
+  <!-- CSS Personalizado -->
   <link rel="stylesheet" href="css/ecosistema.css" />
 </head>
 <body class="ecosistema-page">
 
-    <header class="topbar">
-        <div class="logo-wrap"> Bioinsumos CR</div>
-        <button class="menu-toggle" id="menuToggle"><span></span><span></span><span></span></button>
-        <nav class="nav" id="mainNav">
-          <a href="index.html">Inicio</a>
-          <a href="conocimiento.html">Conocimiento</a>
-          <a href="experiencias.html">Experiencias</a>
-          <a href="ecosistema.html" class="active">Ecosistema</a>
-          <a href="entorno.html" >Entorno</a>
-        </nav>
-      </header>
+  <header class="topbar">
+    <div class="logo-wrap">Bioinsumos CR</div>
+    <button class="menu-toggle" id="menuToggle">
+      <span></span><span></span><span></span>
+    </button>
+    <nav class="nav" id="mainNav">
+      <a href="index.html">Inicio</a>
+      <a href="conocimiento.html">Conocimiento</a>
+      <a href="experiencias.html">Experiencias</a>
+      <a href="ecosistema.html" class="active">Ecosistema</a>
+      <a href="entorno.html">Entorno</a>
+    </nav>
+  </header>
 
   <main>
     <section class="ecosistema-hero">
       <div class="hero-overlay"></div>
       <div class="hero-content">
-        
         <h1>Ecosistema Nacional de Bioinsumos</h1>
         <p>Mapeo inteligente, directorio de actores clave y redes de colaboración estratégica para el desarrollo bioagropecuario de Costa Rica.</p>
       </div>
     </section>
 
     <section class="workspace-section">
-      
       <div class="workspace-tabs-mobile">
         <button class="map-tab-btn active" data-tab="mapa">
           <i class="fa-solid fa-map-location-dot"></i> Mapa de Biofábricas
@@ -158,7 +150,7 @@
     </div>
   </footer>
 
-  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <!-- JS Principal del Mapa -->
   <script src="js/ecosistema.js"></script>
 </body>
 </html>
