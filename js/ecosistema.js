@@ -57,7 +57,7 @@
      mapaEcosistema = L.map("mapaEcosistema", {
        center: [9.7489, -83.7534],
        zoom: 7.5,
-       scrollWheelZoom: false
+       scrollWheelZoom: true
      });
    
      L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
